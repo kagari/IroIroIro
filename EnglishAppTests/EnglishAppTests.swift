@@ -1,15 +1,14 @@
 //
-//  IroIroTests.swift
-//  IroIroTests
+//  EnglishAppTests.swift
+//  EnglishAppTests
 //
-//  Created by 大城昂希 on 2019/09/25.
-//  Copyright © 2019 大城昂希. All rights reserved.
+//  Created by 大城昂希 on 2019/10/14.
 //
 
 import XCTest
-@testable import IroIro
+@testable import EnglishApp
 
-class IroIroTests: XCTestCase {
+class EnglishAppTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
