@@ -1,14 +1,13 @@
 //
-//  IroIroUITests.swift
-//  IroIroUITests
+//  EnglishAppUITests.swift
+//  EnglishAppUITests
 //
-//  Created by 大城昂希 on 2019/09/25.
-//  Copyright © 2019 大城昂希. All rights reserved.
+//  Created by 大城昂希 on 2019/10/14.
 //
 
 import XCTest
 
-class IroIroUITests: XCTestCase {
+class EnglishAppUITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
