@@ -16,6 +16,7 @@
 		13851466235445F10034D298 /* EnglishAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13851465235445F10034D298 /* EnglishAppTests.swift */; };
 		13851471235445F10034D298 /* EnglishAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13851470235445F10034D298 /* EnglishAppUITests.swift */; };
 		1385147F235446B10034D298 /* AVCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1385147E235446B10034D298 /* AVCaptureView.swift */; };
+		6AE6B983235B042C00315D38 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE6B982235B042C00315D38 /* QuestionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		13851470235445F10034D298 /* EnglishAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishAppUITests.swift; sourceTree = "<group>"; };
 		13851472235445F10034D298 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1385147E235446B10034D298 /* AVCaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCaptureView.swift; sourceTree = "<group>"; };
+		6AE6B982235B042C00315D38 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuestionViewController.swift; path = "../../Downloads/ARKit3DTextSample-master/ARKit3DTextSample/QuestionViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				1385144E235445EF0034D298 /* AppDelegate.swift */,
 				13851450235445EF0034D298 /* SceneDelegate.swift */,
 				13851452235445EF0034D298 /* ContentView.swift */,
+				6AE6B982235B042C00315D38 /* QuestionViewController.swift */,
 				13851454235445F10034D298 /* Assets.xcassets */,
 				13851459235445F10034D298 /* LaunchScreen.storyboard */,
 				1385145C235445F10034D298 /* Info.plist */,
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1385147F235446B10034D298 /* AVCaptureView.swift in Sources */,
+				6AE6B983235B042C00315D38 /* QuestionViewController.swift in Sources */,
 				1385144F235445EF0034D298 /* AppDelegate.swift in Sources */,
 				13851451235445EF0034D298 /* SceneDelegate.swift in Sources */,
 				13851453235445EF0034D298 /* ContentView.swift in Sources */,
@@ -439,13 +443,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"EnglishApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = EnglishApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp1016;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -458,13 +463,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"EnglishApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = EnglishApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp1016;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
