@@ -16,6 +16,11 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupUI()
+    }
+    
+    // MARK: - UIを整える関数
+    private func setupUI() {
         question.text = "DOG"
         question.textColor = .purple
         question.textAlignment = .center
