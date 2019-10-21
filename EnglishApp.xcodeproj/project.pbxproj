@@ -16,6 +16,7 @@
 		130262E3235B0B6600EAA314 /* EnglishAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262E2235B0B6600EAA314 /* EnglishAppTests.swift */; };
 		130262EE235B0B6600EAA314 /* EnglishAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */; };
 		130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262FB235B0BA200EAA314 /* QuestionViewController.swift */; };
+		1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1353E74C235C17AE006E35C4 /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishAppUITests.swift; sourceTree = "<group>"; };
 		130262EF235B0B6600EAA314 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		130262FB235B0BA200EAA314 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		1353E74C235C17AE006E35C4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +106,9 @@
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
 				130262CD235B0B6400EAA314 /* SceneDelegate.swift */,
 				130262CF235B0B6400EAA314 /* ViewController.swift */,
-				130262D1235B0B6400EAA314 /* Main.storyboard */,
 				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
+				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
+				130262D1235B0B6400EAA314 /* Main.storyboard */,
 				130262D4235B0B6500EAA314 /* Assets.xcassets */,
 				130262D6235B0B6500EAA314 /* LaunchScreen.storyboard */,
 				130262D9235B0B6500EAA314 /* Info.plist */,
@@ -265,6 +268,7 @@
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
 				130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */,
 				130262CE235B0B6400EAA314 /* SceneDelegate.swift in Sources */,
+				1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,12 +442,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2HRV3K259;
 				INFOPLIST_FILE = EnglishApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -455,12 +460,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R2HRV3K259;
 				INFOPLIST_FILE = EnglishApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.EnglishApp10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
