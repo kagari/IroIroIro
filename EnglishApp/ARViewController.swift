@@ -8,13 +8,23 @@
 import Foundation
 import UIKit
 import ARKit
+import Vision
 
-class ARViewController: UIViewController, ARSCNViewDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    private var currentBuffer: CVPixelBuffer?
+    private let visionQueue = DispatchQueue(label: "com.EnglishApp.pipi")
+    private var identifierString = ""
+    private var confidence: VNConfidence = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set the view's delegate
+        sceneView.delegate = self
+        sceneView.session.delegate = self
+//        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints] // debug用にARの特徴点を出す（黄色い点々）
         
         sceneView.scene = SCNScene()
         sceneView.autoenablesDefaultLighting = true
@@ -24,6 +34,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillAppear(animated)
         
         let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        configuration.isLightEstimationEnabled = true
         sceneView.session.run(configuration)
     }
     
@@ -31,5 +43,71 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         
         sceneView.session.pause()
+    }
+    
+    // ここでARのカメラからキャプチャした画像を処理する
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        guard currentBuffer == nil, case .normal = frame.camera.trackingState else {
+            return
+        }
+        
+        self.currentBuffer = frame.capturedImage
+        classifyCurrentImage() // VisionAPIを用いた認識を行う
+    }
+    
+    private lazy var classificationRequest: VNCoreMLRequest = {
+        do {
+            // Instantiate the model from its generated Swift class.
+            let model = try VNCoreMLModel(for: YOLOv3().model)
+            let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
+                self?.processClassifications(for: request, error: error)
+            })
+            
+            // Crop input images to square area at center, matching the way the ML model was trained.
+            request.imageCropAndScaleOption = .centerCrop
+            
+            return request
+        } catch {
+            fatalError("Failed to load Vision ML model: \(error)")
+        }
+    }()
+    
+    private func classifyCurrentImage() {
+        print("classifyCurrentImage!!")
+        
+        let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!)
+        
+        visionQueue.async {
+            do {
+                defer { self.currentBuffer = nil } // この関数を出る時に実行される
+                try requestHandler.perform([self.classificationRequest])
+            } catch {
+                print("Error: Vision request failed with error \"\(error)\"")
+            }
+        }
+    }
+    
+    func processClassifications(for request: VNRequest, error: Error?) {
+        guard let results = request.results else {
+            print("Unable to classify image.\n\(error!.localizedDescription)")
+            return
+        }
+        // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
+        let classifications = results as! [VNRecognizedObjectObservation]
+        
+        // Show a label for the highest-confidence result (but only above a minimum confidence threshold).
+        if let bestResult = classifications.first(where: { result in result.confidence > 0.5 }),
+            let label = bestResult.labels[0].identifier.split(separator: ",").first {
+            identifierString = String(label)
+            confidence = bestResult.labels[0].confidence
+        } else {
+            identifierString = ""
+            confidence = 0
+        }
+        
+        print("Class \(identifierString): \(confidence)")
+//        DispatchQueue.main.async { [weak self] in
+//            self?.displayClassifierResults()
+//        }
     }
 }

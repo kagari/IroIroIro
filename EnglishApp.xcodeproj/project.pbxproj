@@ -17,6 +17,7 @@
 		130262EE235B0B6600EAA314 /* EnglishAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */; };
 		130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262FB235B0BA200EAA314 /* QuestionViewController.swift */; };
 		1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1353E74C235C17AE006E35C4 /* ARViewController.swift */; };
+		13AF494B235E018600F60D6B /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 13AF494A235E018600F60D6B /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		130262EF235B0B6600EAA314 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		130262FB235B0BA200EAA314 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		1353E74C235C17AE006E35C4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		13AF494A235E018600F60D6B /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,9 +110,10 @@
 				130262CF235B0B6400EAA314 /* ViewController.swift */,
 				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
 				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
+				13AF494A235E018600F60D6B /* YOLOv3.mlmodel */,
 				130262D1235B0B6400EAA314 /* Main.storyboard */,
-				130262D4235B0B6500EAA314 /* Assets.xcassets */,
 				130262D6235B0B6500EAA314 /* LaunchScreen.storyboard */,
+				130262D4235B0B6500EAA314 /* Assets.xcassets */,
 				130262D9235B0B6500EAA314 /* Info.plist */,
 			);
 			path = EnglishApp;
@@ -264,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AF494B235E018600F60D6B /* YOLOv3.mlmodel in Sources */,
 				130262D0235B0B6400EAA314 /* ViewController.swift in Sources */,
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
 				130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */,
