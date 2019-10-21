@@ -87,7 +87,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
-    func processClassifications(for request: VNRequest, error: Error?) {
+    private func processClassifications(for request: VNRequest, error: Error?) {
         guard let results = request.results else {
             print("Unable to classify image.\n\(error!.localizedDescription)")
             return
@@ -101,13 +101,33 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             identifierString = String(label)
             confidence = bestResult.labels[0].confidence
         } else {
-            identifierString = ""
-            confidence = 0
+            return
         }
         
         print("Class \(identifierString): \(confidence)")
-//        DispatchQueue.main.async { [weak self] in
-//            self?.displayClassifierResults()
-//        }
+        DispatchQueue.main.async { [weak self] in
+            self?.addTag(string: self!.identifierString)
+        }
+    }
+
+    private var pre_tag = ""
+    private func addTag(string: String) {
+        // https://qiita.com/k-boy/items/775633fe3fd6da9c5fb6
+        if string == pre_tag { return } // tagが同じなら無視する
+        
+        // カメラ座標系で30cm前
+        let infrontOfCamera = SCNVector3(x: 0, y:0, z: -0.3)
+        
+        // カメラ座標系 -> ワールド座標系
+        guard let cameraNode = sceneView.pointOfView else { return }
+        let pointInWorld = cameraNode.convertPosition(infrontOfCamera, to: nil)
+        
+        let text = SCNText()
+        text.string = string
+        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.3);
+        let textNode = SCNNode(geometry: text)
+        
+        textNode.position = pointInWorld
+        sceneView.scene.rootNode.addChildNode(textNode)
     }
 }

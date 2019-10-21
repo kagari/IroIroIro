@@ -2,3 +2,4 @@
 Pods/
 *.xcworkspace
 EnglishApp.xcodeproj/xcuserdata/*
+EnglishApp/YOLOv3.mlmodel
