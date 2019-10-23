@@ -116,18 +116,15 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if string == pre_tag { return } // tagが同じなら無視する
         
         // カメラ座標系で30cm前
-        let infrontOfCamera = SCNVector3(x: 0, y:0, z: -0.3)
+        let infrontOfCamera = SCNVector3(x: 0, y: -1.0, z: -0.5)
         
-        // カメラ座標系 -> ワールド座標系
-        guard let cameraNode = sceneView.pointOfView else { return }
-        let pointInWorld = cameraNode.convertPosition(infrontOfCamera, to: nil)
-        
+        //textのフォント文字色
         let text = SCNText()
         text.string = string
-        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.3);
+        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.01);
         let textNode = SCNNode(geometry: text)
         
-        textNode.position = pointInWorld
+        textNode.position = infrontOfCamera
         sceneView.scene.rootNode.addChildNode(textNode)
     }
 }
