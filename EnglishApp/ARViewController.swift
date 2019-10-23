@@ -13,6 +13,8 @@ import Vision
 class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var objectLabel: UILabel!
+    
     private var currentBuffer: CVPixelBuffer?
     private let visionQueue = DispatchQueue(label: "com.EnglishApp.pipi")
     private var identifierString = ""
@@ -21,6 +23,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupUI()
+        
         // Set the view's delegate
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -28,6 +32,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         sceneView.scene = SCNScene()
         sceneView.autoenablesDefaultLighting = true
+    }
+    
+    // MARK: - UIを整える関数
+    private func setupUI() {
+        objectLabel.text = "ものを探してね"
+        objectLabel.textColor = .purple
+        objectLabel.textAlignment = .center
+        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,25 +122,24 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
 
-    private var pre_tag = ""
     private func addTag(string: String) {
         // https://qiita.com/k-boy/items/775633fe3fd6da9c5fb6
-        if string == pre_tag { return } // tagが同じなら無視する
-        pre_tag = string
+        if string == objectLabel.text { return } // tagが同じなら無視する
+        objectLabel.text = string
         
-        // カメラ座標系で30cm前
-        let infrontOfCamera = SCNVector3(x: 0, y:0, z: -0.3)
-        
-        // カメラ座標系 -> ワールド座標系
-        guard let cameraNode = sceneView.pointOfView else { return }
-        let pointInWorld = cameraNode.convertPosition(infrontOfCamera, to: nil)
-        
-        let text = SCNText()
-        text.string = string
-        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.3);
-        let textNode = SCNNode(geometry: text)
-        
-        textNode.position = pointInWorld
-        sceneView.scene.rootNode.addChildNode(textNode)
+//        // カメラ座標系で30cm前
+//        let infrontOfCamera = SCNVector3(x: 0, y:0, z: -0.3)
+//
+//        // カメラ座標系 -> ワールド座標系
+//        guard let cameraNode = sceneView.pointOfView else { return }
+//        let pointInWorld = cameraNode.convertPosition(infrontOfCamera, to: nil)
+//
+//        let text = SCNText()
+//        text.string = string
+//        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.3);
+//        let textNode = SCNNode(geometry: text)
+//
+//        textNode.position = pointInWorld
+//        sceneView.scene.rootNode.addChildNode(textNode)
     }
 }
