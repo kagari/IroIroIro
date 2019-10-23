@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9F0-uI-m7f">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PgX-3k-qZT">
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
@@ -29,6 +29,7 @@
                     <navigationItem key="navigationItem" id="T1r-md-Wkm"/>
                     <connections>
                         <outlet property="question" destination="Trj-5m-zrJ" id="qe6-5e-JPp"/>
+                        <segue destination="9F0-uI-m7f" kind="show" identifier="toARViewController" id="uHs-kU-ObY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -38,11 +39,12 @@
         <!--View Controller-->
         <scene sceneID="3ZJ-c7-j8b">
             <objects>
-                <viewController id="9F0-uI-m7f" customClass="ARViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="9F0-uI-m7f" customClass="ARViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
                     <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="QJK-hl-Z40">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                     </arscnView>
+                    <navigationItem key="navigationItem" id="gAP-Hu-eJe"/>
                     <connections>
                         <outlet property="sceneView" destination="QJK-hl-Z40" id="V2X-ta-tsq"/>
                     </connections>

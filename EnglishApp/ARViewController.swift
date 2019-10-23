@@ -114,6 +114,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     private func addTag(string: String) {
         // https://qiita.com/k-boy/items/775633fe3fd6da9c5fb6
         if string == pre_tag { return } // tagが同じなら無視する
+        pre_tag = string
         
         // カメラ座標系で30cm前
         let infrontOfCamera = SCNVector3(x: 0, y:0, z: -0.3)
