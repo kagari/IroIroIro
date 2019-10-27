@@ -17,6 +17,11 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         
         self.setupUI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            // 3秒後にARの画面に遷移
+            self.performSegue(withIdentifier: "toARViewController", sender: nil)
+        }
     }
     
     // MARK: - UIを整える関数
