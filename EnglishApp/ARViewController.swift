@@ -13,6 +13,8 @@ import Vision
 class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var objectLabel: UILabel!
+    
     private var currentBuffer: CVPixelBuffer?
     private let visionQueue = DispatchQueue(label: "com.EnglishApp.pipi")
     private var identifierString = ""
@@ -21,13 +23,22 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setupUI()
+        
         // Set the view's delegate
         sceneView.delegate = self
         sceneView.session.delegate = self
-//        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints] // debug用にARの特徴点を出す（黄色い点々）
         
         sceneView.scene = SCNScene()
         sceneView.autoenablesDefaultLighting = true
+    }
+    
+    // MARK: - UIを整える関数
+    private func setupUI() {
+        objectLabel.text = "ものを探してね"
+        objectLabel.textColor = .purple
+        objectLabel.textAlignment = .center
+        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,13 +68,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     private lazy var classificationRequest: VNCoreMLRequest = {
         do {
-            // Instantiate the model from its generated Swift class.
+            // YOLOv3読み込み
             let model = try VNCoreMLModel(for: YOLOv3().model)
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
             })
             
-            // Crop input images to square area at center, matching the way the ML model was trained.
+            // 入力画像を中央の正方形の領域に切り取りる
             request.imageCropAndScaleOption = .centerCrop
             
             return request
@@ -87,27 +98,53 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
-    func processClassifications(for request: VNRequest, error: Error?) {
+    private func processClassifications(for request: VNRequest, error: Error?) {
         guard let results = request.results else {
             print("Unable to classify image.\n\(error!.localizedDescription)")
             return
         }
-        // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
+        // 分類
         let classifications = results as! [VNRecognizedObjectObservation]
         
-        // Show a label for the highest-confidence result (but only above a minimum confidence threshold).
+        // 分類した一番いい結果を持ってくる
         if let bestResult = classifications.first(where: { result in result.confidence > 0.5 }),
             let label = bestResult.labels[0].identifier.split(separator: ",").first {
             identifierString = String(label)
             confidence = bestResult.labels[0].confidence
         } else {
-            identifierString = ""
-            confidence = 0
+            return
         }
         
         print("Class \(identifierString): \(confidence)")
-//        DispatchQueue.main.async { [weak self] in
-//            self?.displayClassifierResults()
-//        }
+        DispatchQueue.main.async { [weak self] in
+            // 認識結果
+            self?.addTag(string: self!.identifierString)
+            
+            // Tagの1文字目を取る
+            self?.addlabel(string: String(self!.identifierString.prefix(1)))
+        }
+    }
+    
+    // MARK: - Label表示の関数
+    private func addlabel(string: String){
+        // https://qiita.com/k-boy/items/775633fe3fd6da9c5fb6
+        if string == objectLabel.text { return } // tagが同じなら無視する
+        objectLabel.text = string
+    }
+
+    // MARK: - AR文字の関数
+    private func addTag(string: String) {
+        
+        // AR文字の座標
+        let infrontOfCamera = SCNVector3(x: 0, y:0.02, z: -0.1)
+        
+        // 文字のfont,color,size変更
+        let text = SCNText()
+        text.string = string
+        text.font = UIFont(name: "HiraKakuProN-W6", size: 0.1);
+        let textNode = SCNNode(geometry: text)
+
+        textNode.position = infrontOfCamera
+        sceneView.scene.rootNode.addChildNode(textNode)
     }
 }
