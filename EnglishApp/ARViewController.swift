@@ -56,6 +56,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
+    // MARK: - カメラからキャプチャしてMLに流す処理群
     // ここでARのカメラからキャプチャした画像を処理する
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         guard currentBuffer == nil, case .normal = frame.camera.trackingState else {
