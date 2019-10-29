@@ -17,6 +17,7 @@
 		130262EE235B0B6600EAA314 /* EnglishAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */; };
 		130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262FB235B0BA200EAA314 /* QuestionViewController.swift */; };
 		1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1353E74C235C17AE006E35C4 /* ARViewController.swift */; };
+		13FB48852367D119006BA3B8 /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB48842367D119006BA3B8 /* ColorUtil.swift */; };
 		E0EB8E88236304D7006F59FE /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E0EB8E87236304D7006F59FE /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		130262EF235B0B6600EAA314 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		130262FB235B0BA200EAA314 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		1353E74C235C17AE006E35C4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
+		13FB48842367D119006BA3B8 /* ColorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		E0EB8E87236304D7006F59FE /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +117,7 @@
 				130262D6235B0B6500EAA314 /* LaunchScreen.storyboard */,
 				130262D4235B0B6500EAA314 /* Assets.xcassets */,
 				130262D9235B0B6500EAA314 /* Info.plist */,
+				13FB48842367D119006BA3B8 /* ColorUtil.swift */,
 			);
 			path = EnglishApp;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
 				130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */,
 				130262CE235B0B6400EAA314 /* SceneDelegate.swift in Sources */,
+				13FB48852367D119006BA3B8 /* ColorUtil.swift in Sources */,
 				1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
