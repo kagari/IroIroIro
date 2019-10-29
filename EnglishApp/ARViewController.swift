@@ -25,6 +25,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         self.setupUI()
         
+        // TODO: - stringの引数は、QuestionViewから受け取る
+        let question_label = make_label(string: "Person", view: self.view) // お題のラベルを作成
+        for elem in question_label {
+            self.view.addSubview(elem) // お題のラベルを追加
+        }
+        
         // Set the view's delegate
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -56,6 +62,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
+    // MARK: - カメラからキャプチャしてMLに流す処理群
     // ここでARのカメラからキャプチャした画像を処理する
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         guard currentBuffer == nil, case .normal = frame.camera.trackingState else {

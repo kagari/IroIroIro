@@ -12,11 +12,19 @@ import UIKit
 class QuestionViewController: UIViewController {
     
     @IBOutlet weak var question: UILabel! // お題用のラベル
+    let questions = ["Phone", "Dog", "Cat", "Hoge", "Terminal"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupUI()
+        
+        let string = questions[3]
+        let labels = make_label(string: string, view: self.view)
+        for label in labels {
+            self.view.addSubview(label)
+        }
+        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             // 3秒後にARの画面に遷移
