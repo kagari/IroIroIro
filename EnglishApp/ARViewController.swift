@@ -25,6 +25,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         
         self.setupUI()
         
+        // TODO: - stringの引数は、QuestionViewから受け取る
+        let question_label = make_label(string: "Person", view: self.view) // お題のラベルを作成
+        for elem in question_label {
+            self.view.addSubview(elem) // お題のラベルを追加
+        }
+        
         // Set the view's delegate
         sceneView.delegate = self
         sceneView.session.delegate = self
