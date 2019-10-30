@@ -41,10 +41,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     // MARK: - UIを整える関数
     private func setupUI() {
-        objectLabel.text = "ものを探してね"
-        objectLabel.textColor = .purple
-        objectLabel.textAlignment = .center
-        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
+//        objectLabel.text = "を探してね"
+//        objectLabel.textColor = .purple
+//        objectLabel.textAlignment = .center
+//        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
