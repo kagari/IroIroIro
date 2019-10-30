@@ -26,11 +26,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         self.setupUI()
         
         // TODO: - stringの引数は、QuestionViewから受け取る
-<<<<<<< HEAD
-        let question_label = make_label(string: "Dog", view: self.view) // お題のラベルを作成
-=======
         let question_label = make_label(string: "Person", view: self.view) // お題のラベルを作成
->>>>>>> origin/develop
         for elem in question_label {
             self.view.addSubview(elem) // お題のラベルを追加
         }
@@ -45,17 +41,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     // MARK: - UIを整える関数
     private func setupUI() {
-<<<<<<< HEAD
 //        objectLabel.text = "を探してね"
 //        objectLabel.textColor = .purple
 //        objectLabel.textAlignment = .center
 //        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
-=======
-        objectLabel.text = "ものを探してね"
-        objectLabel.textColor = .purple
-        objectLabel.textAlignment = .center
-        objectLabel.font = UIFont.systemFont(ofSize: 100.0)
->>>>>>> origin/develop
     }
     
     override func viewWillAppear(_ animated: Bool) {
