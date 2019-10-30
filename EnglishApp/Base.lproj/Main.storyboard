@@ -16,12 +16,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Trj-5m-zrJ">
+<<<<<<< HEAD
                                 <rect key="frame" x="20" y="53" width="794" height="223"/>
+=======
+                                <rect key="frame" x="42" y="468" width="750" height="223"/>
+>>>>>>> origin/develop
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+<<<<<<< HEAD
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-Pr-jWY">
                                 <rect key="frame" x="20" y="770" width="794" height="230"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -36,16 +41,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+=======
+>>>>>>> origin/develop
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="T1r-md-Wkm"/>
                     <connections>
+<<<<<<< HEAD
                         <outlet property="name" destination="aMj-1F-FjH" id="tfA-9g-fOq"/>
                         <outlet property="question" destination="Trj-5m-zrJ" id="qe6-5e-JPp"/>
                         <outlet property="search" destination="HKm-Pr-jWY" id="DEM-jX-790"/>
                         <outlet property="view" destination="aMj-1F-FjH" id="j2Z-Nx-XNN"/>
+=======
+                        <outlet property="question" destination="Trj-5m-zrJ" id="qe6-5e-JPp"/>
+>>>>>>> origin/develop
                         <segue destination="9F0-uI-m7f" kind="show" identifier="toARViewController" id="uHs-kU-ObY"/>
                     </connections>
                 </viewController>
@@ -94,7 +105,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLa-UE-aMD">
+<<<<<<< HEAD
                                 <rect key="frame" x="71" y="248" width="707" height="706"/>
+=======
+                                <rect key="frame" x="71" y="476" width="646" height="196"/>
+>>>>>>> origin/develop
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -111,7 +126,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZLU-JC-Ztx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="-719.20000000000005" y="137.18140929535232"/>
+=======
+            <point key="canvasLocation" x="-717.98561151079139" y="137.58992805755395"/>
+>>>>>>> origin/develop
         </scene>
     </scenes>
 </document>
