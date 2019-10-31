@@ -21,7 +21,8 @@ class StartViewController: UIViewController, StartViewDelegate {
     func didTapStartButton() {
         print("Startボタンがタップされた")
         let questionViewController = QuestionViewController(titleName: "QuestionViewController")
-        navigationController?.pushViewController(questionViewController, animated: true)
+        questionViewController.modalPresentationStyle = .fullScreen
+        self.present(questionViewController, animated: true, completion: nil)
     }
 }
 
