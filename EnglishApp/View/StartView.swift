@@ -3,13 +3,23 @@ import UIKit
 
 class StartView: UIView {
     
+    var titleLabel: UILabel!
     var startButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         startButton = self.makeStartButton(fontsize: 100)
+        titleLabel = {
+            let label = UILabel()
+            label.text = "いぇいご！！"
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 100)
+            label.textAlignment = .center
+            return label
+        }()
         
+        self.addSubview(titleLabel)
         self.addSubview(startButton)
         self.backgroundColor = .white
     }
@@ -26,8 +36,10 @@ class StartView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        titleLabel.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 0.2*self.frame.height)
         startButton.frame = CGRect(x: 0, y: 0, width: 0.8*self.frame.width, height: 200)
-        startButton.layer.position = self.center
+        startButton.layer.position.x = self.center.x
+        startButton.layer.position.y = 0.8*self.frame.height
     }
     
     private func makeStartButton(fontsize: CGFloat) -> UIButton {

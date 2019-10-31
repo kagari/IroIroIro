@@ -22,13 +22,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-Pr-jWY">
+                                <rect key="frame" x="20" y="770" width="794" height="230"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMj-1F-FjH" userLabel="name">
+                                <rect key="frame" x="69" y="410" width="697" height="231"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="T1r-md-Wkm"/>
                     <connections>
+                        <outlet property="name" destination="aMj-1F-FjH" id="tfA-9g-fOq"/>
                         <outlet property="question" destination="Trj-5m-zrJ" id="qe6-5e-JPp"/>
+                        <outlet property="search" destination="HKm-Pr-jWY" id="DEM-jX-790"/>
+                        <outlet property="view" destination="aMj-1F-FjH" id="j2Z-Nx-XNN"/>
                         <segue destination="9F0-uI-m7f" kind="show" identifier="toARViewController" id="uHs-kU-ObY"/>
                     </connections>
                 </viewController>
@@ -77,7 +94,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLa-UE-aMD">
-                                <rect key="frame" x="71" y="476" width="646" height="196"/>
+                                <rect key="frame" x="71" y="248" width="707" height="706"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -94,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZLU-JC-Ztx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-717.98561151079139" y="137.58992805755395"/>
+            <point key="canvasLocation" x="-719.20000000000005" y="137.18140929535232"/>
         </scene>
         <!--Start View Controller-->
         <scene sceneID="Cu9-4R-KRt">
