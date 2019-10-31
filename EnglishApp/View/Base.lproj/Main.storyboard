@@ -85,38 +85,10 @@
             </objects>
             <point key="canvasLocation" x="687.05035971223026" y="137.58992805755395"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="WZL-4L-TtL">
-            <objects>
-                <viewController id="PgX-3k-qZT" customClass="ViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="JyV-Iu-aEe">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLa-UE-aMD">
-                                <rect key="frame" x="71" y="248" width="707" height="706"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="pEK-w5-2OV"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="5no-aw-D25"/>
-                    </view>
-                    <connections>
-                        <outlet property="startButton" destination="CLa-UE-aMD" id="0Ci-i5-Hnl"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZLU-JC-Ztx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-719.20000000000005" y="137.18140929535232"/>
-        </scene>
-        <!--Start View Controller-->
+        <!--Application Controller-->
         <scene sceneID="Cu9-4R-KRt">
             <objects>
-                <viewController id="UA8-yx-c6j" customClass="StartViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UA8-yx-c6j" customClass="ApplicationController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jlD-iP-mti">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eRp-8W-192" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-718" y="835"/>
+            <point key="canvasLocation" x="-720" y="138"/>
         </scene>
     </scenes>
 </document>
