@@ -18,6 +18,7 @@
 		130492F9236B095E00DDBF6D /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492F8236B095E00DDBF6D /* StartView.swift */; };
 		130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492FA236B131B00DDBF6D /* StartViewController.swift */; };
 		130492FD236B397E00DDBF6D /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 130492FC236B397E00DDBF6D /* YOLOv3.mlmodel */; };
+		130492FF236B554E00DDBF6D /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492FE236B554E00DDBF6D /* QuestionView.swift */; };
 		1313F74523697824002A72EC /* LabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74323697824002A72EC /* LabelUtil.swift */; };
 		1313F74623697824002A72EC /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74423697824002A72EC /* ColorUtil.swift */; };
 		133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133CA1D52369477B005FCEB4 /* ApplicationController.swift */; };
@@ -59,6 +60,7 @@
 		130492F8236B095E00DDBF6D /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		130492FA236B131B00DDBF6D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		130492FC236B397E00DDBF6D /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
+		130492FE236B554E00DDBF6D /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		1313F74323697824002A72EC /* LabelUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelUtil.swift; sourceTree = "<group>"; };
 		1313F74423697824002A72EC /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		133CA1D52369477B005FCEB4 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		130492F6236B090400DDBF6D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				130492FE236B554E00DDBF6D /* QuestionView.swift */,
 				130492F8236B095E00DDBF6D /* StartView.swift */,
 				130262D1235B0B6400EAA314 /* Main.storyboard */,
 			);
@@ -319,6 +322,7 @@
 				130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */,
 				130492FD236B397E00DDBF6D /* YOLOv3.mlmodel in Sources */,
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
+				130492FF236B554E00DDBF6D /* QuestionView.swift in Sources */,
 				130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */,
 				130262CE235B0B6400EAA314 /* SceneDelegate.swift in Sources */,
 				1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */,

@@ -85,10 +85,10 @@
             </objects>
             <point key="canvasLocation" x="687.05035971223026" y="137.58992805755395"/>
         </scene>
-        <!--Application Controller-->
+        <!--Start View Controller-->
         <scene sceneID="Cu9-4R-KRt">
             <objects>
-                <viewController id="UA8-yx-c6j" customClass="ApplicationController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UA8-yx-c6j" customClass="StartViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jlD-iP-mti">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

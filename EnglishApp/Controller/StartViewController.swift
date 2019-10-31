@@ -8,13 +8,20 @@
 import Foundation
 import UIKit
 
-class StartViewController: UIViewController {
-    //StartViewDelegateのインスタンスを宣言
-    weak var delegate: StartViewDelegate?
+class StartViewController: UIViewController, StartViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = StartView()
+        let view = StartView()
+        view.delegate = self // delegateをセット
+        self.view = view
+    }
+    
+    // Startボタンが押されたときには呼ばれる
+    func didTapStartButton() {
+        print("Startボタンがタップされた")
+        let questionViewController = QuestionViewController(titleName: "QuestionViewController")
+        navigationController?.pushViewController(questionViewController, animated: true)
     }
 }
 

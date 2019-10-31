@@ -7,7 +7,8 @@ protocol StartViewDelegate: class {
 
 class StartView: UIView {
     
-    weak var delegate: StartViewDelegate?
+    // StartViewDelegateのインスタンスを宣言
+    var delegate: StartViewDelegate?
     var titleLabel: UILabel!
     var startButton: UIButton!
     
@@ -30,7 +31,7 @@ class StartView: UIView {
         self.backgroundColor = .white
     }
     
-    // MARK: - ここは上のinit関数と全く同じことを書けばOK
+    // ここは上のinit関数と全く同じことを書けばOK
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
@@ -49,6 +50,7 @@ class StartView: UIView {
         self.backgroundColor = .white
     }
     
+    // MARK: - 多分レイアウトが変更されたときに呼び出される
     override func layoutSubviews() {
         super.layoutSubviews()
         
