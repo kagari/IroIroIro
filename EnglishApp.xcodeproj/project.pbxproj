@@ -16,9 +16,12 @@
 		130262E3235B0B6600EAA314 /* EnglishAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262E2235B0B6600EAA314 /* EnglishAppTests.swift */; };
 		130262EE235B0B6600EAA314 /* EnglishAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */; };
 		130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262FB235B0BA200EAA314 /* QuestionViewController.swift */; };
+		130492F9236B095E00DDBF6D /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492F8236B095E00DDBF6D /* StartView.swift */; };
+		130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492FA236B131B00DDBF6D /* StartViewController.swift */; };
+		1313F74523697824002A72EC /* LabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74323697824002A72EC /* LabelUtil.swift */; };
+		1313F74623697824002A72EC /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74423697824002A72EC /* ColorUtil.swift */; };
+		133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133CA1D52369477B005FCEB4 /* ApplicationController.swift */; };
 		1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1353E74C235C17AE006E35C4 /* ARViewController.swift */; };
-		13FB48852367D119006BA3B8 /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB48842367D119006BA3B8 /* ColorUtil.swift */; };
-		13FB48872367F180006BA3B8 /* LabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB48862367F180006BA3B8 /* LabelUtil.swift */; };
 		E0EB8E88236304D7006F59FE /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E0EB8E87236304D7006F59FE /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -55,9 +58,12 @@
 		130262ED235B0B6600EAA314 /* EnglishAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishAppUITests.swift; sourceTree = "<group>"; };
 		130262EF235B0B6600EAA314 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		130262FB235B0BA200EAA314 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		130492F8236B095E00DDBF6D /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		130492FA236B131B00DDBF6D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		1313F74323697824002A72EC /* LabelUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelUtil.swift; sourceTree = "<group>"; };
+		1313F74423697824002A72EC /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
+		133CA1D52369477B005FCEB4 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		1353E74C235C17AE006E35C4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
-		13FB48842367D119006BA3B8 /* ColorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
-		13FB48862367F180006BA3B8 /* LabelUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelUtil.swift; sourceTree = "<group>"; };
 		E0EB8E87236304D7006F59FE /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,14 +115,13 @@
 		130262CA235B0B6400EAA314 /* EnglishApp */ = {
 			isa = PBXGroup;
 			children = (
+				1313F74223697824002A72EC /* Utils */,
 				E0EB8E87236304D7006F59FE /* YOLOv3.mlmodel */,
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
 				130262CD235B0B6400EAA314 /* SceneDelegate.swift */,
-				130262CF235B0B6400EAA314 /* ViewController.swift */,
-				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
-				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
-				13FB48862367F180006BA3B8 /* LabelUtil.swift */,
-				13FB48842367D119006BA3B8 /* ColorUtil.swift */,
+				130492F7236B091000DDBF6D /* Controller */,
+				130492F6236B090400DDBF6D /* View */,
+				130492F5236B08FA00DDBF6D /* Model */,
 				130262D1235B0B6400EAA314 /* Main.storyboard */,
 				130262D6235B0B6500EAA314 /* LaunchScreen.storyboard */,
 				130262D4235B0B6500EAA314 /* Assets.xcassets */,
@@ -141,6 +146,43 @@
 				130262EF235B0B6600EAA314 /* Info.plist */,
 			);
 			path = EnglishAppUITests;
+			sourceTree = "<group>";
+		};
+		130492F5236B08FA00DDBF6D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		130492F6236B090400DDBF6D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				130492F8236B095E00DDBF6D /* StartView.swift */,
+			);
+			name = View;
+			path = EnglishApp/View;
+			sourceTree = SOURCE_ROOT;
+		};
+		130492F7236B091000DDBF6D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				133CA1D52369477B005FCEB4 /* ApplicationController.swift */,
+				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
+				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
+				130262CF235B0B6400EAA314 /* ViewController.swift */,
+				130492FA236B131B00DDBF6D /* StartViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1313F74223697824002A72EC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1313F74323697824002A72EC /* LabelUtil.swift */,
+				1313F74423697824002A72EC /* ColorUtil.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,13 +315,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13FB48872367F180006BA3B8 /* LabelUtil.swift in Sources */,
+				1313F74623697824002A72EC /* ColorUtil.swift in Sources */,
+				130492F9236B095E00DDBF6D /* StartView.swift in Sources */,
+				1313F74523697824002A72EC /* LabelUtil.swift in Sources */,
+				133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */,
 				E0EB8E88236304D7006F59FE /* YOLOv3.mlmodel in Sources */,
+				130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */,
 				130262D0235B0B6400EAA314 /* ViewController.swift in Sources */,
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
 				130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */,
 				130262CE235B0B6400EAA314 /* SceneDelegate.swift in Sources */,
-				13FB48852367D119006BA3B8 /* ColorUtil.swift in Sources */,
 				1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

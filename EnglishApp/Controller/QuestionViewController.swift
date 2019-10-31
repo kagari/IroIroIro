@@ -1,11 +1,3 @@
-//
-//  Question.swift
-//  ARKit3DTextSample
-//
-//  Created by 新垣結梨 on 2019/10/19.
-//  Copyright © 2019 SAPPOROWORKS. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
