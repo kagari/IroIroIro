@@ -13,6 +13,10 @@ class QuestionView: UIView {
     // 初期化関数
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        // DOGを探そう
+        // Dという文字が入る英単語を見つけてね
+        self.backgroundColor = .white
     }
     
     // ここは上のinit関数と全く同じことを書けばOK

@@ -19,8 +19,7 @@ class StartViewController: UIViewController, StartViewDelegate {
     
     // Startボタンが押されたときには呼ばれる
     func didTapStartButton() {
-        print("Startボタンがタップされた")
-        let questionViewController = QuestionViewController(titleName: "QuestionViewController")
+        let questionViewController = QuestionViewController()
         questionViewController.modalPresentationStyle = .fullScreen
         self.present(questionViewController, animated: true, completion: nil)
     }
