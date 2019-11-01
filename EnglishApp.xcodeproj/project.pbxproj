@@ -22,6 +22,7 @@
 		1313F74523697824002A72EC /* LabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74323697824002A72EC /* LabelUtil.swift */; };
 		1313F74623697824002A72EC /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74423697824002A72EC /* ColorUtil.swift */; };
 		133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133CA1D52369477B005FCEB4 /* ApplicationController.swift */; };
+		1348DB66236BC43E008C59ED /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1348DB65236BC43E008C59ED /* QuestionModel.swift */; };
 		1353E74D235C17AE006E35C4 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1353E74C235C17AE006E35C4 /* ARViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		1313F74323697824002A72EC /* LabelUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelUtil.swift; sourceTree = "<group>"; };
 		1313F74423697824002A72EC /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		133CA1D52369477B005FCEB4 /* ApplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
+		1348DB65236BC43E008C59ED /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		1353E74C235C17AE006E35C4 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,9 +121,9 @@
 				1313F74223697824002A72EC /* Utils */,
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
 				130262CD235B0B6400EAA314 /* SceneDelegate.swift */,
+				130492F5236B08FA00DDBF6D /* Model */,
 				130492F7236B091000DDBF6D /* Controller */,
 				130492F6236B090400DDBF6D /* View */,
-				130492F5236B08FA00DDBF6D /* Model */,
 				130262D6235B0B6500EAA314 /* LaunchScreen.storyboard */,
 				130262D4235B0B6500EAA314 /* Assets.xcassets */,
 				130262D9235B0B6500EAA314 /* Info.plist */,
@@ -150,6 +152,7 @@
 		130492F5236B08FA00DDBF6D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1348DB65236BC43E008C59ED /* QuestionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				1313F74623697824002A72EC /* ColorUtil.swift in Sources */,
 				130492F9236B095E00DDBF6D /* StartView.swift in Sources */,
 				1313F74523697824002A72EC /* LabelUtil.swift in Sources */,
+				1348DB66236BC43E008C59ED /* QuestionModel.swift in Sources */,
 				133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */,
 				130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */,
 				130492FD236B397E00DDBF6D /* YOLOv3.mlmodel in Sources */,
