@@ -11,7 +11,7 @@ import UIKit
 class StartViewController: UIViewController, StartViewDelegate {
     
     override func viewDidLoad() {
-        print("StartViewControllerが呼ばれた")
+        print("Called: StartViewController")
         super.viewDidLoad()
         let view = StartView()
         view.delegate = self
@@ -20,7 +20,6 @@ class StartViewController: UIViewController, StartViewDelegate {
     
     // Startボタンが押されたときには呼ばれる
     func didTapStartButton() {
-        print("お題へ画面遷移")
         let questionViewController = QuestionViewController()
         questionViewController.modalPresentationStyle = .fullScreen
         self.present(questionViewController, animated: true, completion: nil)

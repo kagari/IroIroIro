@@ -4,7 +4,7 @@ import UIKit
 class QuestionViewController: UIViewController {
     
     let questionModel: QuestionModel
-    let questionView: QuestionView!
+    let questionView: QuestionView
     
     init() {
         self.questionModel = QuestionModel()
@@ -18,6 +18,7 @@ class QuestionViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        print("Called: QuestionViewController")
         super.viewDidLoad()
         
         self.questionView.dataSource = self.questionModel
@@ -25,11 +26,12 @@ class QuestionViewController: UIViewController {
         self.questionView.setQuestionLabel()
         self.view = self.questionView
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-//            // 3秒後にARの画面に遷移
-//
-//            let arViewController = ARViewController()
-//            self.present(arViewController, animated: true, completion: nil)
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            // 3秒後にResult画面に遷移
+
+            let resultViewController = ResultViewController()
+            resultViewController.modalPresentationStyle = .fullScreen
+            self.present(resultViewController, animated: true, completion: nil)
+        }
     }
 }

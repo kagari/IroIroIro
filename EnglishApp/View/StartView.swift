@@ -33,21 +33,7 @@ class StartView: UIView {
     
     // ここは上のinit関数と全く同じことを書けばOK
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        startButton = self.makeStartButton(fontsize: 100)
-        titleLabel = {
-            let label = UILabel()
-            label.text = "いぇいご！！"
-            label.textColor = UIColor(rgb: 0xFF65B2)
-            label.font = UIFont(name: "Menlo", size: 100)
-            label.textAlignment = .center
-            return label
-        }()
-        
-        self.addSubview(titleLabel)
-        self.addSubview(startButton)
-        self.backgroundColor = .white
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - 多分レイアウトが変更されたときに呼び出される
