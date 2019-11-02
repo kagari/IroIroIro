@@ -1,13 +1,13 @@
 import Foundation
 import UIKit
 
-protocol ResultViewDataSource: class {
+protocol ResultUsedTextViewDataSource: class {
     var usedTextString: [String]? { get }
 }
 
-class ResultView: UIView {
+class ResultUsedTextView: UIView {
     
-    weak var dataSource: ResultViewDataSource?
+    weak var dataSource: ResultUsedTextViewDataSource?
     var usedTextLabels: [UILabel]!
     
     override init(frame: CGRect) {

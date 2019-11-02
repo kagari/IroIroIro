@@ -23,7 +23,7 @@ extension QuestionModel: QuestionViewDataSource {
     }
 }
 
-extension QuestionModel: ResultViewDataSource {
+extension QuestionModel: ResultUsedTextViewDataSource {
     var usedTextString: [String]? {
         return self.dataStorage.getUsedTextList()
     }

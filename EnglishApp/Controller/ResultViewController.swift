@@ -3,11 +3,13 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    let usedTextResultView: ResultView
+    let resultUsedTextView: ResultUsedTextView
+    let resultQuestionView: ResultQuestionView
     let questionModel: QuestionModel
     
     init() {
-        self.usedTextResultView = ResultView()
+        self.resultUsedTextView = ResultUsedTextView()
+        self.resultQuestionView = ResultQuestionView()
         self.questionModel = QuestionModel()
         
         super.init(nibName: nil, bundle: nil)
@@ -21,9 +23,16 @@ class ResultViewController: UIViewController {
         print("Called: ResultViewController")
         super.viewDidLoad()
         
-        self.usedTextResultView.dataSource = self.questionModel
+        self.resultUsedTextView.dataSource = self.questionModel
+        self.resultQuestionView.dataSource = self.questionModel
         
-        self.usedTextResultView.setUsedTextLabels()
-        self.view = self.usedTextResultView
+        self.resultUsedTextView.setUsedTextLabels()
+        self.view = self.resultUsedTextView
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            // 3秒後にResult画面に遷移
+            self.resultQuestionView.setQuestionLabel()
+            self.view = self.resultQuestionView
+        }
     }
 }
