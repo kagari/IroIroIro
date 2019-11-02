@@ -18,7 +18,11 @@ class QuestionDataSingleton: NSObject {
     private override init() {}
     
     func saveUsedText(usedText: String) {
-        data.usedTextList?.append(usedText)
+        if data.usedTextList != nil {
+            data.usedTextList?.append(usedText)
+        } else {
+            data.usedTextList = [usedText]
+        }
     }
 
     func getUsedTextList() -> [String]? {

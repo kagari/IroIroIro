@@ -6,7 +6,7 @@ class QuestionModel: NSObject {
     private let dataStorage :QuestionDataSingleton
     
     override init() {
-        // お題を初期化する
+        // データを初期化する
         dataStorage =  QuestionDataSingleton.sharedInstance
         
         super.init()
