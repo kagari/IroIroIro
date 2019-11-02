@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 protocol ResultViewDataSource: class {
-    var usedTextString: [String] { get }
+    var usedTextString: [String]? { get }
 }
 
 class ResultView: UIView {

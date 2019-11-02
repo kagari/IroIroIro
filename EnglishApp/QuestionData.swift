@@ -1,5 +1,6 @@
 import Foundation
 
+// お題や使用した英単語を保持するクラス
 class QuestionData {
     let questions: [String]
     var question: String?
@@ -13,7 +14,7 @@ class QuestionData {
 
 class QuestionDataSingleton: NSObject {
     var data = QuestionData()
-    static let sharedDataInstance: QuestionDataSingleton = QuestionDataSingleton()
+    static let sharedInstance: QuestionDataSingleton = QuestionDataSingleton()
     private override init() {}
     
     func saveUsedText(usedText: String) {
