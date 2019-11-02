@@ -4,9 +4,11 @@ import UIKit
 class ResultViewController: UIViewController {
     
     let usedTextResultView: ResultView
+    let questionModel: QuestionModel
     
     init() {
         self.usedTextResultView = ResultView()
+        self.questionModel = QuestionModel()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -19,8 +21,9 @@ class ResultViewController: UIViewController {
         print("Called: ResultViewController")
         super.viewDidLoad()
         
-//        self.usedTextResultView.dataSource = QuestionModel
-        self.usedTextResultView.setUsedTextLabel()
+        self.usedTextResultView.dataSource = self.questionModel
+        
+        self.usedTextResultView.setUsedTextLabels()
         self.view = self.usedTextResultView
     }
 }

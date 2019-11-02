@@ -19,9 +19,9 @@ class QuestionDataSingleton: NSObject {
     
     func saveUsedText(usedText: String) {
         if data.usedTextList != nil {
-            data.usedTextList?.append(usedText)
+            data.usedTextList?.append(usedText) // データがある場合には普通にappend
         } else {
-            data.usedTextList = [usedText]
+            data.usedTextList = [usedText] // データがない(nilの)場合には初期化する
         }
     }
 

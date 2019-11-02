@@ -8,7 +8,7 @@ protocol ResultViewDataSource: class {
 class ResultView: UIView {
     
     weak var dataSource: ResultViewDataSource?
-    var usedTextLabel: [UILabel]!
+    var usedTextLabels: [UILabel]!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,18 +36,23 @@ class ResultView: UIView {
     }
     
     // QuestionModelからお題のデータを受け取る関数
-    func setUsedTextLabel() {
+    func setUsedTextLabels() {
         print("setUsedTextLabel")
         guard let used_text = dataSource?.usedTextString else {
             print("dataSource?.usedTextString is nil.")
             return
         }
-        initUsedTextLabel(used_text: used_text)
+        initUsedTextLabels(used_text: used_text)
+        
+        for usedTextLabel in usedTextLabels {
+            usedTextLabel.sizeToFit()
+            self.addSubview(usedTextLabel)
+        }
     }
     
     // 使用した英単語のLabelを作成する関数
-    private func initUsedTextLabel(used_text: [String]) {
-        usedTextLabel = {
+    private func initUsedTextLabels(used_text: [String]) {
+        self.usedTextLabels = {
             let TextLabels = used_text.map({(text) -> UILabel in
                 let label = UILabel()
                 label.text = text
