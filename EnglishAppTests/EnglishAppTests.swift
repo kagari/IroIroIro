@@ -21,11 +21,18 @@ class EnglishAppTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let dataStorage :QuestionDataSingleton = QuestionDataSingleton.sharedInstance
+        
+        // dataStorageにデータを登録できるかテストする
+        let dataStorage: QuestionDataSingleton = QuestionDataSingleton.sharedInstance
         dataStorage.saveUsedText(usedText: "Question")
         XCTAssertEqual(dataStorage.getUsedTextList(), ["Question"])
         dataStorage.saveUsedText(usedText: "Hoge")
         XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge"])
+        // dataStorageでデータがシェアできるかテストする
+        let dataStorage2: QuestionDataSingleton = QuestionDataSingleton.sharedInstance
+        XCTAssertEqual(dataStorage2.getUsedTextList(), ["Question", "Hoge"])
+        dataStorage2.saveUsedText(usedText: "Fuga")
+        XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge", "Fuga"])
     }
 
     func testPerformanceExample() {
