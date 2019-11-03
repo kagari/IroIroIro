@@ -1,10 +1,3 @@
-//
-//  StartViewController.swift
-//  EnglishApp
-//
-//  Created by 大城昂希 on 2019/10/31.
-//
-
 import Foundation
 import UIKit
 

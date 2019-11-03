@@ -17,6 +17,7 @@ class QuestionDataSingleton: NSObject {
     static let sharedInstance: QuestionDataSingleton = QuestionDataSingleton()
     private override init() {}
     
+    // MARK: - setter, getter
     func saveUsedText(usedText: String) {
         if data.usedTextList != nil {
             data.usedTextList?.append(usedText) // データがある場合には普通にappend

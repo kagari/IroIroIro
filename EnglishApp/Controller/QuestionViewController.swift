@@ -29,9 +29,9 @@ class QuestionViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             // 3秒後にResult画面に遷移
 
-            let resultViewController = ResultViewController()
-            resultViewController.modalPresentationStyle = .fullScreen
-            self.present(resultViewController, animated: true, completion: nil)
+            let arSearchObjectViewController = ARSearchObjectViewController()
+            arSearchObjectViewController.modalPresentationStyle = .fullScreen
+            self.present(arSearchObjectViewController, animated: true, completion: nil)
         }
     }
 }
