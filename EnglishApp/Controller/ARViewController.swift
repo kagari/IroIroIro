@@ -5,6 +5,7 @@ import ARKit
 class ARViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSKView!
+    let objectDetectionModel = ObjectDetectionModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,6 @@ class ARViewController: UIViewController {
 
 extension ARViewController: ARSKViewDelegate, ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        print("HeyHey")
+        self.objectDetectionModel.classifyCurrentImage(frame: frame)
     }
 }

@@ -193,8 +193,8 @@
 				133CA1D52369477B005FCEB4 /* ApplicationController.swift */,
 				130492FA236B131B00DDBF6D /* StartViewController.swift */,
 				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
-				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
 				13D2E8B6236C254800D7D387 /* ResultViewController.swift */,
+				1353E74C235C17AE006E35C4 /* ARViewController.swift */,
 				13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */,
 			);
 			path = Controller;
