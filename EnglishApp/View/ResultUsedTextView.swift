@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import LTMorphingLabel
 
 protocol ResultUsedTextViewDataSource: class {
     var usedTextString: [String]? { get }
@@ -57,11 +58,13 @@ class ResultUsedTextView: UIView {
                 var i = 300
 
                 let TextLabels = used_text.map({(text) -> UILabel in
-                    let label = UILabel()
+                    let label = LTMorphingLabel()
+                    label.morphingEffect = .pixelate
                     label.text = text
                     label.textColor = UIColor(rgb: 0xFF65B2)
                     label.font = UIFont(name: "Menlo", size: 50)
                     label.textAlignment = .center
+                    
                     
                     for count in 0...used_text.count{
                         var total = used_text.count
