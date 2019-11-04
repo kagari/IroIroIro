@@ -2,17 +2,16 @@ import Foundation
 import UIKit
 import ARKit
 
-class ARSearchObjectViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ARSearchObjectViewController: UIViewController {
     
-    private let objectDetectionModel: ObjectDetectionModel
-    private var sceneView: ARSCNView
+    let objectDetectionModel: ObjectDetectionModel
+    let sceneView: ARSKView
     
     init() {
-        sceneView = ARSCNView()
-        objectDetectionModel = ObjectDetectionModel()
-        
+        self.objectDetectionModel = ObjectDetectionModel()
+        self.sceneView = ARSKView()
         super.init(nibName: nil, bundle: nil)
-        self.view = sceneView
+        self.view = self.sceneView
     }
     
     required init?(coder: NSCoder) {
@@ -22,20 +21,17 @@ class ARSearchObjectViewController: UIViewController, ARSCNViewDelegate, ARSessi
     override func viewDidLoad() {
         self.viewDidLoad()
         
-        self.sceneView.delegate = self
-        self.sceneView.session.delegate = self
-        
-        self.sceneView.scene = SCNScene()
+//        self.sceneView.delegate = self
+//        self.sceneView.session.delegate = self
+        let scene = SKScene(size: sceneView.bounds.size)
+        scene.scaleMode = .resizeFill
+        sceneView.presentScene(scene)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        //configuration.planeDetection = .horizontal
-        
-        // Run the view's session
         sceneView.session.run(configuration)
     }
     
@@ -45,10 +41,11 @@ class ARSearchObjectViewController: UIViewController, ARSCNViewDelegate, ARSessi
         // Pause the view's session
         sceneView.session.pause()
     }
-    
-    // MARK: - ARのdelegate
+}
+
+extension ARSearchObjectView: ARSKViewDelegate, ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        // frame変数ごと物体認識のクラスに渡す
-        self.objectDetectionModel.classifyCurrentImage(frame: frame)
+        print("呼び出せてる？")
+//        self.objectDetectionModel.classifyCurrentImage(frame: frame)
     }
 }

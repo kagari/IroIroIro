@@ -28,7 +28,8 @@ class QuestionViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             // 3秒後にAR画面に遷移
-            let arSearchObjectViewController = ARSearchObjectViewController()
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let arSearchObjectViewController = storyboard.instantiateViewController(withIdentifier: "ARView") as! ARViewController
             arSearchObjectViewController.modalPresentationStyle = .fullScreen
             self.present(arSearchObjectViewController, animated: true, completion: nil)
             

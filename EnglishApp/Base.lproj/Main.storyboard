@@ -23,5 +23,29 @@
             </objects>
             <point key="canvasLocation" x="-435" y="125"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="XoW-Bv-S6v">
+            <objects>
+                <viewController storyboardIdentifier="ARView" id="9XJ-yV-1IZ" customClass="ARViewController" customModule="EnglishApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XXU-wY-VWq">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arskView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gX4-KQ-s0g">
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </arskView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="QxT-if-lcW"/>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="gX4-KQ-s0g" id="Pmj-rR-JX7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VbA-2s-hWW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="342.44604316546764" y="124.10071942446044"/>
+        </scene>
     </scenes>
 </document>
