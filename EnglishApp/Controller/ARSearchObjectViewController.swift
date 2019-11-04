@@ -1,15 +1,14 @@
 import Foundation
 import UIKit
-import SpriteKit
 import ARKit
 
-class ARSearchObjectViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate {
+class ARSearchObjectViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     private let objectDetectionModel: ObjectDetectionModel
-    private var sceneView: ARSKView
+    private var sceneView: ARSCNView
     
     init() {
-        sceneView = ARSKView()
+        sceneView = ARSCNView()
         objectDetectionModel = ObjectDetectionModel()
         
         super.init(nibName: nil, bundle: nil)
@@ -23,11 +22,10 @@ class ARSearchObjectViewController: UIViewController, ARSKViewDelegate, ARSessio
     override func viewDidLoad() {
         self.viewDidLoad()
         
-        sceneView.delegate = self
-        sceneView.session.delegate = self
-        // Show statistics such as fps and node count
-        sceneView.showsFPS = true
-        sceneView.showsNodeCount = true
+        self.sceneView.delegate = self
+        self.sceneView.session.delegate = self
+        
+        self.sceneView.scene = SCNScene()
     }
     
     override func viewWillAppear(_ animated: Bool) {
