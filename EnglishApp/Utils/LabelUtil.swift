@@ -22,7 +22,6 @@ func make_label(string: String, view: UIView) -> [UILabel] {
         label.textAlignment = .center
         label.text = String(spell)
         label.textColor = Color.gray.UIColor
-        // Times New Roman
         label.font = UIFont(name: "Menlo", size: 0.8*label_size)
         return label
     })

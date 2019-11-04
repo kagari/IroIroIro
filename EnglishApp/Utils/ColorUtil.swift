@@ -26,6 +26,7 @@ enum Color: Int {
     var cgColor: UIKit.CGColor {
         return self.UIColor.cgColor
     }
+    
 }
 
 // HEXからUIColorに変換する拡張
