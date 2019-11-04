@@ -30,7 +30,7 @@
 		13D2E8BD236D59E800D7D387 /* ObjectDetectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */; };
 		13D2E8BF236D5CB900D7D387 /* ARSearchObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */; };
 		13D2E8C1236DA54D00D7D387 /* ARSearchObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */; };
-		666DA36B236FA69500B8E95E /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 666DA36A236FA69500B8E95E /* YOLOv3.mlmodel */; };
+		E0A957EF23700290004BD702 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = E0A957EE23700290004BD702 /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +80,7 @@
 		13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetectionModel.swift; sourceTree = "<group>"; };
 		13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectView.swift; sourceTree = "<group>"; };
 		13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectViewController.swift; sourceTree = "<group>"; };
-		666DA36A236FA69500B8E95E /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../../../Downloads/YOLOv3.mlmodel; sourceTree = "<group>"; };
+		E0A957EE23700290004BD702 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../Downloads/YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +131,7 @@
 		130262CA235B0B6400EAA314 /* EnglishApp */ = {
 			isa = PBXGroup;
 			children = (
-				666DA36A236FA69500B8E95E /* YOLOv3.mlmodel */,
+				E0A957EE23700290004BD702 /* YOLOv3.mlmodel */,
 				1313F74223697824002A72EC /* Utils */,
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
 				130262CD235B0B6400EAA314 /* SceneDelegate.swift */,
@@ -346,7 +346,7 @@
 				133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */,
 				13D2E8BB236D4B0D00D7D387 /* ResultQuestionView.swift in Sources */,
 				13D2E8C1236DA54D00D7D387 /* ARSearchObjectViewController.swift in Sources */,
-				666DA36B236FA69500B8E95E /* YOLOv3.mlmodel in Sources */,
+				E0A957EF23700290004BD702 /* YOLOv3.mlmodel in Sources */,
 				130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */,
 				13D2E8BF236D5CB900D7D387 /* ARSearchObjectView.swift in Sources */,
 				13D2E8BD236D59E800D7D387 /* ObjectDetectionModel.swift in Sources */,
