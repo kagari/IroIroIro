@@ -1,10 +1,14 @@
 import Foundation
 import UIKit
 
+
+
 class QuestionViewController: UIViewController {
     
+    weak var dataSource: QuestionViewDataSource?
     let questionModel: QuestionModel
     let questionView: QuestionView
+    var question: String?
     
     init() {
         self.questionModel = QuestionModel()
@@ -17,11 +21,14 @@ class QuestionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     override func viewDidLoad() {
         print("Called: QuestionViewController")
         super.viewDidLoad()
         
         self.questionView.dataSource = self.questionModel
+        self.question = dataSource?.questionString
         
         self.questionView.setQuestionLabel()
         self.view = self.questionView
@@ -33,5 +40,9 @@ class QuestionViewController: UIViewController {
             arSearchObjectViewController.modalPresentationStyle = .fullScreen
             self.present(arSearchObjectViewController, animated: true, completion: nil)
         }
+    }
+    
+    func getAlphabet(index:Int) -> String {
+        return String((question?.prefix(index))!)
     }
 }

@@ -43,7 +43,6 @@ class QuestionView: UIView {
         self.addSubview(questionLabel)
         self.addSubview(topLabel)
         self.addSubview(searchLabel)
-        
         self.backgroundColor = .white
     }
     
@@ -75,10 +74,12 @@ class QuestionView: UIView {
         questionLabel.text = question + "を完成させよう"
         questionLabel.sizeToFit()
         
-        let top = String(question.prefix(1))
-        //topLabel.text = "a"
-        topLabel.text = String(top.prefix(1))
-        topLabel.sizeToFit()
+    
+       
+//        let top =
+////        //topLabel.text = "a"
+//        topLabel.text = String(top.prefix(1))
+//        topLabel.sizeToFit()
         
         searchLabel.text = "を探してね"
         searchLabel.sizeToFit()

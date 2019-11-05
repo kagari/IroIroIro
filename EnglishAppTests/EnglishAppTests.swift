@@ -33,6 +33,14 @@ class EnglishAppTests: XCTestCase {
         XCTAssertEqual(dataStorage2.getUsedTextList(), ["Question", "Hoge"])
         dataStorage2.saveUsedText(usedText: "Fuga")
         XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge", "Fuga"])
+        
+        //お題N番目が取れるかのテストをする
+        var questionViewController = QuestionViewController()
+        questionViewController.question = "dog"
+        XCTAssertEqual(questionViewController.getAlphabet(index: 0), "d")
+        XCTAssertEqual(questionViewController.getAlphabet(index: 1), "o")
+        XCTAssertEqual(questionViewController.getAlphabet(index: 2), "g")
+
     }
 
     func testPerformanceExample() {
