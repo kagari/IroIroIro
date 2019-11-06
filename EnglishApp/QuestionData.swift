@@ -5,11 +5,13 @@ class QuestionData {
     let questions: [String]
     var question: String?
     var usedTextList: [String]?
+    var alphabet: Character?
     
     init() {
         self.questions = ["Phone", "Dog", "Cat", "Person", "Terminal"]
         self.question = questions.randomElement()
     }
+    
 }
 
 class QuestionDataSingleton: NSObject {

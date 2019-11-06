@@ -9,10 +9,12 @@ class QuestionViewController: UIViewController {
     let questionModel: QuestionModel
     let questionView: QuestionView
     var question: String?
+    var index: Int?
     
     init() {
         self.questionModel = QuestionModel()
         self.questionView = QuestionView()
+        self.index = 0
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,10 +29,13 @@ class QuestionViewController: UIViewController {
         print("Called: QuestionViewController")
         super.viewDidLoad()
         
-        self.questionView.dataSource = self.questionModel
-        self.question = dataSource?.questionString
+//        self.questionView.dataSource = self.questionModel
+        self.dataSource = self.questionModel
+        self.question = self.dataSource?.questionString
         
-        self.questionView.setQuestionLabel()
+        print(self.question as Any)
+        
+        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: getAlphabet(index: index!))
         self.view = self.questionView
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
@@ -48,6 +53,8 @@ class QuestionViewController: UIViewController {
     }
     
     func getAlphabet(index:Int) -> String? {
+        //お題のn番目のアルファベットを取得したい
         return question?.map({String($0)})[index]
+        
     }
 }
