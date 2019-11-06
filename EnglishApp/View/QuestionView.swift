@@ -77,7 +77,7 @@ class QuestionView: UIView {
     
        
 //        let top =
-////        //topLabel.text = "a"
+//        //topLabel.text = "a"
 //        topLabel.text = String(top.prefix(1))
 //        topLabel.sizeToFit()
         

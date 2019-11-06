@@ -42,7 +42,7 @@ class QuestionViewController: UIViewController {
         }
     }
     
-    func getAlphabet(index:Int) -> String {
-        return String((question?.prefix(index))!)
+    func getAlphabet(index:Int) -> String? {
+        return question?.map({String($0)})[index]
     }
 }
