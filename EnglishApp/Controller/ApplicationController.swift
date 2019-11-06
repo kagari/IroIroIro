@@ -3,7 +3,7 @@ import UIKit
 
 class ApplicationController: UIViewController {
     
-    var startViewController: StartViewController!
+    var startViewController: ViewController!
     var arViewController: ARViewController!
     var questionViewController: QuestionViewController!
     
@@ -13,7 +13,7 @@ class ApplicationController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // 一番始めの画面遷移
-        startViewController = StartViewController()
+        startViewController = ViewController()
         startViewController.modalPresentationStyle = .fullScreen
         self.present(startViewController, animated: false, completion: nil)
     }
