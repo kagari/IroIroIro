@@ -51,17 +51,28 @@ class ResultUsedTextView: UIView {
     }
     
     // 使用した英単語のLabelを作成する関数
-    private func initUsedTextLabels(used_text: [String]) {
-        self.usedTextLabels = {
-            let TextLabels = used_text.map({(text) -> UILabel in
-                let label = UILabel()
-                label.text = text
-                label.textColor = UIColor(rgb: 0xFF65B2)
-                label.font = UIFont(name: "Menlo", size: 50)
-                label.textAlignment = .center
-                return label
-            })
-            return TextLabels
-        }()
+        private func initUsedTextLabels(used_text: [String]) {
+            self.usedTextLabels = {
+
+                var i = 200
+
+                let TextLabels = used_text.map({(text) -> UILabel in
+                    let label = UILabel()
+                    label.text = text
+                    label.textColor = UIColor(rgb: 0xFF65B2)
+                    label.font = UIFont(name: "Menlo", size: 50)
+                    label.textAlignment = .center
+                    
+                    
+                    for count in 0...used_text.count{
+                        var total = used_text.count
+                        total -= count
+                        label.frame = CGRect(x: 0, y: i, width: Int(0.8*self.frame.width), height: Int(0.2*self.frame.height))
+                        i += 10
+                    }
+                    return label
+                })
+                return TextLabels
+            }()
+        }
     }
-}

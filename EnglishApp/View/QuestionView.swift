@@ -27,7 +27,7 @@ class QuestionView: UIView {
         topLabel = {
             let label = UILabel()
             label.textColor = UIColor(rgb: 0xFF65B2)
-            label.font = UIFont(name: "Menlo", size: 300)
+            label.font = UIFont(name: "Menlo", size: 200)
             label.textAlignment = .center
             return label
         }()
