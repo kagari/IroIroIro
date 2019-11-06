@@ -66,20 +66,13 @@ class QuestionView: UIView {
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
-    func setQuestionLabel() {
+    func setQuestionLabel(questionString: String?, questionAlphabet: String?) {
         print("setQuestionLabel")
-        guard let question = dataSource?.questionString else {
-            return
-        }
-        questionLabel.text = question + "を完成させよう"
+        questionLabel.text = questionString! + "を完成させよう"
         questionLabel.sizeToFit()
         
-    
-       
-//        let top =
-//        //topLabel.text = "a"
-//        topLabel.text = String(top.prefix(1))
-//        topLabel.sizeToFit()
+        topLabel.text = questionAlphabet
+        topLabel.sizeToFit()
         
         searchLabel.text = "を探してね"
         searchLabel.sizeToFit()
