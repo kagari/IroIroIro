@@ -9,6 +9,8 @@ class QuestionView: UIView {
     
     weak var dataSource: QuestionViewDataSource?
     var questionLabel: UILabel!
+    var topLabel: UILabel! //頭文字のラベル
+    var searchLabel: UILabel! //"を探そうのラベル"
     
     // 初期化関数
     override init(frame: CGRect) {
@@ -22,8 +24,25 @@ class QuestionView: UIView {
             return label
         }()
         
-        self.addSubview(questionLabel)
+        topLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 300)
+            label.textAlignment = .center
+            return label
+        }()
         
+        searchLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 50)
+            label.textAlignment = .center
+            return label
+        }()
+        
+        self.addSubview(questionLabel)
+        self.addSubview(topLabel)
+        self.addSubview(searchLabel)
         self.backgroundColor = .white
     }
     
@@ -36,8 +55,14 @@ class QuestionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        questionLabel.frame = CGRect(x: 0, y: 0, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
-        questionLabel.layer.position = self.center
+        questionLabel.frame = CGRect(x: 100, y: 0, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        //questionLabel.layer.position = self.center
+        
+        topLabel.frame = CGRect(x: 0, y: 0, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        topLabel.layer.position = self.center
+        
+        searchLabel.frame = CGRect(x:100, y: 800, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        //searchLabel.layer.position = self.center
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
@@ -48,5 +73,15 @@ class QuestionView: UIView {
         }
         questionLabel.text = question + "を完成させよう"
         questionLabel.sizeToFit()
+        
+    
+       
+//        let top =
+//        //topLabel.text = "a"
+//        topLabel.text = String(top.prefix(1))
+//        topLabel.sizeToFit()
+        
+        searchLabel.text = "を探してね"
+        searchLabel.sizeToFit()
     }
 }
