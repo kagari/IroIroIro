@@ -2,16 +2,14 @@
 //  AppDelegate.swift
 //  EnglishApp
 //
-//  Created by 大城昂希 on 2019/10/14.
+//  Created by 大城昂希 on 2019/10/19.
 //
 
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
