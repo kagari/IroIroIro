@@ -17,7 +17,6 @@
 		130262FC235B0BA200EAA314 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130262FB235B0BA200EAA314 /* QuestionViewController.swift */; };
 		130492F9236B095E00DDBF6D /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492F8236B095E00DDBF6D /* StartView.swift */; };
 		130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492FA236B131B00DDBF6D /* StartViewController.swift */; };
-		130492FD236B397E00DDBF6D /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 130492FC236B397E00DDBF6D /* YOLOv3.mlmodel */; };
 		130492FF236B554E00DDBF6D /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130492FE236B554E00DDBF6D /* QuestionView.swift */; };
 		1313F74523697824002A72EC /* LabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74323697824002A72EC /* LabelUtil.swift */; };
 		1313F74623697824002A72EC /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1313F74423697824002A72EC /* ColorUtil.swift */; };
@@ -31,6 +30,10 @@
 		13D2E8BD236D59E800D7D387 /* ObjectDetectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */; };
 		13D2E8BF236D5CB900D7D387 /* ARSearchObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */; };
 		13D2E8C1236DA54D00D7D387 /* ARSearchObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */; };
+		6A4AB209237176D8001A8019 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4AB206237176D8001A8019 /* ViewController.swift */; };
+		6A4AB20A237176D8001A8019 /* HowToViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4AB207237176D8001A8019 /* HowToViewController.swift */; };
+		6A4AB20B237176D8001A8019 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4AB208237176D8001A8019 /* SettingController.swift */; };
+		6A579038236FA4EB00C25A04 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6A579037236FA4EB00C25A04 /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +70,6 @@
 		130262FB235B0BA200EAA314 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		130492F8236B095E00DDBF6D /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		130492FA236B131B00DDBF6D /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
-		130492FC236B397E00DDBF6D /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 		130492FE236B554E00DDBF6D /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		1313F74323697824002A72EC /* LabelUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelUtil.swift; sourceTree = "<group>"; };
 		1313F74423697824002A72EC /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
@@ -81,6 +83,10 @@
 		13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetectionModel.swift; sourceTree = "<group>"; };
 		13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectView.swift; sourceTree = "<group>"; };
 		13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectViewController.swift; sourceTree = "<group>"; };
+		6A4AB206237176D8001A8019 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6A4AB207237176D8001A8019 /* HowToViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToViewController.swift; sourceTree = "<group>"; };
+		6A4AB208237176D8001A8019 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		6A579037236FA4EB00C25A04 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../Downloads/RecognizingObjectsInLiveCapture/BreakfastFinder/YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +137,7 @@
 		130262CA235B0B6400EAA314 /* EnglishApp */ = {
 			isa = PBXGroup;
 			children = (
-				130492FC236B397E00DDBF6D /* YOLOv3.mlmodel */,
+				6A579037236FA4EB00C25A04 /* YOLOv3.mlmodel */,
 				1313F74223697824002A72EC /* Utils */,
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
 				130262CD235B0B6400EAA314 /* SceneDelegate.swift */,
@@ -173,6 +179,7 @@
 			);
 			path = Model;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		130492F6236B090400DDBF6D /* View */ = {
 			isa = PBXGroup;
@@ -190,6 +197,7 @@
 		130492F7236B091000DDBF6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6A4AB205237176D8001A8019 /* yuiri */,
 				133CA1D52369477B005FCEB4 /* ApplicationController.swift */,
 				130492FA236B131B00DDBF6D /* StartViewController.swift */,
 				130262FB235B0BA200EAA314 /* QuestionViewController.swift */,
@@ -207,6 +215,16 @@
 				1313F74423697824002A72EC /* ColorUtil.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		6A4AB205237176D8001A8019 /* yuiri */ = {
+			isa = PBXGroup;
+			children = (
+				6A4AB206237176D8001A8019 /* ViewController.swift */,
+				6A4AB207237176D8001A8019 /* HowToViewController.swift */,
+				6A4AB208237176D8001A8019 /* SettingController.swift */,
+			);
+			path = yuiri;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,13 +360,16 @@
 				1313F74623697824002A72EC /* ColorUtil.swift in Sources */,
 				130492F9236B095E00DDBF6D /* StartView.swift in Sources */,
 				1313F74523697824002A72EC /* LabelUtil.swift in Sources */,
+				6A4AB209237176D8001A8019 /* ViewController.swift in Sources */,
 				1348DB66236BC43E008C59ED /* QuestionModel.swift in Sources */,
 				133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */,
 				13D2E8BB236D4B0D00D7D387 /* ResultQuestionView.swift in Sources */,
 				13D2E8C1236DA54D00D7D387 /* ARSearchObjectViewController.swift in Sources */,
+				6A579038236FA4EB00C25A04 /* YOLOv3.mlmodel in Sources */,
 				130492FB236B131B00DDBF6D /* StartViewController.swift in Sources */,
-				130492FD236B397E00DDBF6D /* YOLOv3.mlmodel in Sources */,
 				13D2E8BF236D5CB900D7D387 /* ARSearchObjectView.swift in Sources */,
+				6A4AB20B237176D8001A8019 /* SettingController.swift in Sources */,
+				6A4AB20A237176D8001A8019 /* HowToViewController.swift in Sources */,
 				13D2E8BD236D59E800D7D387 /* ObjectDetectionModel.swift in Sources */,
 				13D2E8B5236BF53C00D7D387 /* ResultUsedTextView.swift in Sources */,
 				130262CC235B0B6400EAA314 /* AppDelegate.swift in Sources */,
