@@ -2,10 +2,16 @@ import Foundation
 import ARKit
 import Vision
 
+protocol ObjectDetectionModelDelegate: class {
+    func detectionFinished(identifier: String?, confidence: Float?)
+}
+
+
 class ObjectDetectionModel: NSObject {
     
+    var delegate: ObjectDetectionModelDelegate?
     private var currentBuffer: CVPixelBuffer?
-    private var identifierString: String?
+    private var identifier: String?
     private var confidence: VNConfidence?
     private let visionQueue: DispatchQueue
     
@@ -39,7 +45,7 @@ class ObjectDetectionModel: NSObject {
         
        print("classifyCurrentImage!!")
        
-       let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!)
+        let requestHandler = VNImageRequestHandler(cvPixelBuffer: self.currentBuffer!)
        
        visionQueue.async {
            do {
@@ -62,16 +68,22 @@ class ObjectDetectionModel: NSObject {
         // 分類した一番いい結果を持ってくる
         if let bestResult = classifications.first(where: { result in result.confidence > 0.5 }),
             let label = bestResult.labels[0].identifier.split(separator: ",").first {
-            identifierString = String(label)
-            confidence = bestResult.labels[0].confidence
+            self.identifier = String(label)
+            self.confidence = bestResult.labels[0].confidence
         } else {
             return
         }
         
-        print("Class \(String(describing: self.identifierString)): \(String(describing: self.confidence))")
         DispatchQueue.main.async {() in
             // 認識したことをdelegateを通してARViewControllerに通知する
+            print("識別結果 -> \(String(describing: self.identifier)): \(String(describing: self.confidence))")
+            self.delegate?.detectionFinished(identifier: self.identifier, confidence: self.confidence)
         }
     }
-    
+}
+
+extension ObjectDetectionModel: ObjectDetectionModelDataSource {
+    var identifierString: String? {
+        return self.identifier
+    }
 }

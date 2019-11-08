@@ -23,23 +23,23 @@ class ARSearchObjectViewController: UIViewController {
         
 //        self.sceneView.delegate = self
 //        self.sceneView.session.delegate = self
-        let scene = SKScene(size: sceneView.bounds.size)
+        let scene = SKScene(size: self.sceneView.bounds.size)
         scene.scaleMode = .resizeFill
-        sceneView.presentScene(scene)
+        self.sceneView.presentScene(scene)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
+        self.sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Pause the view's session
-        sceneView.session.pause()
+        self.sceneView.session.pause()
     }
 }
 

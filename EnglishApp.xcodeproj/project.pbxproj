@@ -31,6 +31,7 @@
 		13D2E8BD236D59E800D7D387 /* ObjectDetectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */; };
 		13D2E8BF236D5CB900D7D387 /* ARSearchObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */; };
 		13D2E8C1236DA54D00D7D387 /* ARSearchObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */; };
+		13D5B0A723713495004D5C50 /* ARTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D5B0A623713495004D5C50 /* ARTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		13D2E8BC236D59E800D7D387 /* ObjectDetectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetectionModel.swift; sourceTree = "<group>"; };
 		13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectView.swift; sourceTree = "<group>"; };
 		13D2E8C0236DA54D00D7D387 /* ARSearchObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSearchObjectViewController.swift; sourceTree = "<group>"; };
+		13D5B0A623713495004D5C50 /* ARTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 				13D2E8B4236BF53C00D7D387 /* ResultUsedTextView.swift */,
 				13D2E8BA236D4B0D00D7D387 /* ResultQuestionView.swift */,
 				13D2E8BE236D5CB900D7D387 /* ARSearchObjectView.swift */,
+				13D5B0A623713495004D5C50 /* ARTextView.swift */,
 			);
 			name = View;
 			path = EnglishApp/View;
@@ -341,6 +344,7 @@
 			files = (
 				1313F74623697824002A72EC /* ColorUtil.swift in Sources */,
 				130492F9236B095E00DDBF6D /* StartView.swift in Sources */,
+				13D5B0A723713495004D5C50 /* ARTextView.swift in Sources */,
 				1313F74523697824002A72EC /* LabelUtil.swift in Sources */,
 				1348DB66236BC43E008C59ED /* QuestionModel.swift in Sources */,
 				133CA1D62369477B005FCEB4 /* ApplicationController.swift in Sources */,
