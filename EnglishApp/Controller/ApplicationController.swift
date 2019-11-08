@@ -51,6 +51,26 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         
         self.identifier = identifier
         
+        guard let targetAlphabet = self.questionViewController.getAlphabet(index: self.questionAlphabetIndex)?.lowercased() else {
+            print("targetAlphabet is nil...")
+            return
+        }
+            
+        guard let isContain = self.checkObjectNameAndQuestion(identifier: identifier, targetAlphabet: String.Element(targetAlphabet)) else {
+            print("checkObjectNameAndQuestion function was return nil...")
+            return
+        }
+        
+        if isContain {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
+            }
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
+            }
+        }
+        
         self.view = questionViewController.questionView
     }
     
@@ -63,7 +83,13 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         }
     }
     
-    func checkObjectNameAndQuestion(identifier: String?, question: String) {
+    func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
+        //大文字小文字を無視させて評価
+        guard let isContain = identifier?.lowercased().contains(targetAlphabet) else {
+            print("identifier is nil!")
+            return nil
+        }
         
+        return isContain
     }
 }

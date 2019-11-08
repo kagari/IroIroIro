@@ -40,7 +40,16 @@ class EnglishAppTests: XCTestCase {
         XCTAssertEqual(questionViewController.getAlphabet(index: 0), "d")
         XCTAssertEqual(questionViewController.getAlphabet(index: 1), "o")
         XCTAssertEqual(questionViewController.getAlphabet(index: 2), "g")
-
+    }
+    
+    func testCheckQuestionAlphabetInIdentifier() {
+        let appController = ApplicationController()
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "H"), Optional(true))
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "h"), Optional(true))
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "G"), Optional(true))
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "g"), Optional(true))
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "F"), Optional(false))
+        XCTAssertEqual(appController.checkObjectNameAndQuestion(identifier: "Hoge", targetAlphabet: "f"), Optional(false))
     }
 
     func testPerformanceExample() {
