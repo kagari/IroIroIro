@@ -51,7 +51,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         
         self.identifier = identifier
         
-        guard let targetAlphabet = self.questionViewController.getAlphabet(index: self.questionAlphabetIndex)?.lowercased() else {
+        guard let targetAlphabet = self.questionViewController.getAlphabet(index: self.questionAlphabetIndex) else {
             print("targetAlphabet is nil...")
             return
         }
@@ -85,7 +85,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
         //大文字小文字を無視させて評価
-        guard let isContain = identifier?.lowercased().contains(targetAlphabet) else {
+        guard let isContain = identifier?.lowercased().contains(targetAlphabet.lowercased()) else {
             print("identifier is nil!")
             return nil
         }
