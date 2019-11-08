@@ -18,4 +18,3 @@ class StartViewController: UIViewController, StartViewDelegate {
         self.present(questionViewController, animated: true, completion: nil)
     }
 }
-
