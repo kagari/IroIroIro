@@ -3,7 +3,7 @@ import ARKit
 import Vision
 
 protocol ObjectDetectionModelDelegate: class {
-    func detectionFinished(identifier: String?, confidence: Float?)
+    func detectionFinished(identifier: String?, objectBounds: CGRect?)
 }
 
 
@@ -11,6 +11,8 @@ class ObjectDetectionModel: NSObject {
     
     var delegate: ObjectDetectionModelDelegate?
     private var currentBuffer: CVPixelBuffer?
+    private var bounds: CGSize?
+    private var objectBounds: CGRect?
     private var identifier: String?
     private var confidence: VNConfidence?
     private let visionQueue: DispatchQueue
@@ -36,12 +38,13 @@ class ObjectDetectionModel: NSObject {
         }
     }()
     
-    func classifyCurrentImage(frame: ARFrame) {
+    func classifyCurrentImage(frame: ARFrame, bounds: CGSize?) {
         guard self.currentBuffer == nil, case .normal = frame.camera.trackingState else {
             return
         }
         
         self.currentBuffer = frame.capturedImage
+        self.bounds = bounds
         
        print("classifyCurrentImage!!")
        
@@ -70,6 +73,7 @@ class ObjectDetectionModel: NSObject {
             let label = bestResult.labels[0].identifier.split(separator: ",").first {
             self.identifier = String(label)
             self.confidence = bestResult.labels[0].confidence
+            self.objectBounds = VNImageRectForNormalizedRect(bestResult.boundingBox, Int(self.bounds!.width), Int(self.bounds!.height))
         } else {
             return
         }
@@ -77,7 +81,8 @@ class ObjectDetectionModel: NSObject {
         DispatchQueue.main.async {() in
             // 認識したことをdelegateを通してARViewControllerに通知する
             print("識別結果 -> \(String(describing: self.identifier)): \(String(describing: self.confidence))")
-            self.delegate?.detectionFinished(identifier: self.identifier, confidence: self.confidence)
+            print("Rectangle -> width: \(String(describing: self.objectBounds?.width)), height: \(String(describing: self.objectBounds?.height))")
+            self.delegate?.detectionFinished(identifier: self.identifier, objectBounds: self.objectBounds)
         }
     }
 }

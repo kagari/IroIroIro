@@ -4,7 +4,7 @@ import ARKit
 
 
 // このクラスはStoryboardを使用している
-class ARViewController: UIViewController {
+class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelDelegate {
     
     @IBOutlet weak var sceneView: ARSKView!
     let objectDetectionModel = ObjectDetectionModel()
@@ -25,22 +25,19 @@ class ARViewController: UIViewController {
         let configuration = ARWorldTrackingConfiguration()
         self.sceneView.session.run(configuration)
     }
-}
-
-extension ARViewController: ARSKViewDelegate, ARSessionDelegate {
+    
+    // MARK: - ARSessionDelegate
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        self.objectDetectionModel.classifyCurrentImage(frame: frame)
+        let bounds = self.sceneView.bounds.size
+        self.objectDetectionModel.classifyCurrentImage(frame: frame, bounds: bounds)
     }
-}
-
-extension ARViewController: ObjectDetectionModelDelegate {
-    func detectionFinished(identifier: String?, confidence: Float?) {
-//        let label = UILabel()
-//        label.text = identifier
-//        label.textColor = UIColor(rgb: 0xFF65B2)
-//        label.font = UIFont(name: "Menlo", size: 50)
-//        label.textAlignment = .center
-//        self.sceneView.addSubview(label)
+    
+    // MARK: - ObjectDetectionModelDelegate
+    func detectionFinished(identifier: String?, objectBounds: CGRect?) {
+        let uilabels = make_label(string: identifier, view: self.view)
+        uilabels?.forEach { label in
+            self.view.addSubview(label)
+        }
         print("呼び出されている？")
     }
 }
