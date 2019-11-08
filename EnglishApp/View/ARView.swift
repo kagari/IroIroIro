@@ -4,13 +4,26 @@ import ARKit
 
 
 // このクラスはStoryboardを使用している
-class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelDelegate {
+class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelDelegate {
     
-    @IBOutlet weak var sceneView: ARSKView!
-    let objectDetectionModel = ObjectDetectionModel()
+    var sceneView: ARSKView
+    let objectDetectionModel: ObjectDetectionModel
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        self.sceneView = ARSKView()
+        self.objectDetectionModel = ObjectDetectionModel()
+        
+        super.init(frame: frame)
+        
+        self.addSubview(self.sceneView)
+        self.setUp()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setUp() {
         self.sceneView.delegate = self
         self.sceneView.session.delegate = self
         self.objectDetectionModel.delegate = self
@@ -23,11 +36,13 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    func startSessionRun() {
         let configuration = ARWorldTrackingConfiguration()
         self.sceneView.session.run(configuration)
+    }
+    
+    override func layoutSubviews() {
+        self.sceneView.frame = self.frame
     }
     
     // MARK: - ARSessionDelegate
@@ -39,15 +54,15 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
     // MARK: - ObjectDetectionModelDelegate
     func detectionFinished(identifier: String?, objectBounds: CGRect?) {
         print("detectionFinished!!")
-        self.view.subviews.forEach { subview in
+        self.subviews.forEach { subview in
             if subview is UILabel {
                 subview.removeFromSuperview()
             }
         }
         // 認識した物体の名前を表示
-        let uilabels = make_label(string: identifier, view: self.view)
+        let uilabels = make_label(string: identifier, view: self)
         uilabels?.forEach { label in
-            self.view.addSubview(label)
+            self.addSubview(label)
         }
     }
     

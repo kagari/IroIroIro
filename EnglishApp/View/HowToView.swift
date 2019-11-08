@@ -1,6 +1,11 @@
 import UIKit
 
+protocol HowToViewDelegate: class {
+    func onbackClick(_:UIButton)
+}
+
 class HowToView: UIView {
+    var delegate: HowToViewDelegate?
     private var eventLabel: UILabel?
     private var eventLabel2: UILabel?
     private var backBtn: UIButton?
@@ -31,7 +36,7 @@ class HowToView: UIView {
         self.backBtn?.layer.cornerRadius = 10.0
         self.backBtn?.layer.borderColor = UIColor.orange.cgColor
         self.backBtn?.layer.borderWidth = 1.0
-        self.backBtn?.addTarget(self, action: #selector(onbackClick(_:)), for: .touchUpInside)
+        self.backBtn?.addTarget(self, action: #selector(onbackClick(button:)), for: .touchUpInside)
         self.addSubview(self.backBtn!)
     }
     
@@ -50,7 +55,7 @@ class HowToView: UIView {
         self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: 200, height: 30)
     }
     
-    @objc func onbackClick(_: UIButton) {
-        print("戻るボタンがクリックされた!!")
+    @objc func onbackClick(button: UIButton) {
+        delegate?.onbackClick(button)
     }
 }

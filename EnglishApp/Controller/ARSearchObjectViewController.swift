@@ -2,16 +2,17 @@ import Foundation
 import UIKit
 import ARKit
 
-class ARSearchObjectViewController: UIViewController {
+class ARSearchObjectViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelDelegate {
     
+    var sceneView: ARSKView
     let objectDetectionModel: ObjectDetectionModel
-    let sceneView: ARSKView
     
     init() {
-        self.objectDetectionModel = ObjectDetectionModel()
         self.sceneView = ARSKView()
+        self.objectDetectionModel = ObjectDetectionModel()
+        
         super.init(nibName: nil, bundle: nil)
-        self.view = self.sceneView
+        self.view.addSubview(self.sceneView)
     }
     
     required init?(coder: NSCoder) {
@@ -19,13 +20,19 @@ class ARSearchObjectViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        self.viewDidLoad()
+        super.viewDidLoad()
+        self.sceneView.delegate = self
+        self.sceneView.session.delegate = self
+        self.objectDetectionModel.delegate = self
         
-//        self.sceneView.delegate = self
-//        self.sceneView.session.delegate = self
         let scene = SKScene(size: self.sceneView.bounds.size)
         scene.scaleMode = .resizeFill
         self.sceneView.presentScene(scene)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(gestureRecognizer:)))
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        
+        self.sceneView.frame = self.view.frame
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,17 +42,28 @@ class ARSearchObjectViewController: UIViewController {
         self.sceneView.session.run(configuration)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        self.sceneView.session.pause()
-    }
-}
-
-extension ARSearchObjectView: ARSKViewDelegate, ARSessionDelegate {
+    // MARK: - ARSessionDelegate
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        print("呼び出せてる？")
-//        self.objectDetectionModel.classifyCurrentImage(frame: frame)
+        let bounds = self.sceneView.bounds.size
+        self.objectDetectionModel.classifyCurrentImage(frame: frame, bounds: bounds)
+    }
+    
+    // MARK: - ObjectDetectionModelDelegate
+    func detectionFinished(identifier: String?, objectBounds: CGRect?) {
+        print("detectionFinished!!")
+        self.view.subviews.forEach { subview in
+            if subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
+        // 認識した物体の名前を表示
+        let uilabels = make_label(string: identifier, view: self.view)
+        uilabels?.forEach { label in
+            self.view.addSubview(label)
+        }
+    }
+    
+    @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
+        print("タップされたよ!!")
     }
 }
