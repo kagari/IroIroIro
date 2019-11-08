@@ -18,10 +18,7 @@ class EnglishAppTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        
+    func testQuestionData() {
         // dataStorageにデータを登録できるかテストする
         let dataStorage: QuestionDataSingleton = QuestionDataSingleton.sharedInstance
         dataStorage.saveUsedText(usedText: "Question")
@@ -33,7 +30,9 @@ class EnglishAppTests: XCTestCase {
         XCTAssertEqual(dataStorage2.getUsedTextList(), ["Question", "Hoge"])
         dataStorage2.saveUsedText(usedText: "Fuga")
         XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge", "Fuga"])
-        
+    }
+    
+    func testGetAlphabet() {
         //お題N番目が取れるかのテストをする
         let questionViewController = QuestionViewController()
         questionViewController.question = "dog"
