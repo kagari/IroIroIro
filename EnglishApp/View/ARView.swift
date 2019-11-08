@@ -2,11 +2,15 @@ import Foundation
 import UIKit
 import ARKit
 
+protocol ARViewDelegate {
+    func tapGesture(identifier: String?)
+}
 
-// このクラスはStoryboardを使用している
 class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelDelegate {
     
+    var delegate: ARViewDelegate?
     var sceneView: ARSKView
+    var identifier: String?
     let objectDetectionModel: ObjectDetectionModel
     
     override init(frame: CGRect) {
@@ -42,6 +46,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.session.run(configuration)
     }
     
+    func pauseSessionRun() {
+        self.sceneView.session.pause()
+    }
+    
     override func layoutSubviews() {
         self.sceneView.frame = self.frame
     }
@@ -55,6 +63,9 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     // MARK: - ObjectDetectionModelDelegate
     func detectionFinished(identifier: String?, objectBounds: CGRect?) {
         print("detectionFinished!!")
+        
+        self.identifier = identifier
+        
         self.subviews.forEach { subview in
             if subview is UILabel {
                 subview.removeFromSuperview()
@@ -68,6 +79,6 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
-        print("タップされたよ!!")
+        delegate?.tapGesture(identifier: self.identifier)
     }
 }

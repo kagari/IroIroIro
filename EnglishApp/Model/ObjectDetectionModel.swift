@@ -6,8 +6,11 @@ protocol ObjectDetectionModelDelegate: class {
     func detectionFinished(identifier: String?, objectBounds: CGRect?)
 }
 
+protocol ObjectDetectionModelDataSource: class {
+    var identifierString: String? { get }
+}
 
-class ObjectDetectionModel: NSObject {
+class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
     
     var delegate: ObjectDetectionModelDelegate?
     private var currentBuffer: CVPixelBuffer?
@@ -85,9 +88,8 @@ class ObjectDetectionModel: NSObject {
             self.delegate?.detectionFinished(identifier: self.identifier, objectBounds: self.objectBounds)
         }
     }
-}
-
-extension ObjectDetectionModel: ObjectDetectionModelDataSource {
+    
+    // MARK: - ObjectDetectionModelDataSource Property
     var identifierString: String? {
         return self.identifier
     }
