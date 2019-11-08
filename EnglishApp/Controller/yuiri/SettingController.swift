@@ -1,11 +1,3 @@
-//
-//  SettingController.swift
-//  Sample
-//
-//  Created by 新垣結梨 on 2019/10/31.
-//  Copyright © 2019 Yuiri A. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -33,10 +25,6 @@ class SettingController: UIViewController {
         backButton.layer.borderWidth = 1.0
         backButton.addTarget(self, action: #selector(onbackClick2(_:)), for: .touchUpInside)
         view.addSubview(backButton)
-        
-        
-        
-        
     }
 
     @objc func onbackClick2(_: UIButton) {
