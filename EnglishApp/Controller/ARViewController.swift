@@ -18,6 +18,9 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
         let scene = SKScene(size: self.sceneView.bounds.size)
         scene.scaleMode = .resizeFill
         self.sceneView.presentScene(scene)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(gestureRecognizer:)))
+        self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,9 +44,14 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
                 subview.removeFromSuperview()
             }
         }
+        // 認識した物体の名前を表示
         let uilabels = make_label(string: identifier, view: self.view)
         uilabels?.forEach { label in
             self.view.addSubview(label)
         }
+    }
+    
+    @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
+        print("タップされたよ!!")
     }
 }
