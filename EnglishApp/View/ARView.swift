@@ -16,14 +16,15 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         super.init(frame: frame)
         
         self.addSubview(self.sceneView)
-        self.setUp()
+        
+        self.setUpARView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUp() {
+    func setUpARView() {
         self.sceneView.delegate = self
         self.sceneView.session.delegate = self
         self.objectDetectionModel.delegate = self

@@ -6,7 +6,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     let startView = StartView()
     let howToView = HowToView()
     let questionViewController = QuestionViewController()
-    let arViewController = ARViewController()
+    let arView = ARView()
     var questionAlphabetIndex = 0
     
     override func viewDidLoad() {
@@ -43,12 +43,9 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func toARView() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.view = self.arViewController
-            self.arViewController.startSessionRun()
-            // 3秒後にResult画面に遷移
-//            let arSearchObjectViewController = ARSearchObjectViewController()
-//            arSearchObjectViewController.modalPresentationStyle = .fullScreen
-//            self.present(arSearchObjectViewController, animated: true, completion: nil)
+            // 3秒後にAR画面を表示
+            self.arView.startSessionRun()
+            self.view = self.arView
         }
     }
 }
