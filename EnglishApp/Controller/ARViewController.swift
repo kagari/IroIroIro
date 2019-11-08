@@ -13,6 +13,7 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
         super.viewDidLoad()
         self.sceneView.delegate = self
         self.sceneView.session.delegate = self
+        self.objectDetectionModel.delegate = self
         
         let scene = SKScene(size: self.sceneView.bounds.size)
         scene.scaleMode = .resizeFill
@@ -34,10 +35,15 @@ class ARViewController: UIViewController, ARSKViewDelegate, ARSessionDelegate, O
     
     // MARK: - ObjectDetectionModelDelegate
     func detectionFinished(identifier: String?, objectBounds: CGRect?) {
+        print("detectionFinished!!")
+        self.view.subviews.forEach { subview in
+            if subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
         let uilabels = make_label(string: identifier, view: self.view)
         uilabels?.forEach { label in
             self.view.addSubview(label)
         }
-        print("呼び出されている？")
     }
 }
