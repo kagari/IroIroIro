@@ -1,11 +1,3 @@
-//
-//  SettingController.swift
-//  Sample
-//
-//  Created by 新垣結梨 on 2019/10/31.
-//  Copyright © 2019 Yuiri A. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -32,8 +24,6 @@ class SettingController: UIViewController, UITableViewDelegate, UITableViewDataS
         backButton.layer.borderWidth = 1.0
         backButton.addTarget(self, action: #selector(onbackClick2(_:)), for: .touchUpInside)
         view.addSubview(backButton)
-        
-        
     }
     
     //④セクション数を指定
@@ -50,7 +40,7 @@ class SettingController: UIViewController, UITableViewDelegate, UITableViewDataS
         print("セル数：1")
         return 1
     }
-//事例
+    //事例
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "aaa")
         cell.textLabel?.text = "アプリのバージョン"
@@ -66,5 +56,4 @@ class SettingController: UIViewController, UITableViewDelegate, UITableViewDataS
     @objc func onbackClick2(_: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
 }

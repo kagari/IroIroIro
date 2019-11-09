@@ -2,10 +2,21 @@ import Foundation
 import ARKit
 import Vision
 
-class ObjectDetectionModel: NSObject {
+protocol ObjectDetectionModelDelegate: class {
+    func detectionFinished(identifier: String?, objectBounds: CGRect?)
+}
+
+protocol ObjectDetectionModelDataSource: class {
+    var identifierString: String? { get }
+}
+
+class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
     
+    var delegate: ObjectDetectionModelDelegate?
     private var currentBuffer: CVPixelBuffer?
-    private var identifierString: String?
+    private var bounds: CGSize?
+    private var objectBounds: CGRect?
+    private var identifier: String?
     private var confidence: VNConfidence?
     private let visionQueue: DispatchQueue
     
@@ -30,16 +41,17 @@ class ObjectDetectionModel: NSObject {
         }
     }()
     
-    func classifyCurrentImage(frame: ARFrame) {
+    func classifyCurrentImage(frame: ARFrame, bounds: CGSize?) {
         guard self.currentBuffer == nil, case .normal = frame.camera.trackingState else {
             return
         }
         
         self.currentBuffer = frame.capturedImage
+        self.bounds = bounds
         
        print("classifyCurrentImage!!")
        
-       let requestHandler = VNImageRequestHandler(cvPixelBuffer: currentBuffer!)
+        let requestHandler = VNImageRequestHandler(cvPixelBuffer: self.currentBuffer!)
        
        visionQueue.async {
            do {
@@ -62,16 +74,23 @@ class ObjectDetectionModel: NSObject {
         // 分類した一番いい結果を持ってくる
         if let bestResult = classifications.first(where: { result in result.confidence > 0.5 }),
             let label = bestResult.labels[0].identifier.split(separator: ",").first {
-            identifierString = String(label)
-            confidence = bestResult.labels[0].confidence
+            self.identifier = String(label)
+            self.confidence = bestResult.labels[0].confidence
+            self.objectBounds = VNImageRectForNormalizedRect(bestResult.boundingBox, Int(self.bounds!.width), Int(self.bounds!.height))
         } else {
             return
         }
         
-        print("Class \(String(describing: self.identifierString)): \(String(describing: self.confidence))")
         DispatchQueue.main.async {() in
             // 認識したことをdelegateを通してARViewControllerに通知する
+            print("識別結果 -> \(String(describing: self.identifier)): \(String(describing: self.confidence))")
+            print("Rectangle -> width: \(String(describing: self.objectBounds?.width)), height: \(String(describing: self.objectBounds?.height))")
+            self.delegate?.detectionFinished(identifier: self.identifier, objectBounds: self.objectBounds)
         }
     }
     
+    // MARK: - ObjectDetectionModelDataSource Property
+    var identifierString: String? {
+        return self.identifier
+    }
 }
