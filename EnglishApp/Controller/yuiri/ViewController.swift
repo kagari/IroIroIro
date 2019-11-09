@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         imageView2.frame = rect2;
         imageView2.center = CGPoint(x:screenWidth/2, y:605)
         self.view.addSubview(imageView2)
+        self.view.sendSubviewToBack(imageView2)
         
         
         UIView.animate(withDuration: 0.5,
@@ -112,7 +113,7 @@ class ViewController: UIViewController {
     
     @objc func goSetting(_: UIButton) {
         let gonext2 = SettingController()
-        gonext2.view.backgroundColor = UIColor.white
+        gonext2.view.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
         gonext2.modalPresentationStyle = .fullScreen
         self.present(gonext2, animated: true, completion: nil)
        }
