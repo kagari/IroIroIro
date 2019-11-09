@@ -11,6 +11,13 @@ class QuestionModel: NSObject {
         
         super.init()
     }
+    
+    func saveUsedText(string: String?) {
+        guard let usedText = string else {
+            return
+        }
+        dataStorage.saveUsedText(usedText: usedText)
+    }
 }
 
 extension QuestionModel: QuestionViewDataSource {

@@ -34,4 +34,8 @@ class QuestionViewController: NSObject {
         //お題のn番目のアルファベットを取得したい
         return question?.map({String($0)})[index]
     }
+    
+    func setUsedObjectName(objectName: String?) {
+        self.questionModel.saveUsedText(string: objectName)
+    }
 }
