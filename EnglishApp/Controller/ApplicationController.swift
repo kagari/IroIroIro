@@ -6,8 +6,9 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     let startView = StartView()
     let howToView = HowToView()
     let questionViewController = QuestionViewController()
+    let resutltViewController = ResultViewController()
     let arView = ARView()
-    var questionAlphabetIndex = 0
+    var questionAlphabetIndex = -1
     var identifier: String?
     
     override func viewDidLoad() {
@@ -22,10 +23,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // MARK: - Start画面のボタンタップ時の挙動
     func buttonEvent(_: UIButton) {
         print("Pushed Start Button!")
-        questionViewController.index = self.questionAlphabetIndex
-        questionViewController.setUpView()
-        self.view = questionViewController.questionView
-        self.toARView()
+        self.toQuestionView()
     }
     
     func goHowTo(_: UIButton) {
@@ -46,7 +44,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // MARK: - 物体認識画面の画面タップ時の挙動
     func tapGesture(identifier: String?) {
         print("Get Tap Gesture!")
-        self.arView.pauseSessionRun()
+//        self.arView.pauseSessionRun() // pauseすると画面がカクツクのでコメントアウト
         print("identifier: \(String(describing: identifier))")
         
         self.identifier = identifier
@@ -57,29 +55,39 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         }
             
         guard let isContain = self.checkObjectNameAndQuestion(identifier: identifier, targetAlphabet: String.Element(targetAlphabet)) else {
-            print("checkObjectNameAndQuestion function was return nil...")
+            print("checkObjectNameAndQuestion function return nil...")
             return
         }
         
         if isContain {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
-            }
+            print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
+            print("Correct!!")
+            self.toQuestionView()
         }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
-            }
+            print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
+            print("Incorrect!!")
         }
-        
-        self.view = questionViewController.questionView
     }
     
     // MARK: - その他の関数
     func toARView() {
+        self.arView.startSessionRun()
+        self.view = self.arView
+    }
+    
+    func toQuestionView() {
+        self.questionAlphabetIndex += 1
+        // when Next alphabet is none, goto ResultView
+        if self.questionAlphabetIndex == self.questionViewController.question?.lengthOfBytes(using: String.Encoding.utf8) {
+            self.arView.pauseSessionRun()
+            self.view = self.resutltViewController.resultQuestionView
+            return
+        }
+        questionViewController.index = self.questionAlphabetIndex
+        questionViewController.setUpView()
+        self.view = questionViewController.questionView
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            // 3秒後にAR画面を表示
-            self.arView.startSessionRun()
-            self.view = self.arView
+            self.toARView()
         }
     }
     
