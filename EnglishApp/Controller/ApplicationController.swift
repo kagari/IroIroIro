@@ -61,9 +61,18 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             return
         }
         
-        if isContain {
+        if isContain { //ここで正誤判定の結果をUIで表示する
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
+            
+            let maru = UILabel()
+            maru.text = "⭕️"
+            //maru.textColor = UIColor(rgb: 0xFF65B2)
+            maru.font = UIFont(name: "Menlo", size: 100)
+            maru.sizeToFit()
+            maru.textAlignment = .center
+            self.arView.addSubview(maru)
+            
             
             self.questionViewController.setUsedObjectName(objectName: identifier)
             
@@ -76,12 +85,12 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
                 return
             }
             
-            self.toQuestionView()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.toQuestionView()
                 self.toARView()
             }
             
-        }else{
+        }else{ //間違えUIここ
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
         }
