@@ -8,7 +8,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     let questionViewController = QuestionViewController()
     let resutltViewController = ResultViewController()
     let arView = ARView()
-    var questionAlphabetIndex = -1
+    var questionAlphabetIndex = 0
     var identifier: String?
     
     override func viewDidLoad() {
@@ -24,6 +24,9 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     func buttonEvent(_: UIButton) {
         print("Pushed Start Button!")
         self.toQuestionView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.toARView()
+        }
     }
     
     func goHowTo(_: UIButton) {
@@ -44,7 +47,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // MARK: - 物体認識画面の画面タップ時の挙動
     func tapGesture(identifier: String?) {
         print("Get Tap Gesture!")
-//        self.arView.pauseSessionRun() // pauseすると画面がカクツクのでコメントアウト
         print("identifier: \(String(describing: identifier))")
         
         self.identifier = identifier
@@ -62,7 +64,23 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         if isContain {
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
+            
+            self.questionViewController.setUsedObjectName(objectName: identifier)
+            
+            self.questionAlphabetIndex += 1
+            // when Next alphabet is none, goto ResultView
+            if self.questionAlphabetIndex == self.questionViewController.question?.lengthOfBytes(using: String.Encoding.utf8) {
+                self.arView.pauseSessionRun() // ARsession Pause
+                
+                self.toResultView()
+                return
+            }
+            
             self.toQuestionView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.toARView()
+            }
+            
         }else{
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
@@ -76,18 +94,17 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     }
     
     func toQuestionView() {
-        self.questionAlphabetIndex += 1
-        // when Next alphabet is none, goto ResultView
-        if self.questionAlphabetIndex == self.questionViewController.question?.lengthOfBytes(using: String.Encoding.utf8) {
-            self.arView.pauseSessionRun()
-            self.view = self.resutltViewController.resultQuestionView
-            return
-        }
         questionViewController.index = self.questionAlphabetIndex
         questionViewController.setUpView()
         self.view = questionViewController.questionView
+    }
+    
+    func toResultView() {
+        self.resutltViewController.resultQuestionView.setQuestionLabel()
+        self.view = self.resutltViewController.resultQuestionView
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.toARView()
+            self.resutltViewController.resultUsedTextView.setUsedTextLabels()
+            self.view = self.resutltViewController.resultUsedTextView
         }
     }
     

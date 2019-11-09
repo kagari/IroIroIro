@@ -17,9 +17,6 @@ class ResultViewController: NSObject {
         print("Called: ResultViewController")
         self.resultUsedTextView.dataSource = self.questionModel
         self.resultQuestionView.dataSource = self.questionModel
-        
-        self.resultQuestionView.setQuestionLabel()
-        self.resultUsedTextView.setUsedTextLabels()
     }
 
     required init?(coder: NSCoder) {
