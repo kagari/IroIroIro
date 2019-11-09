@@ -11,6 +11,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var delegate: ARViewDelegate?
     var sceneView: ARSKView
     var identifier: String?
+    var objectLabel: UILabel!
     let objectDetectionModel: ObjectDetectionModel
     
     override init(frame: CGRect) {
@@ -22,6 +23,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(self.sceneView)
         
         self.setUpARView()
+        
+        objectLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 50)
+            label.textAlignment = .center
+            return label
+        }()
+        self.addSubview(objectLabel)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +63,8 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     
     override func layoutSubviews() {
         self.sceneView.frame = self.frame
+        super.layoutSubviews()
+
     }
     
     // MARK: - ARSessionDelegate
@@ -71,12 +84,17 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
                 subview.removeFromSuperview()
             }
         }
-        // 認識した物体の名前を表示
-        let uilabels = make_label(string: identifier, view: self)
-        uilabels?.forEach { label in
-            self.addSubview(label)
+//        // 認識した物体の名前を表示
+//        let uilabels = make_label(string: identifier, view: self)
+//        uilabels?.forEach { label in
+//            self.addSubview(label)
+//        }
+        self.objectLabel.text = self.identifier
+        self.objectLabel.frame = objectBounds!
+        self.objectLabel.textAlignment = .center
+        self.objectLabel.sizeToFit()
+        self.addSubview(self.objectLabel)
         }
-    }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
