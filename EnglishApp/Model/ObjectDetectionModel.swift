@@ -48,8 +48,6 @@ class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
         
         self.currentBuffer = frame.capturedImage
         self.bounds = bounds
-        
-       print("classifyCurrentImage!!")
        
         let requestHandler = VNImageRequestHandler(cvPixelBuffer: self.currentBuffer!)
        
