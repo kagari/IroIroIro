@@ -18,6 +18,7 @@ class ResultViewController: NSObject {
         self.resultUsedTextView.dataSource = self.questionModel
         self.resultQuestionView.dataSource = self.questionModel
         
+        self.resultQuestionView.setQuestionLabel()
         self.resultUsedTextView.setUsedTextLabels()
     }
 
