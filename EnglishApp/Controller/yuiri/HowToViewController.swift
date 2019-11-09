@@ -39,10 +39,10 @@ class HowToController: UIViewController {
         //戻るボタン
         let backBtn = UIButton(frame: CGRect(x: w - 300 , y: h - 85, width: 200, height: 30))
         backBtn.setTitle("戻る", for: UIControl.State())
-        backBtn.setTitleColor(.orange, for: UIControl.State())
+        backBtn.setTitleColor(UIColor(red:120/255, green:204/255, blue:208/255, alpha:1), for: UIControl.State())
         backBtn.backgroundColor = .white
         backBtn.layer.cornerRadius = 10.0
-        backBtn.layer.borderColor = UIColor.orange.cgColor
+        backBtn.layer.borderColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1).cgColor
         backBtn.layer.borderWidth = 1.0
         backBtn.addTarget(self, action: #selector(onbackClick(_:)), for: .touchUpInside)
         view.addSubview(backBtn)
