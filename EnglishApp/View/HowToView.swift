@@ -6,27 +6,17 @@ protocol HowToViewDelegate: class {
 
 class HowToView: UIView {
     var delegate: HowToViewDelegate?
-    private var eventLabel: UILabel?
-    private var eventLabel2: UILabel?
+    private let image = UIImage(named:"howtoplay3")!
+    private var imageView: UIImageView?
     private var backBtn: UIButton?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        
-        //遊び方ラベル
-        self.eventLabel = UILabel()
-        self.eventLabel?.text = "遊び方"
-        self.eventLabel?.textColor = .red
-        self.eventLabel?.font = UIFont.systemFont(ofSize: 80)
-        self.eventLabel?.textAlignment = .center
-        self.addSubview(self.eventLabel!)
-    
-        //遊び方説明ラベル
-        self.eventLabel2 = UILabel()
-        self.eventLabel2?.text = "1.你好 2.他是我的朋友 3.我想喝珍珠奶茶"
-        self.eventLabel2?.font = UIFont.systemFont(ofSize: 50)
-        self.addSubview(self.eventLabel2!)
+
+        // 遊び方の画像
+        self.imageView = UIImageView(image:image)
+        self.addSubview(self.imageView!)
     
         //戻るボタン
         self.backBtn = UIButton()
@@ -48,10 +38,11 @@ class HowToView: UIView {
         super.layoutSubviews()
         let width = self.frame.width
         let height = self.frame.height
+        let imgWidth = image.size.width
+        let imgHeight = image.size.height
+        let scale = width / imgWidth
         
-        self.eventLabel?.frame = CGRect(x: 0, y: height*0.1, width: width, height: 100)
-        
-        self.eventLabel2?.frame = CGRect(x: width*0.1, y: height*0.3, width: width*0.8, height: 200)
+        self.imageView?.frame = CGRect(x: 0, y: 0, width: imgWidth*scale, height: imgHeight*scale)
         self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: 200, height: 30)
     }
     
