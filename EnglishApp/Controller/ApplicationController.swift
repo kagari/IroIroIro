@@ -8,7 +8,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     private var questionView: QuestionView!
     private var arView: ARView!
     private var resultView: ResultView!
-    private var questionModel: QuestionModel!
+    private var questionData: QuestionData!
     private var questionAlphabetIndex: Int!
     private var identifier: String!
     var question: String?
@@ -20,14 +20,14 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.questionView = QuestionView()
         self.arView = ARView()
         self.resultView = ResultView()
-        self.questionModel = QuestionModel()
+        self.questionData = QuestionData()
         self.questionAlphabetIndex = 0
         
         self.startView.delegate = self
         self.howToView.delegate = self
         self.arView.delegate = self
         
-        self.question = self.questionModel.questionString
+        self.question = self.questionData.getQuestion()
     }
     
     override func viewDidLoad() {
@@ -84,7 +84,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
-            self.questionModel.saveUsedText(string: identifier)
+            self.questionData.addUsedText(usedText: identifier)
             
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
@@ -119,7 +119,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func toResultView() {
         self.resultView.setQuestionLabel(question: self.question)
-        self.resultView.setUsedTextLabels(usedTexts: self.questionModel.usedTextString)
+        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList())
         self.view = self.resultView
     }
     
