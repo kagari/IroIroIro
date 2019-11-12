@@ -11,7 +11,6 @@ class QuestionData {
         self.questions = ["Phone", "Dog", "Cat", "Person", "Terminal"]
         self.question = questions.randomElement()
     }
-    
 }
 
 class QuestionDataSingleton: NSObject {

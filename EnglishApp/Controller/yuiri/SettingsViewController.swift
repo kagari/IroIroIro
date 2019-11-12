@@ -32,10 +32,6 @@ class SettingsViewController: UIViewController {
         backButton.layer.borderWidth = 1.0
         backButton.addTarget(self, action: #selector(onbackClick2(_:)), for: .touchUpInside)
         view.addSubview(backButton)
-        
-        
-        
-        
     }
 
     @objc func onbackClick2(_: UIButton) {

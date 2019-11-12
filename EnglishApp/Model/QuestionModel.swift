@@ -8,12 +8,15 @@ class QuestionModel: NSObject {
     override init() {
         // データを初期化する
         dataStorage =  QuestionDataSingleton.sharedInstance
-        dataStorage.saveUsedText(usedText: "Hoge")
-        dataStorage.saveUsedText(usedText: "Fuga")
-        dataStorage.saveUsedText(usedText: "Piyo")
-        dataStorage.saveUsedText(usedText: "Bar")
         
         super.init()
+    }
+    
+    func saveUsedText(string: String?) {
+        guard let usedText = string else {
+            return
+        }
+        dataStorage.saveUsedText(usedText: usedText)
     }
 }
 
