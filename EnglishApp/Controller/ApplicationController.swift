@@ -3,20 +3,46 @@ import UIKit
 
 class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate {
     
-    let startView = StartView()
-    let howToView = HowToView()
-    let questionViewController = QuestionViewController()
-    let resutltViewController = ResultViewController()
-    let arView = ARView()
-    var questionAlphabetIndex = 0
-    var identifier: String?
+    private var startView: StartView!
+    private var howToView: HowToView!
+    private var questionView: QuestionView!
+    private var arView: ARView!
+    private var resultView: ResultView!
+    private var questionModel: QuestionModel!
+    private var questionAlphabetIndex: Int!
+    private var identifier: String!
+    var question: String?
+    
+    // set instance for game
+    private func setupGame() {
+        self.startView = StartView()
+        self.howToView = HowToView()
+        self.questionView = QuestionView()
+        self.arView = ARView()
+        self.resultView = ResultView()
+        self.questionModel = QuestionModel()
+        self.questionAlphabetIndex = 0
+        
+        self.startView.delegate = self
+        self.howToView.delegate = self
+        self.arView.delegate = self
+        
+        self.questionView.dataSource = self.questionModel
+        self.arView.dataSource = self.questionModel
+        
+        self.question = self.questionModel.questionString
+    }
+    
+    func getAlphabet(index: Int) -> String? {
+        // get n-th alphabet from question
+        return question?.map({String($0)})[index]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        startView.delegate = self
-        howToView.delegate = self
-        arView.delegate = self
+        self.setupGame()
+        
         self.view = startView
     }
     
@@ -31,7 +57,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func goHowTo(_: UIButton) {
         print("Pushed HowTo Button!")
-        self.view = howToView
+        self.view = self.howToView
     }
     
     func goSetting(_: UIButton) {
@@ -41,7 +67,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // MARK: - HowTo画面のボタンタップ時の挙動
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
-        self.view = startView
+        self.view = self.startView
     }
     
     // MARK: - 物体認識画面の画面タップ時の挙動
@@ -51,7 +77,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         
         self.identifier = identifier
         
-        guard let targetAlphabet = self.questionViewController.getAlphabet(index: self.questionAlphabetIndex) else {
+        guard let targetAlphabet = self.getAlphabet(index: self.questionAlphabetIndex) else {
             print("targetAlphabet is nil...")
             return
         }
@@ -65,11 +91,11 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
-            self.questionViewController.setUsedObjectName(objectName: identifier)
+            self.questionModel.saveUsedText(string: identifier)
             
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
-            if self.questionAlphabetIndex == self.questionViewController.question?.lengthOfBytes(using: String.Encoding.utf8) {
+            if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
                 self.arView.pauseSessionRun() // ARsession Pause
                 
                 self.toResultView()
@@ -89,23 +115,18 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // MARK: - その他の関数
     func toARView() {
+        self.arView.setQuestionLabel()
         self.arView.startSessionRun()
         self.view = self.arView
     }
     
     func toQuestionView() {
-        questionViewController.index = self.questionAlphabetIndex
-        questionViewController.setUpView()
-        self.view = questionViewController.questionView
+        self.view = self.questionView
     }
     
     func toResultView() {
-        self.resutltViewController.resultQuestionView.setQuestionLabel()
-        self.view = self.resutltViewController.resultQuestionView
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.resutltViewController.resultUsedTextView.setUsedTextLabels()
-            self.view = self.resutltViewController.resultUsedTextView
-        }
+        self.resultView.setQuestionLabel()
+        self.view = self.resultView
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {

@@ -11,7 +11,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var delegate: ARViewDelegate?
     var sceneView: ARSKView
     var identifier: String?
+    var questionLabel: UILabel?
+    var dataSource: QuestionViewDataSource?
     let objectDetectionModel: ObjectDetectionModel
+    
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
@@ -41,6 +44,17 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    func setQuestionLabel() {
+        self.questionLabel = {
+            let label = UILabel()
+            label.text = dataSource?.questionString
+            label.font = UIFont(name: "Menlo", size: 50)
+            label.sizeToFit()
+            return label
+        }()
+        self.addSubview(self.questionLabel!)
+    }
+    
     func startSessionRun() {
         let configuration = ARWorldTrackingConfiguration()
         self.sceneView.session.run(configuration)
@@ -52,6 +66,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     
     override func layoutSubviews() {
         self.sceneView.frame = self.frame
+        self.questionLabel?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
     
     // MARK: - ARSessionDelegate
