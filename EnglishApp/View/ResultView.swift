@@ -25,10 +25,10 @@ class ResultView: UIView {
         super.layoutSubviews()
     }
     
-    func setQuestionLabel() {
+    func setQuestionLabel(question: String?) {
         self.questionLabel = {
             let label = UILabel()
-            label.text = "Result"
+            label.text = question
             label.textColor = UIColor(rgb: 0xFF65B2)
             label.font = UIFont(name: "Menlo", size: 100)
             label.textAlignment = .center
@@ -39,27 +39,27 @@ class ResultView: UIView {
     }
     
     // QuestionModelからお題のデータを受け取る関数
-    func setUsedTextLabels() {
+    func setUsedTextLabels(usedTexts: [String]?) {
         print("setUsedTextLabel")
-        guard let used_text = dataSource?.usedTextString else {
+        guard let used_texts = usedTexts else {
             print("dataSource?.usedTextString is nil.")
             return
         }
-        initUsedTextLabels(used_text: used_text)
+        self.initUsedTextLabels(used_texts: used_texts)
         
-        for usedTextLabel in usedTextLabels {
+        for usedTextLabel in self.usedTextLabels {
             usedTextLabel.sizeToFit()
             self.addSubview(usedTextLabel)
         }
     }
     
     // 使用した英単語のLabelを作成する関数
-    private func initUsedTextLabels(used_text: [String]) {
+    private func initUsedTextLabels(used_texts: [String]) {
         self.usedTextLabels = {
 
             var i = 200
 
-            let TextLabels = used_text.map({(text) -> UILabel in
+            let TextLabels = used_texts.map({(text) -> UILabel in
                 let label = UILabel()
                 label.text = text
                 label.textColor = UIColor(rgb: 0xFF65B2)
@@ -67,8 +67,8 @@ class ResultView: UIView {
                 label.textAlignment = .center
                 
                 
-                for count in 0...used_text.count{
-                    var total = used_text.count
+                for count in 0...used_texts.count{
+                    var total = used_texts.count
                     total -= count
                     label.frame = CGRect(x: 0, y: i, width: Int(0.8*self.frame.width), height: Int(0.2*self.frame.height))
                     i += 10

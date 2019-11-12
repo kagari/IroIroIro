@@ -27,14 +27,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.howToView.delegate = self
         self.arView.delegate = self
         
-        self.resultView.dataSource = self.questionModel
-        
         self.question = self.questionModel.questionString
-    }
-    
-    func getAlphabet(index: Int) -> String? {
-        // get n-th alphabet from question
-        return question?.map({String($0)})[index]
     }
     
     override func viewDidLoad() {
@@ -119,22 +112,28 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     }
     
     func toQuestionView() {
-        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: self.getAlphabet(index: self.questionAlphabetIndex))
+        let alphabet = self.getAlphabet(index: self.questionAlphabetIndex)
+        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet)
         self.view = self.questionView
     }
     
     func toResultView() {
-        self.resultView.setQuestionLabel()
-        self.resultView.setUsedTextLabels()
+        self.resultView.setQuestionLabel(question: self.question)
+        self.resultView.setUsedTextLabels(usedTexts: self.questionModel.usedTextString)
         self.view = self.resultView
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
-        //大文字小文字を無視させて評価
+        // ignore Capital or Lower Case when check alphabet
         guard let isContain = identifier?.lowercased().contains(targetAlphabet.lowercased()) else {
             print("identifier is nil!")
             return nil
         }
         return isContain
+    }
+    
+    // get n-th alphabet from question
+    func getAlphabet(index: Int) -> String? {
+        return question?.map({String($0)})[index]
     }
 }
