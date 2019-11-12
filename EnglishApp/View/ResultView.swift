@@ -9,7 +9,7 @@ class ResultView: UIView {
     
     weak var dataSource: ResultUsedTextViewDataSource?
     var usedTextLabels: [UILabel]!
-    var questionLabel: UILabel?
+    var questionLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,6 +21,7 @@ class ResultView: UIView {
     }
     
     override func layoutSubviews() {
+        self.questionLabel.sizeToFit()
         super.layoutSubviews()
     }
     
@@ -34,7 +35,7 @@ class ResultView: UIView {
             return label
         }()
         
-        self.addSubview(self.questionLabel!)
+        self.addSubview(self.questionLabel)
     }
     
     // QuestionModelからお題のデータを受け取る関数

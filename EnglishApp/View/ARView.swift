@@ -13,11 +13,13 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var identifier: String?
     var questionLabel: UILabel?
     let objectDetectionModel: ObjectDetectionModel
+    let configuration: ARConfiguration
     
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
+        self.configuration = ARWorldTrackingConfiguration()
         
         super.init(frame: frame)
         
@@ -54,12 +56,11 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(self.questionLabel!)
     }
     
-    func startSessionRun() {
-        let configuration = ARWorldTrackingConfiguration()
-        self.sceneView.session.run(configuration)
+    func startSession() {
+        self.sceneView.session.run(self.configuration)
     }
     
-    func pauseSessionRun() {
+    func pauseSession() {
         self.sceneView.session.pause()
     }
     

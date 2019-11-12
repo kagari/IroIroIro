@@ -27,6 +27,8 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.howToView.delegate = self
         self.arView.delegate = self
         
+        self.resultView.dataSource = self.questionModel
+        
         self.question = self.questionModel.questionString
     }
     
@@ -85,6 +87,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         }
         
         if isContain {
+            self.arView.pauseSession()
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
@@ -93,8 +96,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
-                self.arView.pauseSessionRun() // ARsession Pause
-                
                 self.toResultView()
                 return
             }
@@ -113,7 +114,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // MARK: - その他の関数
     func toARView() {
         self.arView.setQuestionLabel(question: self.question)
-        self.arView.startSessionRun()
+        self.arView.startSession()
         self.view = self.arView
     }
     
@@ -124,6 +125,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func toResultView() {
         self.resultView.setQuestionLabel()
+        self.resultView.setUsedTextLabels()
         self.view = self.resultView
     }
     
