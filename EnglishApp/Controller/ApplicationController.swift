@@ -27,9 +27,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.howToView.delegate = self
         self.arView.delegate = self
         
-        self.questionView.dataSource = self.questionModel
-        self.arView.dataSource = self.questionModel
-        
         self.question = self.questionModel.questionString
     }
     
@@ -115,12 +112,13 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // MARK: - その他の関数
     func toARView() {
-        self.arView.setQuestionLabel()
+        self.arView.setQuestionLabel(question: self.question)
         self.arView.startSessionRun()
         self.view = self.arView
     }
     
     func toQuestionView() {
+        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: self.getAlphabet(index: self.questionAlphabetIndex))
         self.view = self.questionView
     }
     
@@ -135,7 +133,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             print("identifier is nil!")
             return nil
         }
-        
         return isContain
     }
 }

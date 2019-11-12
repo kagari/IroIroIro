@@ -12,7 +12,6 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var sceneView: ARSKView
     var identifier: String?
     var questionLabel: UILabel?
-    var dataSource: QuestionViewDataSource?
     let objectDetectionModel: ObjectDetectionModel
     
     
@@ -44,10 +43,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func setQuestionLabel() {
+    func setQuestionLabel(question: String?) {
         self.questionLabel = {
             let label = UILabel()
-            label.text = dataSource?.questionString
+            label.text = question
             label.font = UIFont(name: "Menlo", size: 50)
             label.sizeToFit()
             return label

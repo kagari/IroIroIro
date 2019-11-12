@@ -7,7 +7,6 @@ protocol QuestionViewDataSource: class {
 
 class QuestionView: UIView {
     
-    weak var dataSource: QuestionViewDataSource?
     var questionLabel: UILabel!
     var topLabel: UILabel! //頭文字のラベル
     var searchLabel: UILabel! //"を探そうのラベル"
