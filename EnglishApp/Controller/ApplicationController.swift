@@ -69,6 +69,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             maru.text = "⭕️"
             //maru.textColor = UIColor(rgb: 0xFF65B2)
             maru.font = UIFont(name: "Menlo", size: 100)
+            maru.frame = CGRect(x: 300, y: 300, width: 500, height: 500)
             maru.sizeToFit()
             maru.textAlignment = .center
             self.arView.addSubview(maru)
@@ -91,8 +92,17 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             }
             
         }else{ //間違えUIここ
+            let batsu = UILabel()
+            batsu.text = "✖️"
+            batsu.font = UIFont(name: "Menlo", size: 100)
+            batsu.frame = CGRect(x: 300, y: 300, width: 500, height: 500)
+            batsu.sizeToFit()
+            batsu.textAlignment = .center
+            self.arView.addSubview(batsu)
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
+            
+            
         }
     }
     
