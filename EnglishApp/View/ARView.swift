@@ -11,11 +11,15 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var delegate: ARViewDelegate?
     var sceneView: ARSKView
     var identifier: String?
+    var questionLabel: UILabel?
     let objectDetectionModel: ObjectDetectionModel
+    let configuration: ARConfiguration
+    
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
+        self.configuration = ARWorldTrackingConfiguration()
         
         super.init(frame: frame)
         
@@ -41,17 +45,24 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func startSessionRun() {
-        let configuration = ARWorldTrackingConfiguration()
-        self.sceneView.session.run(configuration)
+    func setQuestionLabel(question: String?) {
+        let uilabels = make_label(string: question, view: self)
+        uilabels?.forEach { label in
+            self.addSubview(label)
+        }
     }
     
-    func pauseSessionRun() {
+    func startSession() {
+        self.sceneView.session.run(self.configuration)
+    }
+    
+    func pauseSession() {
         self.sceneView.session.pause()
     }
     
     override func layoutSubviews() {
         self.sceneView.frame = self.frame
+        self.questionLabel?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
     
     // MARK: - ARSessionDelegate
@@ -66,16 +77,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         
         self.identifier = identifier
         
-        self.subviews.forEach { subview in
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
-        }
-        // 認識した物体の名前を表示
-        let uilabels = make_label(string: identifier, view: self)
-        uilabels?.forEach { label in
-            self.addSubview(label)
-        }
+//        self.subviews.forEach { subview in
+//            if subview is UILabel {
+//                subview.removeFromSuperview()
+//            }
+//        }
+//        // 認識した物体の名前を表示
+//        let uilabels = make_label(string: identifier, view: self)
+//        uilabels?.forEach { label in
+//            self.addSubview(label)
+//        }
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {

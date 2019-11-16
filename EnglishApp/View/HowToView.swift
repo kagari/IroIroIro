@@ -43,7 +43,7 @@ class HowToView: UIView {
         let scale = width / imgWidth
         
         self.imageView?.frame = CGRect(x: 0, y: 0, width: imgWidth*scale, height: imgHeight*scale)
-        self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: 200, height: 30)
+        self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: width*0.28, height: height*0.05)
     }
     
     @objc func onbackClick(button: UIButton) {
