@@ -1,10 +1,6 @@
 import Foundation
 import UIKit
 
-protocol QuestionViewDataSource: class {
-    var questionString: String? { get }
-}
-
 class QuestionView: UIView {
     
     var questionLabel: UILabel!

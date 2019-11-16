@@ -1,13 +1,8 @@
 import Foundation
 import UIKit
 
-protocol ResultUsedTextViewDataSource: class {
-    var usedTextString: [String]? { get }
-}
-
 class ResultView: UIView {
     
-    weak var dataSource: ResultUsedTextViewDataSource?
     var usedTextLabels: [UILabel]!
     var questionLabel: UILabel!
     
@@ -42,7 +37,7 @@ class ResultView: UIView {
     func setUsedTextLabels(usedTexts: [String]?) {
         print("setUsedTextLabel")
         guard let used_texts = usedTexts else {
-            print("dataSource?.usedTextString is nil.")
+            print("usedTexts is nil.")
             return
         }
         self.initUsedTextLabels(used_texts: used_texts)
