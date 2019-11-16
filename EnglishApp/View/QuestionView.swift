@@ -58,7 +58,7 @@ class QuestionView: UIView {
         
         self.questionLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
         self.questionLabel.center.x = self.center.x
-        self.questionLabel.font = UIFont.systemFont(ofSize: width*0.08)
+        self.questionLabel.font = UIFont.systemFont(ofSize: width*0.07)
         
         self.topLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
         self.topLabel.center = self.center
@@ -66,7 +66,7 @@ class QuestionView: UIView {
         
         self.searchLabel.frame = CGRect(x: 0, y: height-height*0.2, width: width*0.8, height: height*0.2)
         self.searchLabel.center.x = self.center.x
-        self.searchLabel.font = UIFont.systemFont(ofSize: width*0.08)
+        self.searchLabel.font = UIFont.systemFont(ofSize: width*0.07)
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
