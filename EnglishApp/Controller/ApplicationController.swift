@@ -83,14 +83,8 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
-            let maru = UILabel()
-            maru.text = "⭕️"
-            //maru.textColor = UIColor(rgb: 0xFF65B2)
-            maru.font = UIFont(name: "Menlo", size: 100)
-            maru.frame = CGRect(x: 300, y: 300, width: 500, height: 500)
-            maru.sizeToFit()
-            maru.textAlignment = .center
-            self.arView.addSubview(maru)
+            self.arView.setCorrectLabel() //まる表示
+            
             
             self.questionData.addUsedText(usedText: identifier)
             
@@ -101,29 +95,33 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
                 return
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.toQuestionView()
-                self.toARView()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    self.toARView()
+                }
             }
             
         }else{ //間違えUIここ
-            let batsu = UILabel()
-            batsu.text = "✖️"
-            batsu.font = UIFont(name: "Menlo", size: 100)
-            batsu.frame = CGRect(x: 300, y: 300, width: 500, height: 500)
-            batsu.sizeToFit()
-            batsu.textAlignment = .center
-            self.arView.addSubview(batsu)
+            
+            self.arView.setWrongLabel() //ばつ表示
+            
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
             
-            
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.toARView()
+            }
         }
     }
     
     // MARK: - その他の関数
     func toARView() {
+        self.arView.subviews.forEach { subview in
+            if subview.tag == 0 && subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
         self.arView.startSession()
         self.view = self.arView
         self.arView.setQuestionLabel(question: self.question)
