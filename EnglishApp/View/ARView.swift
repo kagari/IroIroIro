@@ -46,14 +46,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     }
     
     func setQuestionLabel(question: String?) {
-        self.questionLabel = {
-            let label = UILabel()
-            label.text = question
-            label.font = UIFont(name: "Menlo", size: 50)
-            label.sizeToFit()
-            return label
-        }()
-        self.addSubview(self.questionLabel!)
+        let uilabels = make_label(string: question, view: self)
+        uilabels?.forEach { label in
+            self.addSubview(label)
+        }
     }
     
     func startSession() {
@@ -81,16 +77,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         
         self.identifier = identifier
         
-        self.subviews.forEach { subview in
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
-        }
-        // 認識した物体の名前を表示
-        let uilabels = make_label(string: identifier, view: self)
-        uilabels?.forEach { label in
-            self.addSubview(label)
-        }
+//        self.subviews.forEach { subview in
+//            if subview is UILabel {
+//                subview.removeFromSuperview()
+//            }
+//        }
+//        // 認識した物体の名前を表示
+//        let uilabels = make_label(string: identifier, view: self)
+//        uilabels?.forEach { label in
+//            self.addSubview(label)
+//        }
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {

@@ -106,9 +106,9 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // MARK: - その他の関数
     func toARView() {
-        self.arView.setQuestionLabel(question: self.question)
         self.arView.startSession()
         self.view = self.arView
+        self.arView.setQuestionLabel(question: self.question)
     }
     
     func toQuestionView() {
