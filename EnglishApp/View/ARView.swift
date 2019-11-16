@@ -14,7 +14,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var questionLabel: UILabel?
     let objectDetectionModel: ObjectDetectionModel
     let configuration: ARConfiguration
-    
+    var objectLabel: UILabel!
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
@@ -26,6 +26,15 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(self.sceneView)
         
         self.setUpARView()
+        
+        objectLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 50)
+            label.textAlignment = .center
+            return label
+        }()
+        self.addSubview(objectLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -87,6 +96,11 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
 //        uilabels?.forEach { label in
 //            self.addSubview(label)
 //        }
+        self.objectLabel.text = self.identifier
+        self.objectLabel.frame = CGRect(x:300,y:500,width: 250,height:250)
+        self.objectLabel.textAlignment = .center
+        self.objectLabel.sizeToFit()
+        self.addSubview(self.objectLabel)
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
