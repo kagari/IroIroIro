@@ -11,11 +11,15 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var delegate: ARViewDelegate?
     var sceneView: ARSKView
     var identifier: String?
+    var questionLabel: UILabel?
     let objectDetectionModel: ObjectDetectionModel
+    let configuration: ARConfiguration
+    
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
+        self.configuration = ARWorldTrackingConfiguration()
         
         super.init(frame: frame)
         
@@ -41,17 +45,68 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func startSessionRun() {
-        let configuration = ARWorldTrackingConfiguration()
-        self.sceneView.session.run(configuration)
+    func setQuestionLabel(question: String?) {
+        let uilabels = make_label(string: question, view: self)
+        uilabels?.forEach { label in
+            self.addSubview(label)
+        }
     }
     
-    func pauseSessionRun() {
+    func setCorrectLabel() {
+        let maru = UILabel()
+        maru.text = "◯"
+        maru.textColor = .red
+        maru.font = UIFont.systemFont(ofSize: 300)
+        maru.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
+        maru.center = self.center
+        maru.textAlignment = .center
+        maru.tag = 0
+        self.addSubview(maru)
+        
+        let maru2 = UILabel()
+        maru2.text = "correct:)"
+        maru2.textColor = .red
+        maru2.font = UIFont.systemFont(ofSize: 100)
+        maru2.frame = CGRect(x: 0, y: maru.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
+        maru2.center.x = maru.frame.midX
+        maru2.textAlignment = .center
+        maru2.tag = 0
+        self.addSubview(maru2)
+    }
+    
+    func setWrongLabel() {
+        let batsu = UILabel()
+        batsu.text = "×"
+        batsu.textColor = .blue
+        batsu.font = UIFont.systemFont(ofSize: 500)
+        batsu.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
+        batsu.center = self.center
+        batsu.textAlignment = .center
+        batsu.tag = 0
+        self.addSubview(batsu)
+        
+        let batsu2 = UILabel()
+        batsu2.text = "wrong:("
+        batsu2.textColor = .blue
+        batsu2.font = UIFont.systemFont(ofSize: 100)
+        batsu2.frame = CGRect(x: 0, y: batsu.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
+        batsu2.center.x = batsu.frame.midX
+        batsu2.textAlignment = .center
+        batsu2.tag = 0
+        self.addSubview(batsu2)
+    }
+    
+    func startSession() {
+        self.sceneView.session.run(self.configuration)
+    }
+    
+    func pauseSession() {
         self.sceneView.session.pause()
     }
     
     override func layoutSubviews() {
         self.sceneView.frame = self.frame
+        self.questionLabel?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
     }
     
     // MARK: - ARSessionDelegate
@@ -66,16 +121,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         
         self.identifier = identifier
         
-        self.subviews.forEach { subview in
-            if subview is UILabel {
-                subview.removeFromSuperview()
-            }
-        }
-        // 認識した物体の名前を表示
-        let uilabels = make_label(string: identifier, view: self)
-        uilabels?.forEach { label in
-            self.addSubview(label)
-        }
+//        self.subviews.forEach { subview in
+//            if subview is UILabel {
+//                subview.removeFromSuperview()
+//            }
+//        }
+//        // 認識した物体の名前を表示
+//        let uilabels = make_label(string: identifier, view: self)
+//        uilabels?.forEach { label in
+//            self.addSubview(label)
+//        }
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
