@@ -79,10 +79,12 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             return
         }
         
-        if isContain {
-            self.arView.pauseSession()
+        if isContain { //ここで正誤判定の結果をUIで表示する
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
+            
+            self.arView.setCorrectLabel() //まる表示
+            
             
             self.questionData.addUsedText(usedText: identifier)
             
@@ -93,19 +95,33 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
                 return
             }
             
-            self.toQuestionView()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                self.toARView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.toQuestionView()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    self.toARView()
+                }
             }
             
-        }else{
+        }else{ //間違えUIここ
+            
+            self.arView.setWrongLabel() //ばつ表示
+            
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.toARView()
+            }
         }
     }
     
     // MARK: - その他の関数
     func toARView() {
+        self.arView.subviews.forEach { subview in
+            if subview.tag == 0 && subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
         self.arView.startSession()
         self.view = self.arView
         self.arView.setQuestionLabel(question: self.question)
