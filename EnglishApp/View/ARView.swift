@@ -14,6 +14,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var questionLabel: UILabel?
     let objectDetectionModel: ObjectDetectionModel
     let configuration: ARConfiguration
+    var objectLabel: UILabel!
     
     
     override init(frame: CGRect) {
@@ -26,6 +27,15 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(self.sceneView)
         
         self.setUpARView()
+        
+        objectLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 50)
+            label.textAlignment = .center
+            return label
+        }()
+        self.addSubview(objectLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -45,8 +55,8 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func setQuestionLabel(question: String?) {
-        let uilabels = make_label(string: question, view: self)
+    func setQuestionLabel(question: String?, index: Int) {
+        let uilabels = make_label(string: question, index: index, view: self)
         uilabels?.forEach { label in
             self.addSubview(label)
         }
@@ -120,17 +130,13 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         print("detectionFinished!!")
         
         self.identifier = identifier
-        
-//        self.subviews.forEach { subview in
-//            if subview is UILabel {
-//                subview.removeFromSuperview()
-//            }
-//        }
-//        // 認識した物体の名前を表示
-//        let uilabels = make_label(string: identifier, view: self)
-//        uilabels?.forEach { label in
-//            self.addSubview(label)
-//        }
+       
+        // 物体の名前を中心に表示
+        self.objectLabel.text = self.identifier
+        self.objectLabel.frame = CGRect(x:300,y:500,width: 250,height:250)
+        self.objectLabel.textAlignment = .center
+        self.objectLabel.sizeToFit()
+        self.addSubview(self.objectLabel)
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {

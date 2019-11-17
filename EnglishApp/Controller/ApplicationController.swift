@@ -124,7 +124,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         }
         self.arView.startSession()
         self.view = self.arView
-        self.arView.setQuestionLabel(question: self.question)
+        self.arView.setQuestionLabel(question: self.question, index: self.questionAlphabetIndex)
     }
     
     func toQuestionView() {
