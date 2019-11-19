@@ -79,7 +79,8 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             return
         }
         
-        if isContain { //ここで正誤判定の結果をUIで表示する
+        if isContain {
+            self.arView.pauseSession()
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
@@ -150,6 +151,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        return question?.map({String($0)})[index]
+        return self.question?.map({String($0)})[index]
     }
 }

@@ -8,7 +8,7 @@ class QuestionData {
     var alphabet: Character?
     
     init() {
-        self.questions = ["Phone", "Dog", "Cat", "Person", "Terminal"]
+        self.questions = ["Person"] // ["Phone", "Dog", "Cat", "Person", "Terminal"]
         self.question = questions.randomElement()
         self.usedTextList = []
     }
