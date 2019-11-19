@@ -45,8 +45,9 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func setQuestionLabel(question: String?) {
-        let uilabels = make_label(string: question, view: self)
+    func setQuestionLabel(question: String?, index: Int) {
+        let baseUILabel = makeBaseUILabel(string: question, index: index)
+        let uilabels = setUILabelSize(uilabels: baseUILabel, x: 0, y: self.frame.size.height*0.05, width: self.frame.size.width)
         uilabels?.forEach { label in
             self.addSubview(label)
         }

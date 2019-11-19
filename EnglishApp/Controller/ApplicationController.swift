@@ -106,9 +106,14 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // MARK: - その他の関数
     func toARView() {
+        self.arView.subviews.forEach { subview in
+            if subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
         self.arView.startSession()
         self.view = self.arView
-        self.arView.setQuestionLabel(question: self.question)
+        self.arView.setQuestionLabel(question: self.question, index: self.questionAlphabetIndex)
     }
     
     func toQuestionView() {
@@ -134,6 +139,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        return question?.map({String($0)})[index]
+        return self.question?.map({String($0)})[index]
     }
 }
