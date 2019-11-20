@@ -1,13 +1,14 @@
 import Foundation
 import UIKit
 
-class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate {
+class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate,RewardViewDelegate {
     
     private var startView: StartView!
     private var howToView: HowToView!
     private var questionView: QuestionView!
     private var arView: ARView!
     private var resultView: ResultView!
+    private var rewardView: RewardView!
     private var questionData: QuestionData!
     private var questionAlphabetIndex: Int!
     private var identifier: String!
@@ -20,12 +21,14 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.questionView = QuestionView()
         self.arView = ARView()
         self.resultView = ResultView()
+        self.rewardView = RewardView()
         self.questionData = QuestionData()
         self.questionAlphabetIndex = 0
         
         self.startView.delegate = self
         self.howToView.delegate = self
         self.arView.delegate = self
+        self.rewardView.delegate = self
         
         self.question = self.questionData.getQuestion()
     }
@@ -54,12 +57,19 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     
     func goSetting(_: UIButton) {
         print("Pushed Setting Button!")
+        self.view = self.rewardView
+        //self.view = self.howToView
     }
     
     // MARK: - HowTo画面のボタンタップ時の挙動
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
         self.view = self.startView
+    }
+    
+    func goSave(_: UIButton) {
+        print("Pushed Save Button!")
+        //self.view = self.startView
     }
     
     // MARK: - 物体認識画面の画面タップ時の挙動
