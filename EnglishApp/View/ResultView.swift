@@ -1,7 +1,14 @@
 import Foundation
 import UIKit
 
+protocol ResultViewDelegate: class {
+    func goHome(_:UIButton)
+    func goNextGame(_:UIButton)
+}
+
 class ResultView: UIView {
+    
+    var delegate: ResultViewDelegate?
     
     var usedTextLabels: [UILabel]!
     var questionLabel: UILabel!
@@ -25,7 +32,7 @@ class ResultView: UIView {
         self.goHomeButton.setTitle("おわる", for: .init())
         self.goHomeButton.setTitleColor(.white, for: .init())
         self.goHomeButton.backgroundColor = UIColor(rgb: 0x78CCD0)
-        self.goHomeButton.addTarget(self, action: #selector(goHome(_:)), for: .touchUpInside)
+        self.goHomeButton.addTarget(self, action: #selector(goHome(button:)), for: .touchUpInside)
         self.addSubview(self.goHomeButton)
     }
     
@@ -34,7 +41,7 @@ class ResultView: UIView {
         self.goNextGameButton.setTitle("もういちど", for: .init())
         self.goNextGameButton.setTitleColor(.white, for: .init())
         self.goNextGameButton.backgroundColor = UIColor(rgb: 0x78CCD0)
-        self.goNextGameButton.addTarget(self, action: #selector(goNextGame(_:)), for: .touchUpInside)
+        self.goNextGameButton.addTarget(self, action: #selector(goNextGame(button:)), for: .touchUpInside)
         self.addSubview(self.goNextGameButton)
     }
     
@@ -110,12 +117,14 @@ class ResultView: UIView {
     }
     
     // "おわる"ボタンが押された時に呼ばれるメソッド
-    @objc func goHome(_ sender: UIButton) {
+    @objc func goHome(button: UIButton) {
         print("goHome")
+        delegate?.goHome(button)
     }
     
-    // "おわる"ボタンが押された時に呼ばれるメソッド
-    @objc func goNextGame(_ sender: UIButton) {
+    // "もういちど"ボタンが押された時に呼ばれるメソッド
+    @objc func goNextGame(button: UIButton) {
         print("goNextGame")
+        delegate?.goNextGame(button)
     }
 }

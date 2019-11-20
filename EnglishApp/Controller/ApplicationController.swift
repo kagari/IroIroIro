@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate {
+class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ResultViewDelegate, ARViewDelegate {
     
     private var startView: StartView!
     private var howToView: HowToView!
@@ -26,6 +26,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.startView.delegate = self
         self.howToView.delegate = self
         self.arView.delegate = self
+        self.resultView.delegate = self
         
         self.question = self.questionData.getQuestion()
     }
@@ -62,6 +63,23 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         self.view = self.startView
     }
     
+    // MARK: - Result画面のボタンタップ時の挙動
+    func goHome(_: UIButton) {
+        print("Pushed おわり Button!")
+        self.setupGame()
+        self.view = self.startView
+    }
+    
+    func goNextGame(_: UIButton) {
+        print("Pushed もういちど Button!")
+        self.setupGame()
+        
+        self.toQuestionView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.toARView()
+        }
+    }
+    
     // MARK: - 物体認識画面の画面タップ時の挙動
     func tapGesture(identifier: String?) {
         print("Get Tap Gesture!")
@@ -80,7 +98,6 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         }
         
         if isContain {
-            self.arView.pauseSession()
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
             
@@ -97,6 +114,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     self.toARView()
