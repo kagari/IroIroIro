@@ -5,19 +5,54 @@ class ResultView: UIView {
     
     var usedTextLabels: [UILabel]!
     var questionLabel: UILabel!
+    var goHomeButton = UIButton()
+    var goNextGameButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
+        
+        self.makeGoHomeButton()
+        self.makeGoNextGameButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // おわる
+    func makeGoHomeButton() {
+        self.goHomeButton.setTitle("おわる", for: .init())
+        self.goHomeButton.setTitleColor(.white, for: .init())
+        self.goHomeButton.backgroundColor = UIColor(rgb: 0x78CCD0)
+        self.goHomeButton.addTarget(self, action: #selector(goHome(_:)), for: .touchUpInside)
+        self.addSubview(self.goHomeButton)
+    }
+    
+    // もういちど
+    func makeGoNextGameButton() {
+        self.goNextGameButton.setTitle("もういちど", for: .init())
+        self.goNextGameButton.setTitleColor(.white, for: .init())
+        self.goNextGameButton.backgroundColor = UIColor(rgb: 0x78CCD0)
+        self.goNextGameButton.addTarget(self, action: #selector(goNextGame(_:)), for: .touchUpInside)
+        self.addSubview(self.goNextGameButton)
+    }
+    
     override func layoutSubviews() {
-        self.questionLabel.sizeToFit()
         super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        self.questionLabel.sizeToFit()
+        
+        self.goHomeButton.frame = CGRect(x: 0, y: height*0.65, width: width*0.5, height: height*0.08)
+        self.goHomeButton.center.x = self.center.x
+        self.goHomeButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
+
+        self.goNextGameButton.frame = CGRect(x: 0, y: height*0.8, width: width*0.5, height: height*0.08)
+        self.goNextGameButton.center.x = self.center.x
+        self.goNextGameButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
     }
     
     func setQuestionLabel(question: String?) {
@@ -72,5 +107,15 @@ class ResultView: UIView {
             })
             return TextLabels
         }()
+    }
+    
+    // "おわる"ボタンが押された時に呼ばれるメソッド
+    @objc func goHome(_ sender: UIButton) {
+        print("goHome")
+    }
+    
+    // "おわる"ボタンが押された時に呼ばれるメソッド
+    @objc func goNextGame(_ sender: UIButton) {
+        print("goNextGame")
     }
 }
