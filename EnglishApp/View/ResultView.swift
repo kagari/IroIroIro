@@ -12,6 +12,9 @@ class ResultView: UIView {
     
     var usedTextLabels: [UILabel]!
     var questionLabel: UILabel!
+    
+    let homeImage = UIImage(named: "home")!
+    let retryImage = UIImage(named: "retry")!
     var goHomeButton = UIButton()
     var goNextGameButton = UIButton()
     
@@ -29,8 +32,14 @@ class ResultView: UIView {
     
     // おわる
     func makeGoHomeButton() {
-        self.goHomeButton.setTitle("おわる", for: .init())
-        self.goHomeButton.setTitleColor(.white, for: .init())
+//        self.goHomeButton.setTitle("おわる", for: .init())
+//        self.goHomeButton.setTitleColor(.white, for: .init())
+        // homeアイコンを設置
+        self.goHomeButton.setImage(homeImage, for: .init())
+        self.goHomeButton.imageView?.contentMode = .scaleToFill
+        self.goHomeButton.contentHorizontalAlignment = .fill
+        self.goHomeButton.contentVerticalAlignment = .fill
+        
         self.goHomeButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.goHomeButton.addTarget(self, action: #selector(goHome(button:)), for: .touchUpInside)
         self.addSubview(self.goHomeButton)
@@ -38,8 +47,14 @@ class ResultView: UIView {
     
     // もういちど
     func makeGoNextGameButton() {
-        self.goNextGameButton.setTitle("もういちど", for: .init())
-        self.goNextGameButton.setTitleColor(.white, for: .init())
+//        self.goNextGameButton.setTitle("もういちど", for: .init())
+//        self.goNextGameButton.setTitleColor(.white, for: .init())
+        // homeアイコンを設置
+        self.goNextGameButton.setImage(retryImage, for: .init())
+        self.goNextGameButton.imageView?.contentMode = .scaleToFill
+        self.goNextGameButton.contentHorizontalAlignment = .fill
+        self.goNextGameButton.contentVerticalAlignment = .fill
+        
         self.goNextGameButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.goNextGameButton.addTarget(self, action: #selector(goNextGame(button:)), for: .touchUpInside)
         self.addSubview(self.goNextGameButton)
@@ -53,13 +68,15 @@ class ResultView: UIView {
         
         self.questionLabel.sizeToFit()
         
-        self.goHomeButton.frame = CGRect(x: 0, y: height*0.65, width: width*0.5, height: height*0.08)
-        self.goHomeButton.center.x = self.center.x
-        self.goHomeButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
+        self.goHomeButton.frame = CGRect(x: 0, y: height*0.7, width: width*0.2, height: width*0.2)
+        self.goHomeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goHomeButton.layer.cornerRadius = width*0.1/2
+        self.goHomeButton.center.x = width*1/4
 
-        self.goNextGameButton.frame = CGRect(x: 0, y: height*0.8, width: width*0.5, height: height*0.08)
-        self.goNextGameButton.center.x = self.center.x
-        self.goNextGameButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
+        self.goNextGameButton.frame = CGRect(x: 0, y: height*0.7, width: width*0.2, height: width*0.2)
+        self.goNextGameButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goNextGameButton.layer.cornerRadius = width*0.1/2
+        self.goNextGameButton.center.x = width*3/4
     }
     
     func setQuestionLabel(question: String?) {
