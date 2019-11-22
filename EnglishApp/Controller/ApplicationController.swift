@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ResultViewDelegate, ARViewDelegate {
+class ApplicationController: UIViewController, ARViewDelegate {
     
     private var startView: StartView!
     private var howToView: HowToView!
@@ -35,49 +35,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         super.viewDidLoad()
         
         self.setupGame()
-        
-        self.view = startView
-    }
-    
-    // MARK: - Start画面のボタンタップ時の挙動
-    func buttonEvent(_: UIButton) {
-        print("Pushed Start Button!")
-        self.toQuestionView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.toARView()
-        }
-    }
-    
-    func goHowTo(_: UIButton) {
-        print("Pushed HowTo Button!")
-        self.view = self.howToView
-    }
-    
-    func goSetting(_: UIButton) {
-        print("Pushed Setting Button!")
-    }
-    
-    // MARK: - HowTo画面のボタンタップ時の挙動
-    func onbackClick(_: UIButton) {
-        print("Pushed Back Button!")
         self.view = self.startView
-    }
-    
-    // MARK: - Result画面のボタンタップ時の挙動
-    func goHome(_: UIButton) {
-        print("Pushed おわり Button!")
-        self.setupGame()
-        self.view = self.startView
-    }
-    
-    func goNextGame(_: UIButton) {
-        print("Pushed もういちど Button!")
-        self.setupGame()
-        
-        self.toQuestionView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.toARView()
-        }
     }
     
     // MARK: - 物体認識画面の画面タップ時の挙動
@@ -170,5 +128,49 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
         return self.question?.map({String($0)})[index]
+    }
+}
+
+extension ApplicationController: StartViewDelegate {
+    func buttonEvent(_: UIButton) {
+        print("Pushed Start Button!")
+        self.toQuestionView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.toARView()
+        }
+    }
+    
+    func goHowTo(_: UIButton) {
+        print("Pushed HowTo Button!")
+        self.view = self.howToView
+    }
+    
+    func goSetting(_: UIButton) {
+        print("Pushed Setting Button!")
+    }
+}
+
+extension ApplicationController: HowToViewDelegate {
+    func onbackClick(_: UIButton) {
+        print("Pushed Back Button!")
+        self.view = self.startView
+    }
+}
+
+extension ApplicationController: ResultViewDelegate {
+    func goHome(_: UIButton) {
+        print("Pushed おわり Button!")
+        self.setupGame()
+        self.view = self.startView
+    }
+    
+    func goNextGame(_: UIButton) {
+        print("Pushed もういちど Button!")
+        self.setupGame()
+        
+        self.toQuestionView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.toARView()
+        }
     }
 }

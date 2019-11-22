@@ -16,7 +16,9 @@ class ResultView: UIView {
     let homeImage = UIImage(named: "home")!
     let retryImage = UIImage(named: "retry")!
     var goHomeButton = UIButton()
+    var goHomeLabel = UILabel()
     var goNextGameButton = UIButton()
+    var goNextGameLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,8 +34,6 @@ class ResultView: UIView {
     
     // おわる
     func makeGoHomeButton() {
-//        self.goHomeButton.setTitle("おわる", for: .init())
-//        self.goHomeButton.setTitleColor(.white, for: .init())
         // homeアイコンを設置
         self.goHomeButton.setImage(homeImage, for: .init())
         self.goHomeButton.imageView?.contentMode = .scaleToFill
@@ -43,12 +43,15 @@ class ResultView: UIView {
         self.goHomeButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.goHomeButton.addTarget(self, action: #selector(goHome(button:)), for: .touchUpInside)
         self.addSubview(self.goHomeButton)
+        
+        self.goHomeLabel.text = "おわる"
+        self.goHomeLabel.textAlignment = .center
+        self.goHomeLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.addSubview(self.goHomeLabel)
     }
     
     // もういちど
     func makeGoNextGameButton() {
-//        self.goNextGameButton.setTitle("もういちど", for: .init())
-//        self.goNextGameButton.setTitleColor(.white, for: .init())
         // homeアイコンを設置
         self.goNextGameButton.setImage(retryImage, for: .init())
         self.goNextGameButton.imageView?.contentMode = .scaleToFill
@@ -58,6 +61,11 @@ class ResultView: UIView {
         self.goNextGameButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.goNextGameButton.addTarget(self, action: #selector(goNextGame(button:)), for: .touchUpInside)
         self.addSubview(self.goNextGameButton)
+        
+        self.goNextGameLabel.text = "もういちど"
+        self.goNextGameLabel.textAlignment = .center
+        self.goNextGameLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.addSubview(self.goNextGameLabel)
     }
     
     override func layoutSubviews() {
@@ -65,18 +73,25 @@ class ResultView: UIView {
         
         let width = self.frame.width
         let height = self.frame.height
+        let buttonRect = CGRect(x: 0, y: height*0.75, width: width*0.2, height: width*0.2)
         
         self.questionLabel.sizeToFit()
         
-        self.goHomeButton.frame = CGRect(x: 0, y: height*0.7, width: width*0.2, height: width*0.2)
+        self.goHomeButton.frame = buttonRect
+        self.goHomeButton.center.x = width*1/4
         self.goHomeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.goHomeButton.layer.cornerRadius = width*0.1/2
-        self.goHomeButton.center.x = width*1/4
+        
+        self.goHomeLabel.frame = CGRect(x: 0, y: self.goHomeButton.frame.maxY, width: width*0.2, height: width*0.05)
+        self.goHomeLabel.center.x = width*1/4
 
-        self.goNextGameButton.frame = CGRect(x: 0, y: height*0.7, width: width*0.2, height: width*0.2)
+        self.goNextGameButton.frame = buttonRect
+        self.goNextGameButton.center.x = width*3/4
         self.goNextGameButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.goNextGameButton.layer.cornerRadius = width*0.1/2
-        self.goNextGameButton.center.x = width*3/4
+        
+        self.goNextGameLabel.frame = CGRect(x: 0, y: self.goNextGameButton.frame.maxY, width: width*0.2, height: width*0.05)
+        self.goNextGameLabel.center.x = width*3/4
     }
     
     func setQuestionLabel(question: String?) {
