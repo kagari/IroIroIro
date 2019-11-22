@@ -1,23 +1,97 @@
 import Foundation
 import UIKit
 
+protocol ResultViewDelegate: class {
+    func goHome(_:UIButton)
+    func goNextGame(_:UIButton)
+}
+
 class ResultView: UIView {
+    
+    var delegate: ResultViewDelegate?
     
     var usedTextLabels: [UILabel]!
     var questionLabel: UILabel!
     
+    let homeImage = UIImage(named: "home")!
+    let retryImage = UIImage(named: "retry")!
+    var goHomeButton = UIButton()
+    var goHomeLabel = UILabel()
+    var goNextGameButton = UIButton()
+    var goNextGameLabel = UILabel()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
+        
+        self.makeGoHomeButton()
+        self.makeGoNextGameButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // おわる
+    func makeGoHomeButton() {
+        // homeアイコンを設置
+        self.goHomeButton.setImage(homeImage, for: .init())
+        self.goHomeButton.imageView?.contentMode = .scaleToFill
+        self.goHomeButton.contentHorizontalAlignment = .fill
+        self.goHomeButton.contentVerticalAlignment = .fill
+        
+        self.goHomeButton.backgroundColor = UIColor(rgb: 0x78CCD0)
+        self.goHomeButton.addTarget(self, action: #selector(goHome(button:)), for: .touchUpInside)
+        self.addSubview(self.goHomeButton)
+        
+        self.goHomeLabel.text = "おわる"
+        self.goHomeLabel.textAlignment = .center
+        self.goHomeLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.addSubview(self.goHomeLabel)
+    }
+    
+    // もういちど
+    func makeGoNextGameButton() {
+        // homeアイコンを設置
+        self.goNextGameButton.setImage(retryImage, for: .init())
+        self.goNextGameButton.imageView?.contentMode = .scaleToFill
+        self.goNextGameButton.contentHorizontalAlignment = .fill
+        self.goNextGameButton.contentVerticalAlignment = .fill
+        
+        self.goNextGameButton.backgroundColor = UIColor(rgb: 0x78CCD0)
+        self.goNextGameButton.addTarget(self, action: #selector(goNextGame(button:)), for: .touchUpInside)
+        self.addSubview(self.goNextGameButton)
+        
+        self.goNextGameLabel.text = "もういちど"
+        self.goNextGameLabel.textAlignment = .center
+        self.goNextGameLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.addSubview(self.goNextGameLabel)
+    }
+    
     override func layoutSubviews() {
-        self.questionLabel.sizeToFit()
         super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        let buttonRect = CGRect(x: 0, y: height*0.75, width: width*0.2, height: width*0.2)
+        
+        self.questionLabel.sizeToFit()
+        
+        self.goHomeButton.frame = buttonRect
+        self.goHomeButton.center.x = width*1/4
+        self.goHomeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goHomeButton.layer.cornerRadius = width*0.1/2
+        
+        self.goHomeLabel.frame = CGRect(x: 0, y: self.goHomeButton.frame.maxY, width: width*0.2, height: width*0.05)
+        self.goHomeLabel.center.x = width*1/4
+
+        self.goNextGameButton.frame = buttonRect
+        self.goNextGameButton.center.x = width*3/4
+        self.goNextGameButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goNextGameButton.layer.cornerRadius = width*0.1/2
+        
+        self.goNextGameLabel.frame = CGRect(x: 0, y: self.goNextGameButton.frame.maxY, width: width*0.2, height: width*0.05)
+        self.goNextGameLabel.center.x = width*3/4
     }
     
     func setQuestionLabel(question: String?) {
@@ -72,5 +146,17 @@ class ResultView: UIView {
             })
             return TextLabels
         }()
+    }
+    
+    // "おわる"ボタンが押された時に呼ばれるメソッド
+    @objc func goHome(button: UIButton) {
+        print("goHome")
+        delegate?.goHome(button)
+    }
+    
+    // "もういちど"ボタンが押された時に呼ばれるメソッド
+    @objc func goNextGame(button: UIButton) {
+        print("goNextGame")
+        delegate?.goNextGame(button)
     }
 }
