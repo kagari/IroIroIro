@@ -3,7 +3,7 @@ import UIKit
 
 class ResultView: UIView {
     
-    var usedTextLabels: [UILabel]!
+    var usedTextLabels: [[UILabel]?]!
     var questionLabel: UILabel!
     
     override init(frame: CGRect) {
@@ -34,41 +34,34 @@ class ResultView: UIView {
     }
     
     // QuestionModelからお題のデータを受け取る関数
-    func setUsedTextLabels(usedTexts: [String]?) {
+    func setUsedTextLabels(usedTexts: [String]?, question: String?) {
         print("setUsedTextLabel")
         guard let used_texts = usedTexts else {
             print("usedTexts is nil.")
             return
         }
-        self.initUsedTextLabels(used_texts: used_texts)
+        
+        self.initUsedTextLabels(used_texts: used_texts, question: question)
         
         for usedTextLabel in self.usedTextLabels {
-            usedTextLabel.sizeToFit()
-            self.addSubview(usedTextLabel)
+            for TextLabel in usedTextLabel!{
+                    TextLabel.sizeToFit()
+                    self.addSubview(TextLabel)
+                }
+            }
         }
-    }
     
     // 使用した英単語のLabelを作成する関数
-    private func initUsedTextLabels(used_texts: [String]) {
+    private func initUsedTextLabels(used_texts: [String], question: String?) {
         self.usedTextLabels = {
-
-            var i = 200
-
-            let TextLabels = used_texts.map({(text) -> UILabel in
-                let label = UILabel()
-                label.text = text
-                label.textColor = UIColor(rgb: 0xFF65B2)
-                label.font = UIFont(name: "Menlo", size: 50)
-                label.textAlignment = .center
-                
-                
-                for count in 0...used_texts.count{
-                    var total = used_texts.count
-                    total -= count
-                    label.frame = CGRect(x: 0, y: i, width: Int(0.8*self.frame.width), height: Int(0.2*self.frame.height))
-                    i += 10
-                }
-                return label
+            let TextLabels = used_texts.enumerated().map({(idx,text) -> [UILabel]? in
+                let resultlabels = result_label(string: text, index: idx, view: self)
+//                if text.lowercased().contains(question){
+                    resultlabels?.forEach { label in
+                        self.addSubview(label)
+                    }
+//                }
+                return resultlabels
             })
             return TextLabels
         }()

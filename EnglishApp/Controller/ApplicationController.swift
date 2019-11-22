@@ -43,7 +43,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         print("Pushed Start Button!")
         self.toQuestionView()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-            self.toARView()
+            self.toResultView()
         }
     }
     
@@ -134,9 +134,14 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     }
     
     func toResultView() {
-        self.resultView.setQuestionLabel(question: self.question)
-        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList())
+        self.resultView.subviews.forEach { subview in
+            if subview.tag == 0 && subview is UILabel {
+                subview.removeFromSuperview()
+            }
+        }
         self.view = self.resultView
+        self.resultView.setQuestionLabel(question: self.question)
+        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
