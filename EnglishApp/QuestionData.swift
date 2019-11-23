@@ -8,11 +8,12 @@ class QuestionData {
     var alphabet: Character?
     
     init() {
-//        , "Dog", "Cat", "Person", "Terminal"
-        self.questions = ["Phone"]
+//        , "Dog", "Phone", "Person", "Terminal"
+        self.questions = ["Cat"]
         self.question = questions.randomElement()
 //        ダミーデータ
-        self.usedTextList = ["person","cell phone","laptop","tvmonitor","bottle"]
+//        self.usedTextList = ["person","cell phone","laptop","tvmonitor","bottle"]
+        self.usedTextList = []
     }
     
     // MARK: - setter, getter

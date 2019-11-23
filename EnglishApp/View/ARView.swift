@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import ARKit
+import AVFoundation
 
 protocol ARViewDelegate {
     func tapGesture(identifier: String?)
@@ -15,12 +16,14 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     let objectDetectionModel: ObjectDetectionModel
     let configuration: ARConfiguration
     var objectLabel: UILabel!
+    var speechSynthesizer : AVSpeechSynthesizer!
     
     
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
         self.configuration = ARWorldTrackingConfiguration()
+        self.speechSynthesizer = AVSpeechSynthesizer()
         
         super.init(frame: frame)
         
@@ -130,16 +133,23 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         print("detectionFinished!!")
         
         self.identifier = identifier
-       
+        
         // 物体の名前を中心に表示
         self.objectLabel.text = self.identifier
         self.objectLabel.frame = CGRect(x:300,y:500,width: 250,height:250)
         self.objectLabel.textAlignment = .center
         self.objectLabel.sizeToFit()
         self.addSubview(self.objectLabel)
+        
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
+        let utterance = AVSpeechUtterance(string: identifier!) // 読み上げる文字
+        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP") // 言語
+        utterance.rate = 0.5; // 読み上げ速度
+        utterance.pitchMultiplier = 0.5; // 読み上げる声のピッチ
+        utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
+        self.speechSynthesizer.speak(utterance)
     }
 }
