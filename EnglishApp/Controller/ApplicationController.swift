@@ -67,6 +67,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
+                self.arView.pauseSession()
                 self.toResultView()
                 return
             }
@@ -112,8 +113,8 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     func toResultView() {
         self.resultView.setQuestionLabel(question: self.question)
-        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
         self.view = self.resultView
+        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
