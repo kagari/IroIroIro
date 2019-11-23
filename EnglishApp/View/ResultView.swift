@@ -10,7 +10,7 @@ class ResultView: UIView {
     
     var delegate: ResultViewDelegate?
     
-    var usedTextLabels: [UILabel]!
+    var usedTextLabels: [[UILabel]?] = []
     var questionLabel: UILabel!
     
     let homeImage = UIImage(named: "home")!
@@ -20,16 +20,56 @@ class ResultView: UIView {
     var goNextGameButton = UIButton()
     var goNextGameLabel = UILabel()
     
+    var descriptionLabel: UILabel!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         
         self.makeGoHomeButton()
         self.makeGoNextGameButton()
+        
+        self.descriptionLabel = {
+            let label = UILabel()
+            label.text = "見つけた英単語"
+            label.textAlignment = .center
+            label.font = UIFont(name: "Menlo", size: 50)
+            return label
+        }()
+        self.addSubview(self.descriptionLabel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        let buttonSize = width*0.1
+        let buttonRect = CGRect(x: 0, y: height*0.85, width: buttonSize, height: buttonSize)
+        
+        self.questionLabel.frame = CGRect(x: 0, y: 0, width: width, height: height*0.15)
+        
+        self.descriptionLabel.frame = CGRect(x: 0, y: height*0.2, width: width, height: height*0.02)
+        
+        self.goHomeButton.frame = buttonRect
+        self.goHomeButton.center.x = width*1/4
+        self.goHomeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goHomeButton.layer.cornerRadius = buttonSize/2
+        
+        self.goHomeLabel.frame = CGRect(x: 0, y: self.goHomeButton.frame.maxY, width: buttonSize, height: width*0.05)
+        self.goHomeLabel.center.x = width*1/4
+
+        self.goNextGameButton.frame = buttonRect
+        self.goNextGameButton.center.x = width*3/4
+        self.goNextGameButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.goNextGameButton.layer.cornerRadius = buttonSize/2
+        
+        self.goNextGameLabel.frame = CGRect(x: 0, y: self.goNextGameButton.frame.maxY, width: buttonSize, height: width*0.05)
+        self.goNextGameLabel.center.x = width*3/4
     }
     
     // おわる
@@ -68,32 +108,6 @@ class ResultView: UIView {
         self.addSubview(self.goNextGameLabel)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let width = self.frame.width
-        let height = self.frame.height
-        let buttonRect = CGRect(x: 0, y: height*0.75, width: width*0.2, height: width*0.2)
-        
-        self.questionLabel.sizeToFit()
-        
-        self.goHomeButton.frame = buttonRect
-        self.goHomeButton.center.x = width*1/4
-        self.goHomeButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.goHomeButton.layer.cornerRadius = width*0.1/2
-        
-        self.goHomeLabel.frame = CGRect(x: 0, y: self.goHomeButton.frame.maxY, width: width*0.2, height: width*0.05)
-        self.goHomeLabel.center.x = width*1/4
-
-        self.goNextGameButton.frame = buttonRect
-        self.goNextGameButton.center.x = width*3/4
-        self.goNextGameButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        self.goNextGameButton.layer.cornerRadius = width*0.1/2
-        
-        self.goNextGameLabel.frame = CGRect(x: 0, y: self.goNextGameButton.frame.maxY, width: width*0.2, height: width*0.05)
-        self.goNextGameLabel.center.x = width*3/4
-    }
-    
     func setQuestionLabel(question: String?) {
         self.questionLabel = {
             let label = UILabel()
@@ -108,46 +122,48 @@ class ResultView: UIView {
     }
     
     // QuestionModelからお題のデータを受け取る関数
-    func setUsedTextLabels(usedTexts: [String]?) {
+    func setUsedTextLabels(usedTexts: [String]?, question: String?) {
         print("setUsedTextLabel")
         guard let used_texts = usedTexts else {
-            print("usedTexts is nil.")
+            print("usedTexts is nil...")
             return
         }
-        self.initUsedTextLabels(used_texts: used_texts)
+        guard let question = question else {
+            print("question is nil...")
+            return
+        }
+
+        guard let count = used_texts.map({$0.count}).max() else { // get max length of used text
+            print("count is nil...")
+            return
+        }
+        
+        let labelSizeBaseStringCount = self.frame.width*0.8/CGFloat(count)
+        let labelSizeBaseQuestionLength = self.frame.height*0.8/CGFloat(question.count)
+        let labelSize = count > question.count ? labelSizeBaseStringCount : labelSizeBaseQuestionLength
+        var y = self.frame.height*0.25
+        
+        for (q, text) in zip(question.lowercased(), used_texts) {
+            guard let idx = text.lowercased().firstIndex(of: q) else {
+                print("not found \(q) from \(text)")
+                continue
+            }
+            
+            let index = text.distance(from: text.startIndex, to: idx)
+            
+            let labels = makeUILabelsForUsedTextLabel(string: text, index: index, x: self.frame.width*0.1, y: CGFloat(y), labelSize: labelSize)
+            
+            self.usedTextLabels.append(labels)
+            y += labelSize*1.5
+        }
         
         for usedTextLabel in self.usedTextLabels {
-            usedTextLabel.sizeToFit()
-            self.addSubview(usedTextLabel)
+            usedTextLabel?.forEach { text in
+                self.addSubview(text)
+            }
         }
     }
-    
-    // 使用した英単語のLabelを作成する関数
-    private func initUsedTextLabels(used_texts: [String]) {
-        self.usedTextLabels = {
 
-            var i = 200
-
-            let TextLabels = used_texts.map({(text) -> UILabel in
-                let label = UILabel()
-                label.text = text
-                label.textColor = UIColor(rgb: 0xFF65B2)
-                label.font = UIFont(name: "Menlo", size: 50)
-                label.textAlignment = .center
-                
-                
-                for count in 0...used_texts.count{
-                    var total = used_texts.count
-                    total -= count
-                    label.frame = CGRect(x: 0, y: i, width: Int(0.8*self.frame.width), height: Int(0.2*self.frame.height))
-                    i += 10
-                }
-                return label
-            })
-            return TextLabels
-        }()
-    }
-    
     // "おわる"ボタンが押された時に呼ばれるメソッド
     @objc func goHome(button: UIButton) {
         print("goHome")

@@ -112,7 +112,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     func toResultView() {
         self.resultView.setQuestionLabel(question: self.question)
-        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList())
+        self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
         self.view = self.resultView
     }
     
