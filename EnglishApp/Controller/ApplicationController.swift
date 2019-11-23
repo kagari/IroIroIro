@@ -42,11 +42,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.view = self.startView
     }
     
-    func goSave(reward: String?) {
-        print("Pushed save Button!")
-        self.rewardData.setReward(reward: reward)
-    }
-    
     // MARK: - 物体認識画面の画面タップ時の挙動
     func tapGesture(identifier: String?) {
         print("Get Tap Gesture!")
@@ -157,6 +152,8 @@ extension ApplicationController: StartViewDelegate {
     
     func goSetting(_: UIButton) {
         print("Pushed Setting Button!")
+        self.rewardView.setTextField(reward: self.rewardData.getReward())
+        self.view = self.rewardView
     }
 }
 
@@ -164,6 +161,13 @@ extension ApplicationController: HowToViewDelegate {
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
         self.view = self.startView
+    }
+}
+
+extension ApplicationController: RewardViewDelegate {
+    func goSave(reward: String?) {
+        print("Pushed save Button!")
+        self.rewardData.setReward(reward: reward)
     }
 }
 
