@@ -170,7 +170,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
         let utterance = AVSpeechUtterance(string: identifier!) // 読み上げるtext
-        utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP") // 言語
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
         utterance.rate = 0.5; // 読み上げ速度
         utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
         utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
