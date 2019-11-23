@@ -33,6 +33,7 @@ class ResultView: UIView {
             let label = UILabel()
             label.text = "見つけた英単語"
             label.textAlignment = .center
+            label.textColor = UIColor(rgb: 0x78CCD0)
             label.font = UIFont(name: "Menlo", size: 50)
             return label
         }()
