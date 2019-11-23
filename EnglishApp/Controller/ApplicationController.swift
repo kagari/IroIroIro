@@ -1,15 +1,17 @@
 import Foundation
 import UIKit
 
-class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate {
+class ApplicationController: UIViewController, StartViewDelegate, HowToViewDelegate, ARViewDelegate, RewardViewDelegate{
     
     private var startView: StartView!
     private var howToView: HowToView!
+    private var rewardView: RewardView!
     private var questionView: QuestionView!
     private var arView: ARView!
     private var resultView: ResultView!
     private var questionData: QuestionData!
     private var questionAlphabetIndex: Int!
+    private let rewardData = RewardData()
     private var identifier: String!
     var question: String?
     
@@ -17,6 +19,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     private func setupGame() {
         self.startView = StartView()
         self.howToView = HowToView()
+        self.rewardView = RewardView()
         self.questionView = QuestionView()
         self.arView = ARView()
         self.resultView = ResultView()
@@ -25,6 +28,7 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
         
         self.startView.delegate = self
         self.howToView.delegate = self
+        self.rewardView.delegate = self
         self.arView.delegate = self
         
         self.question = self.questionData.getQuestion()
@@ -53,13 +57,20 @@ class ApplicationController: UIViewController, StartViewDelegate, HowToViewDeleg
     }
     
     func goSetting(_: UIButton) {
-        print("Pushed Setting Button!")
+        print("pushed Back Botton")
+        self.rewardView.setTextField(reward: self.rewardData.getReward())
+        self.view = self.rewardView
     }
     
     // MARK: - HowTo画面のボタンタップ時の挙動
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
         self.view = self.startView
+    }
+    
+    func goSave(reward: String?) {
+        print("Pushed save Button!")
+        self.rewardData.setReward(reward: reward)
     }
     
     // MARK: - 物体認識画面の画面タップ時の挙動
