@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 // MARK: - お題を表示するためのUILabelのリストを作成する関数
-func makeBaseUILabel(string: String?, index: Int) -> [UILabel]? {
+func makeBaseUILabels(string: String?, index: Int) -> [UILabel]? {
     let uilabels = string?.enumerated().map({(idx, spell) -> UILabel in
         let label = UILabel()
         label.clipsToBounds = true
@@ -45,4 +45,37 @@ func setUILabelSize(uilabels: [UILabel]?, x: CGFloat, y: CGFloat, width: CGFloat
         _x += label_size + space_size
         return label
     }
+}
+
+// MARK: - UsedTextLabel用
+func makeUILabelsForUsedTextLabel(string: String?, index:Int, x: CGFloat, y: CGFloat, labelSize: CGFloat) -> [UILabel]? {
+    
+    var x = x
+    let uilabels = string?.enumerated().map({(idx,spell) -> UILabel in
+        let label = UILabel(frame: CGRect(x: x, y: y, width: labelSize, height: labelSize))
+        x += labelSize
+        // 文字の位置のセンタリングやバックグラウンドの設定
+        label.backgroundColor = .white
+        label.textAlignment = .center
+        label.text = String(spell)
+        
+        if idx == index{
+            // 角を丸くする
+            label.layer.cornerRadius = labelSize/2
+            label.clipsToBounds = true
+            // 枠線を表示
+            label.layer.borderWidth = 0.08*labelSize
+            label.layer.borderColor = UIColor(rgb: 0xed0000).cgColor
+            label.textColor = UIColor(rgb: 0xFF80BF)
+        } else {
+            // 角を丸くする
+            label.layer.cornerRadius = labelSize/2
+            label.clipsToBounds = true
+            label.textColor = UIColor(rgb: 0xFF80BF)
+        }
+
+        label.font = UIFont(name: "Menlo", size: 0.8*labelSize)
+        return label
+    })
+    return uilabels
 }
