@@ -34,11 +34,11 @@ class EnglishAppTests: XCTestCase {
     
     func testGetAlphabet() {
         //お題N番目が取れるかのテストをする
-        let questionViewController = QuestionViewController()
-        questionViewController.question = "dog"
-        XCTAssertEqual(questionViewController.getAlphabet(index: 0), "d")
-        XCTAssertEqual(questionViewController.getAlphabet(index: 1), "o")
-        XCTAssertEqual(questionViewController.getAlphabet(index: 2), "g")
+        let appController = ApplicationController()
+        appController.question = "dog"
+        XCTAssertEqual(appController.getAlphabet(index: 0), "d")
+        XCTAssertEqual(appController.getAlphabet(index: 1), "o")
+        XCTAssertEqual(appController.getAlphabet(index: 2), "g")
     }
     
     func testCheckQuestionAlphabetInIdentifier() {
