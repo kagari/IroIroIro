@@ -1,8 +1,13 @@
 import Foundation
 import UIKit
 
+protocol QuestionViewDataSource: class {
+    var questionString: String? { get }
+}
+
 class QuestionView: UIView {
     
+    weak var dataSource: QuestionViewDataSource?
     var questionLabel: UILabel!
     var topLabel: UILabel! //頭文字のラベル
     var searchLabel: UILabel! //"を探そうのラベル"
@@ -11,7 +16,7 @@ class QuestionView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.questionLabel = {
+        questionLabel = {
             let label = UILabel()
             label.textColor = UIColor(rgb: 0xFF65B2)
             label.font = UIFont(name: "Menlo", size: 50)
@@ -19,7 +24,7 @@ class QuestionView: UIView {
             return label
         }()
         
-        self.topLabel = {
+        topLabel = {
             let label = UILabel()
             label.textColor = UIColor(rgb: 0xFF65B2)
             label.font = UIFont(name: "Menlo", size: 200)
@@ -27,7 +32,7 @@ class QuestionView: UIView {
             return label
         }()
         
-        self.searchLabel = {
+        searchLabel = {
             let label = UILabel()
             label.textColor = UIColor(rgb: 0xFF65B2)
             label.font = UIFont(name: "Menlo", size: 50)
@@ -35,9 +40,9 @@ class QuestionView: UIView {
             return label
         }()
         
-        self.addSubview(self.questionLabel)
-        self.addSubview(self.topLabel)
-        self.addSubview(self.searchLabel)
+        self.addSubview(questionLabel)
+        self.addSubview(topLabel)
+        self.addSubview(searchLabel)
         self.backgroundColor = .white
     }
     
@@ -49,32 +54,27 @@ class QuestionView: UIView {
     // MARK: - 多分レイアウトが変更されたときに呼び出される
     override func layoutSubviews() {
         super.layoutSubviews()
-        let height = self.frame.height
-        let width = self.frame.width
         
-        self.questionLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
-        self.questionLabel.center.x = self.center.x
-        self.questionLabel.font = UIFont.systemFont(ofSize: width*0.07)
+        questionLabel.frame = CGRect(x: 100, y: 0, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        //questionLabel.layer.position = self.center
         
-        self.topLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
-        self.topLabel.center = self.center
-        self.topLabel.font = UIFont.systemFont(ofSize: height*0.1)
+        topLabel.frame = CGRect(x: 0, y: 0, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        topLabel.layer.position = self.center
         
-        self.searchLabel.frame = CGRect(x: 0, y: height-height*0.2, width: width*0.8, height: height*0.2)
-        self.searchLabel.center.x = self.center.x
-        self.searchLabel.font = UIFont.systemFont(ofSize: width*0.07)
+        searchLabel.frame = CGRect(x:100, y: 800, width: 0.8*self.frame.width, height: 0.2*self.frame.height)
+        //searchLabel.layer.position = self.center
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
     func setQuestionLabel(questionString: String?, questionAlphabet: String?) {
         print("setQuestionLabel")
-        self.questionLabel.text = questionString! + "を完成させよう"
-        self.questionLabel.sizeToFit()
+        questionLabel.text = questionString! + "を完成させよう"
+        questionLabel.sizeToFit()
         
-        self.topLabel.text = questionAlphabet
-        self.topLabel.sizeToFit()
+        topLabel.text = questionAlphabet
+        topLabel.sizeToFit()
         
-        self.searchLabel.text = "を探してね"
-        self.searchLabel.sizeToFit()
+        searchLabel.text = "を探してね"
+        searchLabel.sizeToFit()
     }
 }

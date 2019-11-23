@@ -4,29 +4,34 @@ import Foundation
 class QuestionData {
     let questions: [String]
     var question: String?
-    var usedTextList: [String]
+    var usedTextList: [String]?
     var alphabet: Character?
     
     init() {
         self.questions = ["Phone", "Dog", "Cat", "Person", "Terminal"]
         self.question = questions.randomElement()
-        self.usedTextList = []
     }
+}
+
+class QuestionDataSingleton: NSObject {
+    var data = QuestionData()
+    static let sharedInstance: QuestionDataSingleton = QuestionDataSingleton()
+    private override init() {}
     
     // MARK: - setter, getter
-    func addUsedText(usedText: String?) {
-        guard let usedText = usedText else {
-            print("usedText is nil...")
-            return
+    func saveUsedText(usedText: String) {
+        if data.usedTextList != nil {
+            data.usedTextList?.append(usedText) // データがある場合には普通にappend
+        } else {
+            data.usedTextList = [usedText] // データがない(nilの)場合には初期化する
         }
-        self.usedTextList.append(usedText)
     }
-    
-    func getUsedTextList() -> [String] {
-        return self.usedTextList
+
+    func getUsedTextList() -> [String]? {
+        return data.usedTextList
     }
     
     func getQuestion() -> String? {
-        return self.question
+        return data.question
     }
 }
