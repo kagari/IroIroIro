@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import ARKit
+import AVFoundation
 
 protocol ARViewDelegate {
     func tapGesture(identifier: String?)
@@ -15,12 +16,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     let objectDetectionModel: ObjectDetectionModel
     let configuration: ARConfiguration
     var objectLabel: UILabel!
-    
-    
+    var speechSynthesizer : AVSpeechSynthesizer!
+    var audioPlayer: AVAudioPlayer!
+    let audioCorrect = NSDataAsset(name: "correct1")
+    let audioIncorrect = NSDataAsset(name: "incorrect1")
+
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
         self.configuration = ARWorldTrackingConfiguration()
+        self.speechSynthesizer = AVSpeechSynthesizer()
         
         super.init(frame: frame)
         
@@ -73,7 +78,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru.textAlignment = .center
         maru.tag = 0
         self.addSubview(maru)
-        
+
         let maru2 = UILabel()
         maru2.text = "correct:)"
         maru2.textColor = .red
@@ -83,6 +88,19 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru2.textAlignment = .center
         maru2.tag = 0
         self.addSubview(maru2)
+        
+        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+        do {
+            audioPlayer = try AVAudioPlayer(data: audioCorrect!.data, fileTypeHint: "mp3")
+            audioPlayer.volume = 0.1
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        // 再生準備
+        audioPlayer.prepareToPlay()
+        
+        // 再生する
+        audioPlayer.play()
     }
     
     func setWrongLabel() {
@@ -105,6 +123,19 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu2.textAlignment = .center
         batsu2.tag = 0
         self.addSubview(batsu2)
+
+        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+        do {
+            audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
+            audioPlayer.volume = 0.1
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        // 再生準備
+        audioPlayer.prepareToPlay()
+        
+        // 再生する
+        audioPlayer.play()
     }
     
     func startSession() {
@@ -131,7 +162,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         print("detectionFinished!!")
         
         self.identifier = identifier
-       
+        
         // 物体の名前を中心に表示
         self.objectLabel.text = self.identifier
         self.objectLabel.font = UIFont(name: "Menlo", size: 100)
@@ -139,9 +170,16 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.objectLabel.center = self.center
         self.objectLabel.textAlignment = .center
         self.addSubview(self.objectLabel)
+        
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
+        let utterance = AVSpeechUtterance(string: identifier!) // 読み上げるtext
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
+        utterance.rate = 0.5; // 読み上げ速度
+        utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
+        utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
+        self.speechSynthesizer.speak(utterance)
     }
 }
