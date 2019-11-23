@@ -91,11 +91,13 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audioCorrect as URL, fileTypeHint:nil)
+            audioPlayer.volume = 0.1
         } catch {
             print("AVAudioPlayerインスタンス作成でエラー")
         }
         // 再生準備
         audioPlayer.prepareToPlay()
+        
         // 再生する
         audioPlayer.play()
     }
@@ -124,11 +126,13 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: audioIncorrect as URL, fileTypeHint:nil)
+            audioPlayer.volume = 0.1
         } catch {
             print("AVAudioPlayerインスタンス作成でエラー")
         }
         // 再生準備
         audioPlayer.prepareToPlay()
+        
         // 再生する
         audioPlayer.play()
     }
