@@ -18,8 +18,8 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     var objectLabel: UILabel!
     var speechSynthesizer : AVSpeechSynthesizer!
     var audioPlayer: AVAudioPlayer!
-    let audioCorrect = NSURL(fileURLWithPath: Bundle.main.path(forResource: "correct1", ofType: "mp3")!)
-    let audioIncorrect = NSURL(fileURLWithPath: Bundle.main.path(forResource: "incorrect1", ofType: "mp3")!)
+    let audioCorrect = NSDataAsset(name: "correct1")
+    let audioIncorrect = NSDataAsset(name: "incorrect1")
 
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
@@ -91,7 +91,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         
         // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioCorrect as URL, fileTypeHint:nil)
+            audioPlayer = try AVAudioPlayer(data: audioCorrect!.data, fileTypeHint: "mp3")
             audioPlayer.volume = 0.1
         } catch {
             print("AVAudioPlayerインスタンス作成でエラー")
@@ -126,7 +126,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
 
         // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioIncorrect as URL, fileTypeHint:nil)
+            audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
             audioPlayer.volume = 0.1
         } catch {
             print("AVAudioPlayerインスタンス作成でエラー")
