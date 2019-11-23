@@ -134,9 +134,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
        
         // 物体の名前を中心に表示
         self.objectLabel.text = self.identifier
-        self.objectLabel.frame = CGRect(x:300,y:500,width: 250,height:250)
+        self.objectLabel.font = UIFont(name: "Menlo", size: 100)
+        self.objectLabel.frame = CGRect(x: 0, y: 0,width: self.frame.width, height: self.frame.height * 0.2)
+        self.objectLabel.center = self.center
         self.objectLabel.textAlignment = .center
-        self.objectLabel.sizeToFit()
         self.addSubview(self.objectLabel)
     }
     
