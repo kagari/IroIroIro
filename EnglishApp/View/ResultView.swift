@@ -141,7 +141,7 @@ class ResultView: UIView {
         let labelSizeBaseStringCount = self.frame.width*0.8/CGFloat(count)
         let labelSizeBaseQuestionLength = self.frame.height*0.8/CGFloat(question.count)
         let labelSize = count > question.count ? labelSizeBaseStringCount : labelSizeBaseQuestionLength
-        var y = self.frame.height*0.25
+        var y = self.frame.height*0.28
         
         for (q, text) in zip(question.lowercased(), used_texts) {
             guard let idx = text.lowercased().firstIndex(of: q) else {
