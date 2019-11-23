@@ -27,6 +27,8 @@
 		6A4AB20A237176D8001A8019 /* HowToView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4AB207237176D8001A8019 /* HowToView.swift */; };
 		6A4AB20B237176D8001A8019 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4AB208237176D8001A8019 /* SettingController.swift */; };
 		6AE7B12D237FE8D200997ACE /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6AE7B12C237FE8D200997ACE /* YOLOv3.mlmodel */; };
+		E090C09223890CC500768E96 /* incorrect1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E090C09123890CC500768E96 /* incorrect1.mp3 */; };
+		E090C09423890CCE00768E96 /* correct1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E090C09323890CCE00768E96 /* correct1.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		6A4AB207237176D8001A8019 /* HowToView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HowToView.swift; sourceTree = "<group>"; };
 		6A4AB208237176D8001A8019 /* SettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		6AE7B12C237FE8D200997ACE /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../Downloads/YOLOv3.mlmodel; sourceTree = "<group>"; };
+		E090C09123890CC500768E96 /* incorrect1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = incorrect1.mp3; path = ../../Downloads/incorrect1.mp3; sourceTree = "<group>"; };
+		E090C09323890CCE00768E96 /* correct1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = correct1.mp3; path = ../../Downloads/correct1.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 		130262CA235B0B6400EAA314 /* EnglishApp */ = {
 			isa = PBXGroup;
 			children = (
+				E090C09323890CCE00768E96 /* correct1.mp3 */,
+				E090C09123890CC500768E96 /* incorrect1.mp3 */,
 				6AE7B12C237FE8D200997ACE /* YOLOv3.mlmodel */,
 				1313F74223697824002A72EC /* Utils */,
 				130262CB235B0B6400EAA314 /* AppDelegate.swift */,
@@ -309,8 +315,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E090C09423890CCE00768E96 /* correct1.mp3 in Resources */,
 				130262D8235B0B6500EAA314 /* LaunchScreen.storyboard in Resources */,
 				130262D5235B0B6500EAA314 /* Assets.xcassets in Resources */,
+				E090C09223890CC500768E96 /* incorrect1.mp3 in Resources */,
 				130262D3235B0B6400EAA314 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

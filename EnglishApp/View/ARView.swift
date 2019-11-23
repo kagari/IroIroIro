@@ -17,8 +17,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     let configuration: ARConfiguration
     var objectLabel: UILabel!
     var speechSynthesizer : AVSpeechSynthesizer!
-    
-    
+    var audioPlayer: AVAudioPlayer!
+    let audioCorrect = NSURL(fileURLWithPath: Bundle.main.path(forResource: "correct1", ofType: "mp3")!)
+    let audioIncorrect = NSURL(fileURLWithPath: Bundle.main.path(forResource: "incorrect1", ofType: "mp3")!)
+
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
@@ -75,7 +77,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru.textAlignment = .center
         maru.tag = 0
         self.addSubview(maru)
-        
+
         let maru2 = UILabel()
         maru2.text = "correct:)"
         maru2.textColor = .red
@@ -85,6 +87,17 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru2.textAlignment = .center
         maru2.tag = 0
         self.addSubview(maru2)
+        
+        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audioCorrect as URL, fileTypeHint:nil)
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        // 再生準備
+        audioPlayer.prepareToPlay()
+        // 再生する
+        audioPlayer.play()
     }
     
     func setWrongLabel() {
@@ -107,6 +120,17 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu2.textAlignment = .center
         batsu2.tag = 0
         self.addSubview(batsu2)
+
+        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: audioIncorrect as URL, fileTypeHint:nil)
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        // 再生準備
+        audioPlayer.prepareToPlay()
+        // 再生する
+        audioPlayer.play()
     }
     
     func startSession() {
@@ -145,10 +169,10 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
-        let utterance = AVSpeechUtterance(string: identifier!) // 読み上げる文字
+        let utterance = AVSpeechUtterance(string: identifier!) // 読み上げるtext
         utterance.voice = AVSpeechSynthesisVoice(language: "ja-JP") // 言語
         utterance.rate = 0.5; // 読み上げ速度
-        utterance.pitchMultiplier = 0.5; // 読み上げる声のピッチ
+        utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
         utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
         self.speechSynthesizer.speak(utterance)
     }
