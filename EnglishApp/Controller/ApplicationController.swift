@@ -5,11 +5,13 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     private var startView: StartView!
     private var howToView: HowToView!
+    private var rewardView: RewardView!
     private var questionView: QuestionView!
     private var arView: ARView!
     private var resultView: ResultView!
     private var questionData: QuestionData!
     private var questionAlphabetIndex: Int!
+    private let rewardData = RewardData()
     private var identifier: String!
     var question: String?
     
@@ -17,6 +19,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     private func setupGame() {
         self.startView = StartView()
         self.howToView = HowToView()
+        self.rewardView = RewardView()
         self.questionView = QuestionView()
         self.arView = ARView()
         self.resultView = ResultView()
@@ -25,6 +28,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.startView.delegate = self
         self.howToView.delegate = self
+        self.rewardView.delegate = self
         self.arView.delegate = self
         self.resultView.delegate = self
         
@@ -148,6 +152,8 @@ extension ApplicationController: StartViewDelegate {
     
     func goSetting(_: UIButton) {
         print("Pushed Setting Button!")
+        self.rewardView.setTextField(reward: self.rewardData.getReward())
+        self.view = self.rewardView
     }
 }
 
@@ -155,6 +161,13 @@ extension ApplicationController: HowToViewDelegate {
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
         self.view = self.startView
+    }
+}
+
+extension ApplicationController: RewardViewDelegate {
+    func goSave(reward: String?) {
+        print("Pushed save Button!")
+        self.rewardData.setReward(reward: reward)
     }
 }
 
