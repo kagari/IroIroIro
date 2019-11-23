@@ -17,20 +17,6 @@ class EnglishAppTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testQuestionData() {
-        // dataStorageにデータを登録できるかテストする
-        let dataStorage: QuestionDataSingleton = QuestionDataSingleton.sharedInstance
-        dataStorage.saveUsedText(usedText: "Question")
-        XCTAssertEqual(dataStorage.getUsedTextList(), ["Question"])
-        dataStorage.saveUsedText(usedText: "Hoge")
-        XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge"])
-        // dataStorageでデータがシェアできるかテストする
-        let dataStorage2: QuestionDataSingleton = QuestionDataSingleton.sharedInstance
-        XCTAssertEqual(dataStorage2.getUsedTextList(), ["Question", "Hoge"])
-        dataStorage2.saveUsedText(usedText: "Fuga")
-        XCTAssertEqual(dataStorage.getUsedTextList(), ["Question", "Hoge", "Fuga"])
-    }
     
     func testGetAlphabet() {
         //お題N番目が取れるかのテストをする
