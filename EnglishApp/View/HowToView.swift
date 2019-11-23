@@ -6,7 +6,7 @@ protocol HowToViewDelegate: class {
 
 class HowToView: UIView {
     var delegate: HowToViewDelegate?
-    private let image = UIImage(named:"howtoplay4")!
+    private let image = UIImage(named:"howtoplay3")!
     private var imageView: UIImageView?
     private var backBtn: UIButton?
     
@@ -21,10 +21,10 @@ class HowToView: UIView {
         //戻るボタン
         self.backBtn = UIButton()
         self.backBtn?.setTitle("戻る", for: UIControl.State())
-        self.backBtn?.setTitleColor(.white, for: UIControl.State())
-        self.backBtn?.backgroundColor = UIColor(rgb: 0x78CCD0)
+        self.backBtn?.setTitleColor(.orange, for: UIControl.State())
+        self.backBtn?.backgroundColor = .white
         self.backBtn?.layer.cornerRadius = 10.0
-        self.backBtn?.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
+        self.backBtn?.layer.borderColor = UIColor.orange.cgColor
         self.backBtn?.layer.borderWidth = 1.0
         self.backBtn?.addTarget(self, action: #selector(onbackClick(button:)), for: .touchUpInside)
         self.addSubview(self.backBtn!)
@@ -43,8 +43,7 @@ class HowToView: UIView {
         let scale = width / imgWidth
         
         self.imageView?.frame = CGRect(x: 0, y: 0, width: imgWidth*scale, height: imgHeight*scale)
-        self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: width*0.28, height: height*0.05)
-        self.backBtn?.titleLabel?.font = UIFont.systemFont(ofSize: height*0.03)
+        self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: 200, height: 30)
     }
     
     @objc func onbackClick(button: UIButton) {
