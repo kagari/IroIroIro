@@ -53,7 +53,6 @@ class StartView: UIView {
     func makeStartButton() {
         self.startButton.setTitle("START", for: .normal) // タイトルを設定する
         self.startButton.setTitleColor(UIColor(red:120/255, green:204/255, blue:208/255, alpha:1), for: .normal)
-        self.startButton.titleLabel?.font = UIFont.systemFont(ofSize: 100)
         self.startButton.addTarget(self, action: #selector(buttonEvent(button:)), for: .touchUpInside)
         self.addSubview(self.startButton)
     }
@@ -63,7 +62,6 @@ class StartView: UIView {
         self.howToButton.setTitle("遊び方", for: UIControl.State())
         self.howToButton.setTitleColor(.white, for: UIControl.State())
         self.howToButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
-        self.howToButton.titleLabel?.font = UIFont.systemFont(ofSize: 80)
         self.howToButton.addTarget(self, action: #selector(goHowTo(button:)), for: .touchUpInside)
         self.addSubview(self.howToButton)
     }
@@ -73,7 +71,6 @@ class StartView: UIView {
         self.settingButton.setTitle("設定", for: UIControl.State())
         self.settingButton.setTitleColor(.white, for: UIControl.State())
         self.settingButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
-        self.settingButton.titleLabel?.font = UIFont.systemFont(ofSize: 80)
         self.settingButton.addTarget(self, action: #selector(goSetting(button:)), for: .touchUpInside)
         self.addSubview(self.settingButton)
     }
@@ -98,8 +95,13 @@ class StartView: UIView {
         self.imageView2?.center = CGPoint(x: width*0.5, y: height*0.55)
         
         self.startButton.frame = CGRect(x: 0, y: height*0.38, width: width, height: height*0.3)
+        self.startButton.titleLabel?.font = UIFont.systemFont(ofSize: height < width*2 ? height*0.085 : width*0.16)
+        
         self.howToButton.frame = CGRect(x: 0, y: height*0.8, width: width*0.5, height: height*0.2)
+        self.howToButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
+        
         self.settingButton.frame = CGRect(x: width*0.5, y: height*0.8, width: width*0.5, height: height*0.2)
+        self.settingButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
     }
     
     // MARK: - ボタンタップ時の挙動
