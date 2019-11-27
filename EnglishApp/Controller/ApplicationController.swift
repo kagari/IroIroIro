@@ -31,6 +31,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.rewardView.delegate = self
         self.arView.delegate = self
         self.resultView.delegate = self
+        self.questionView.delegate = self
         
         self.question = self.questionData.getQuestion()
     }
@@ -187,4 +188,14 @@ extension ApplicationController: ResultViewDelegate {
             self.toARView()
         }
     }
+}
+
+extension ApplicationController: QuestionViewDelegate{
+    func goSkip(_: UIButton) {
+        print("Pushed Skip Button!")
+        self.setupGame()
+        
+        self.toARView()
+    }
+    
 }

@@ -93,7 +93,7 @@ class ResultView: UIView {
     
     // もういちど
     func makeGoNextGameButton() {
-        // homeアイコンを設置
+        // repeatアイコンを設置
         self.goNextGameButton.setImage(retryImage, for: .init())
         self.goNextGameButton.imageView?.contentMode = .scaleToFill
         self.goNextGameButton.contentHorizontalAlignment = .fill
