@@ -140,7 +140,7 @@ extension ApplicationController: StartViewDelegate {
     func buttonEvent(_: UIButton) {
         print("Pushed Start Button!")
         self.toQuestionView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
             self.toARView()
         }
     }
