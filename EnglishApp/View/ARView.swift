@@ -161,6 +161,18 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     func detectionFinished(identifier: String?, objectBounds: CGRect?) {
         print("detectionFinished!!")
         
+        self.subviews.filter({$0.tag == 10}).forEach { view in // delete ObjectRoundedLineView
+            view.removeFromSuperview()
+        }
+        
+        let objectRoundedLineView = UIView(frame: objectBounds!)
+        objectRoundedLineView.tag = 10
+        objectRoundedLineView.backgroundColor = UIColor(rgba: 0xf0ea9e)
+        self.addSubview(objectRoundedLineView)
+        self.subviews.filter({$0 is UILabel}).forEach { label in
+            self.bringSubviewToFront(label)
+        }
+        
         self.identifier = identifier
         
         // 物体の名前を中心に表示
