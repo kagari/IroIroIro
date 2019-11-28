@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import AVFoundation
 
 class ApplicationController: UIViewController, ARViewDelegate {
     
@@ -14,6 +15,11 @@ class ApplicationController: UIViewController, ARViewDelegate {
     private let rewardData = RewardData()
     private var identifier: String!
     var question: String?
+    
+    var speechSynthesizer : AVSpeechSynthesizer!
+    var audioPlayer: AVAudioPlayer!
+    let audioCorrect = NSDataAsset(name: "correct1")
+    let audioIncorrect = NSDataAsset(name: "incorrect1")
     
     // set instance for game
     private func setupGame() {
@@ -33,6 +39,8 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView.delegate = self
         
         self.question = self.questionData.getQuestion()
+        
+        self.speechSynthesizer = AVSpeechSynthesizer()
     }
     
     override func viewDidLoad() {
@@ -46,6 +54,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     func tapGesture(identifier: String?) {
         print("Get Tap Gesture!")
         print("identifier: \(String(describing: identifier))")
+        
+        if let identifier = self.identifier {
+            let utterance = AVSpeechUtterance(string: identifier) // 読み上げるtext
+            utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
+            utterance.rate = 0.5; // 読み上げ速度
+            utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
+            utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
+            self.speechSynthesizer.speak(utterance)
+        }
         
         self.identifier = identifier
         
@@ -64,6 +81,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
             print("Correct!!")
             
             self.arView.setCorrectLabel() //まる表示
+            // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+            do {
+                audioPlayer = try AVAudioPlayer(data: audioCorrect!.data, fileTypeHint: "mp3")
+                audioPlayer.volume = 0.1
+            } catch {
+                print("AVAudioPlayerインスタンス作成でエラー")
+            }
+            audioPlayer.prepareToPlay() // 再生準備
+            audioPlayer.play() // 再生
             
             
             self.questionData.addUsedText(usedText: identifier)
@@ -87,6 +113,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
         }else{ //間違えUIここ
             
             self.arView.setWrongLabel() //ばつ表示
+            // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
+            do {
+                audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
+                audioPlayer.volume = 0.1
+            } catch {
+                print("AVAudioPlayerインスタンス作成でエラー")
+            }
+            audioPlayer.prepareToPlay() // 再生準備
+            audioPlayer.play() // 再生
             
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
