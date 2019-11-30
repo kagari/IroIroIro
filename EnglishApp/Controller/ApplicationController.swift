@@ -55,15 +55,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         print("Get Tap Gesture!")
         print("identifier: \(String(describing: identifier))")
         
-        if let identifier = self.identifier {
-            let utterance = AVSpeechUtterance(string: identifier) // 読み上げるtext
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
-            utterance.rate = 0.5; // 読み上げ速度
-            utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
-            utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
-            self.speechSynthesizer.speak(utterance)
-        }
-        
         self.identifier = identifier
         
         guard let targetAlphabet = self.getAlphabet(index: self.questionAlphabetIndex) else {
@@ -74,6 +65,17 @@ class ApplicationController: UIViewController, ARViewDelegate {
         guard let isContain = self.checkObjectNameAndQuestion(identifier: identifier, targetAlphabet: String.Element(targetAlphabet)) else {
             print("checkObjectNameAndQuestion function return nil...")
             return
+        }
+        
+        if let identifier = self.identifier {
+            DispatchQueue.main.async {
+                let utterance = AVSpeechUtterance(string: identifier) // 読み上げるtext
+                utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
+                utterance.rate = 0.5; // 読み上げ速度
+                utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
+                utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
+                self.speechSynthesizer.speak(utterance)
+            }
         }
         
         if isContain {
