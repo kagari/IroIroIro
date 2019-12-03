@@ -12,7 +12,7 @@ class QuestionView: UIView {
     
     let skipImage = UIImage(named: "skip")!
     var skipButton = UIButton()
-    var skipLabel = UILabel()
+//    var skipLabel = UILabel()
     var speechSynthesizer : AVSpeechSynthesizer!
     var questionLabel: UILabel!
     var topLabel: UILabel! //頭文字のラベル
@@ -82,12 +82,12 @@ class QuestionView: UIView {
         self.searchLabel.font = UIFont.systemFont(ofSize: width*0.07)
         
         self.skipButton.frame = buttonRect
-        self.skipButton.center.x = width*1/4
+        self.skipButton.center.x = width*3/4
         self.skipButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.skipButton.layer.cornerRadius = buttonSize/2
         
-        self.skipLabel.frame = CGRect(x: 0, y: self.skipButton.frame.maxY, width: buttonSize, height: width*0.05)
-        self.skipLabel.center.x = width*1/4
+//        self.skipLabel.frame = CGRect(x: 0, y: self.skipButton.frame.maxY, width: buttonSize, height: width*0.05)
+//        self.skipLabel.center.x = width*3/4
     }
     
     func makeSkipButton() {
@@ -101,10 +101,10 @@ class QuestionView: UIView {
         self.skipButton.addTarget(self, action: #selector(goSkip(button:)), for: .touchUpInside)
         self.addSubview(self.skipButton)
         
-        self.skipLabel.text = "スキップ"
-        self.skipLabel.textAlignment = .center
-        self.skipLabel.textColor = UIColor(rgb: 0x78CCD0)
-        self.addSubview(self.skipLabel)
+//        self.skipLabel.text = "スキップ"
+//        self.skipLabel.textAlignment = .center
+//        self.skipLabel.textColor = UIColor(rgb: 0x78CCD0)
+//        self.addSubview(self.skipLabel)
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
