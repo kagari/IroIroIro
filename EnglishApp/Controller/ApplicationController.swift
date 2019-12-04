@@ -187,7 +187,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        return self.question?.map({String($0)})[index]
+        guard let count = self.question?.count else {
+            return nil
+        }
+        
+        if count > index {
+            return self.question?.map({String($0)})[index]
+        }
+        
+        return nil
     }
 }
 
