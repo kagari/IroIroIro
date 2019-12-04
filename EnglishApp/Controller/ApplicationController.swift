@@ -108,20 +108,22 @@ class ApplicationController: UIViewController, ARViewDelegate {
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
-                self.identifier = nil
-                self.isSpellJudge = false
-                self.arView.pauseSession()
-                self.toResultView()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.arView.pauseSession()
+                    self.toResultView()
+                    self.identifier = nil
+                    self.isSpellJudge = false
+                }
                 self.gameClearCount += 1
                 return
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.identifier = nil
-                self.isSpellJudge = false
-                self.arView.pauseSession()
+//                self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    self.identifier = nil
+                    self.isSpellJudge = false
                     self.toARView()
                 }
             }
@@ -143,6 +145,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
             print("Incorrect!!")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.identifier = nil
                 self.isSpellJudge = false
                 self.toARView()
             }
@@ -152,7 +155,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     // MARK: - その他の関数
     func toARView() {
         self.arView.subviews.forEach { subview in
-            if subview.tag == 0 && subview is UILabel {
+            if subview.tag >= 10 {
                 subview.removeFromSuperview()
             }
         }

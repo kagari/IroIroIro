@@ -70,7 +70,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
         maru.center = self.center
         maru.textAlignment = .center
-        maru.tag = 0
+        maru.tag = 11
         self.addSubview(maru)
 
         let maru2 = UILabel()
@@ -80,7 +80,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru2.frame = CGRect(x: 0, y: maru.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
         maru2.center.x = maru.frame.midX
         maru2.textAlignment = .center
-        maru2.tag = 0
+        maru2.tag = 11
         self.addSubview(maru2)
     }
     
@@ -92,7 +92,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
         batsu.center = self.center
         batsu.textAlignment = .center
-        batsu.tag = 0
+        batsu.tag = 11
         self.addSubview(batsu)
         
         let batsu2 = UILabel()
@@ -102,7 +102,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu2.frame = CGRect(x: 0, y: batsu.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
         batsu2.center.x = batsu.frame.midX
         batsu2.textAlignment = .center
-        batsu2.tag = 0
+        batsu2.tag = 11
         self.addSubview(batsu2)
     }
     
@@ -138,6 +138,9 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
             let objectRoundedLineView = UIView(frame: objectBounds)
             objectRoundedLineView.tag = 10
             objectRoundedLineView.backgroundColor = UIColor(rgba: 0xf0ea9e)
+            // set tap gesture
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(gestureRecognizer:)))
+            objectRoundedLineView.addGestureRecognizer(tapGestureRecognizer)
             self.addSubview(objectRoundedLineView)
             
         } else {
