@@ -133,7 +133,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
             view.removeFromSuperview()
         }
         
-        if let objectBounds = objectBounds {
+        if let objectBounds = objectBounds, let identifier = identifier {
             
             let objectRoundedLineView = UIView(frame: objectBounds)
             objectRoundedLineView.tag = 10
@@ -141,21 +141,22 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
             // set tap gesture
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(gestureRecognizer:)))
             objectRoundedLineView.addGestureRecognizer(tapGestureRecognizer)
-            self.addSubview(objectRoundedLineView)
             
+            self.identifier = identifier
+            // 名前を物体の枠の中央に表示
+            self.objectLabel.text = self.identifier
+            self.objectLabel.font = UIFont(name: "Menlo", size: 100)
+            self.objectLabel.adjustsFontSizeToFitWidth = true
+            self.objectLabel.frame = CGRect(x: 0, y: 0,width: objectBounds.width, height: objectBounds.height)
+            self.objectLabel.center = objectRoundedLineView.center
+            self.objectLabel.textAlignment = .center
+            self.objectLabel.tag = 10
+            self.addSubview(self.objectLabel)
+            
+            self.addSubview(objectRoundedLineView)
         } else {
             print("Object detection is failed.")
         }
-        
-        self.identifier = identifier
-        // 物体の名前を中心に表示
-        self.objectLabel.text = self.identifier
-        self.objectLabel.font = UIFont(name: "Menlo", size: 100)
-        self.objectLabel.frame = CGRect(x: 0, y: 0,width: self.frame.width, height: self.frame.height * 0.2)
-        self.objectLabel.center = self.center
-        self.objectLabel.textAlignment = .center
-        self.objectLabel.tag = 10
-        self.addSubview(self.objectLabel)
         
         // move UILabel to foreground
         self.subviews.filter({$0 is UILabel}).forEach { label in
