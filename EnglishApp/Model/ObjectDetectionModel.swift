@@ -50,15 +50,15 @@ class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
         self.bounds = bounds
        
         let requestHandler = VNImageRequestHandler(cvPixelBuffer: self.currentBuffer!)
-       
-       visionQueue.async {
-           do {
-               defer { self.currentBuffer = nil } // この関数を出る時に実行される
-               try requestHandler.perform([self.classificationRequest])
-           } catch {
-               print("Error: Vision request failed with error \"\(error)\"")
-           }
-       }
+        
+        self.visionQueue.async {
+            do {
+                defer { self.currentBuffer = nil } // この関数を出る時に実行される
+                try requestHandler.perform([self.classificationRequest])
+            } catch {
+                print("Error: Vision request failed with error \"\(error)\"")
+            }
+        }
     }
     
     private func processClassifications(for request: VNRequest, error: Error?) {
