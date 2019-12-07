@@ -29,7 +29,7 @@
 		6AE7B12D237FE8D200997ACE /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6AE7B12C237FE8D200997ACE /* YOLOv3.mlmodel */; };
 		6B00EE5623891BCC00BC8732 /* RewardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B00EE5523891BCC00BC8732 /* RewardData.swift */; };
 		6B00EE5823891BE000BC8732 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B00EE5723891BE000BC8732 /* RewardView.swift */; };
-		E0E16EA8239B831E000C618C /* 遊び方.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E0E16EA7239B831E000C618C /* 遊び方.mp4 */; };
+		E0E16EAA239B8BFB000C618C /* 遊び方.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E0E16EA9239B8BFB000C618C /* 遊び方.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +78,7 @@
 		6AE7B12C237FE8D200997ACE /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = YOLOv3.mlmodel; path = ../../Downloads/YOLOv3.mlmodel; sourceTree = "<group>"; };
 		6B00EE5523891BCC00BC8732 /* RewardData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardData.swift; sourceTree = "<group>"; };
 		6B00EE5723891BE000BC8732 /* RewardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
-		E0E16EA7239B831E000C618C /* 遊び方.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "遊び方.mp4"; path = "../Downloads/遊び方.mp4"; sourceTree = "<group>"; };
+		E0E16EA9239B8BFB000C618C /* 遊び方.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "遊び方.mp4"; path = "../Downloads/遊び方.mp4"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +109,7 @@
 		130262BF235B0B6400EAA314 = {
 			isa = PBXGroup;
 			children = (
-				E0E16EA7239B831E000C618C /* 遊び方.mp4 */,
+				E0E16EA9239B8BFB000C618C /* 遊び方.mp4 */,
 				130262CA235B0B6400EAA314 /* EnglishApp */,
 				130262E1235B0B6600EAA314 /* EnglishAppTests */,
 				130262EC235B0B6600EAA314 /* EnglishAppUITests */,
@@ -318,7 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0E16EA8239B831E000C618C /* 遊び方.mp4 in Resources */,
+				E0E16EAA239B8BFB000C618C /* 遊び方.mp4 in Resources */,
 				130262D8235B0B6500EAA314 /* LaunchScreen.storyboard in Resources */,
 				130262D5235B0B6500EAA314 /* Assets.xcassets in Resources */,
 				130262D3235B0B6400EAA314 /* Main.storyboard in Resources */,
