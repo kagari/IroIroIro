@@ -234,6 +234,7 @@ extension ApplicationController: StartViewDelegate {
 extension ApplicationController: HowToViewDelegate {
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
+        self.setupGame()
         self.view = self.startView
     }
 }
