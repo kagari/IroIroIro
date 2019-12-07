@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 protocol HowToViewDelegate: class {
     func onbackClick(_:UIButton)
@@ -11,12 +12,9 @@ class HowToView: UIView {
     private var backBtn: UIButton?
     
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
         self.backgroundColor = .white
-
-        // 遊び方の画像
-        self.imageView = UIImageView(image:image)
-        self.addSubview(self.imageView!)
     
         //戻るボタン
         self.backBtn = UIButton()

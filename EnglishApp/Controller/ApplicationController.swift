@@ -19,11 +19,19 @@ class ApplicationController: UIViewController, ARViewDelegate {
     private var gameClearCount: Int!
     private var isSpellJudge: Bool!
     
-    var speechSynthesizer : AVSpeechSynthesizer!
+    var speechSynthesizer: AVSpeechSynthesizer!
     var audioPlayer: AVAudioPlayer!
     let audioCorrect = NSDataAsset(name: "correct1")
     let audioIncorrect = NSDataAsset(name: "incorrect1")
     
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
+    
+    let path = Bundle.main.path(forResource: "遊び方", ofType: "mp4")!
+
+//    let asset = NSDataAsset(name:"遊び方")
+//    let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("遊び方.mp4")
+
     // set instance for game
     private func setupGame() {
         self.startView = StartView()
@@ -47,6 +55,9 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.speechSynthesizer = AVSpeechSynthesizer()
         self.isSpellJudge = false
+        
+        self.player = AVPlayer(url: URL(fileURLWithPath: self.path))
+        self.playerLayer = AVPlayerLayer(player: player)
     }
     
     override func viewDidLoad() {
@@ -204,6 +215,13 @@ extension ApplicationController: StartViewDelegate {
     func goHowTo(_: UIButton) {
         print("Pushed HowTo Button!")
         self.view = self.howToView
+        
+        player.play()
+    
+        self.playerLayer.frame = self.howToView.bounds
+        self.playerLayer.videoGravity = .resizeAspectFill
+        self.playerLayer.zPosition = -1 // ボタン等よりも後ろに表示
+        self.howToView.layer.insertSublayer(self.playerLayer, at: 0) // 動画をレイヤーとして追加
     }
     
     func goSetting(_: UIButton) {
@@ -248,7 +266,6 @@ extension ApplicationController: ResultViewDelegate {
 extension ApplicationController: QuestionViewDelegate{
     func goSkip(_: UIButton) {
         print("Pushed Skip Button!")
-        self.setupGame()
         
         self.toARView()
     }
