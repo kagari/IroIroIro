@@ -34,7 +34,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView = ResultView()
         self.questionData = QuestionData()
         self.questionAlphabetIndex = 0
-        self.gameClearCount = 0
         
         self.startView.delegate = self
         self.howToView.delegate = self
@@ -46,6 +45,10 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.speechSynthesizer = AVSpeechSynthesizer()
         self.isSpellJudge = false
+        
+        if self.gameClearCount == nil || self.gameClearCount == 5 {
+            self.gameClearCount = 0
+        }
     }
     
     override func viewDidLoad() {
@@ -110,11 +113,11 @@ class ApplicationController: UIViewController, ARViewDelegate {
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     self.arView.pauseSession()
+                    self.gameClearCount += 1
                     self.toResultView()
                     self.identifier = nil
                     self.isSpellJudge = false
                 }
-                self.gameClearCount += 1
                 return
             }
             
@@ -174,6 +177,14 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView.setQuestionLabel(question: self.question)
         self.view = self.resultView
         self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
+        
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+
+        let rect = CGRect(x: width*0.1, y: height*0.18, width: width*0.8, height: height*0.1)
+        let rewardStars = ResultRewardComponent(getStarCount: self.gameClearCount, frame: rect)
+        rewardStars.thisGetStar(index: gameClearCount-1)
+        self.resultView.addSubview(rewardStars)
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {

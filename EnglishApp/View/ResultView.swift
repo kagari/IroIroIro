@@ -54,7 +54,7 @@ class ResultView: UIView {
         
         self.questionLabel.frame = CGRect(x: 0, y: 0, width: width, height: height*0.15)
         
-        self.descriptionLabel.frame = CGRect(x: 0, y: height*0.2, width: width, height: height*0.02)
+        self.descriptionLabel.frame = CGRect(x: 0, y: height*0.32, width: width, height: height*0.02)
         
         self.goHomeButton.frame = buttonRect
         self.goHomeButton.center.x = width*1/4
@@ -140,9 +140,9 @@ class ResultView: UIView {
         }
         
         let labelSizeBaseStringCount = self.frame.width*0.8/CGFloat(count)
-        let labelSizeBaseQuestionLength = self.frame.height*0.35/CGFloat(question.count)
+        let labelSizeBaseQuestionLength = self.frame.height*0.32/CGFloat(question.count)
         let labelSize = min(labelSizeBaseQuestionLength, labelSizeBaseStringCount)
-        var y = self.frame.height*0.28
+        var y = self.frame.height*0.32 + labelSize
         
         for (q, text) in zip(question.lowercased(), used_texts) {
             guard let idx = text.lowercased().firstIndex(of: q) else {
