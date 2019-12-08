@@ -188,7 +188,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         if gameClearCount == 5 {
             let rect = CGRect(x: width*0.1, y: height*0.3, width: width*0.8, height: height*0.6)
-            self.rewardData.setReward(reward: "15分ゲームができる")
             let rewardWindow = RewardWindow(reward: self.rewardData.getReward(), frame: rect)
             rewardWindow.alpha = 0
             rewardWindow.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
