@@ -185,6 +185,22 @@ class ApplicationController: UIViewController, ARViewDelegate {
         let rewardStars = ResultRewardComponent(getStarCount: self.gameClearCount, frame: rect)
         rewardStars.thisGetStar(index: gameClearCount-1)
         self.resultView.addSubview(rewardStars)
+        
+        if gameClearCount == 5 {
+            let rect = CGRect(x: width*0.1, y: height*0.3, width: width*0.8, height: height*0.6)
+            self.rewardData.setReward(reward: "15分ゲームができる")
+            let rewardWindow = RewardWindow(reward: self.rewardData.getReward(), frame: rect)
+            rewardWindow.alpha = 0
+            rewardWindow.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+
+            self.resultView.addSubview(rewardWindow)
+
+            UIView.animate(withDuration: 0.7, delay: 1.3, options: .curveEaseIn, animations: {
+                rewardWindow.alpha = 1
+                rewardWindow.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }, completion: {_ in
+            })
+        }
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
