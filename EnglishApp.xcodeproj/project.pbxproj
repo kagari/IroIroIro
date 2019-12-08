@@ -182,8 +182,8 @@
 				6A4AB207237176D8001A8019 /* HowToView.swift */,
 				130492FE236B554E00DDBF6D /* QuestionView.swift */,
 				1353E74C235C17AE006E35C4 /* ARView.swift */,
-				13D2E8B4236BF53C00D7D387 /* ResultView.swift */,
 				6B00EE5723891BE000BC8732 /* RewardView.swift */,
+				13D2E8B4236BF53C00D7D387 /* ResultView.swift */,
 				13D7A9BE239B7211008188DB /* ResultRewardComponent.swift */,
 				13D7A9C0239C07B9008188DB /* ResultRewardWindow.swift */,
 			);

@@ -164,6 +164,34 @@ class ResultView: UIView {
             }
         }
     }
+    
+    func setClearStars(clearCount: Int) {
+        let width = self.frame.width
+        let height = self.frame.height
+
+        let rect = CGRect(x: width*0.1, y: height*0.18, width: width*0.8, height: height*0.1)
+        let rewardStars = ResultRewardComponent(getStarCount: clearCount, frame: rect)
+        rewardStars.thisGetStar(index: clearCount-1)
+        self.addSubview(rewardStars)
+    }
+    
+    func setRewardWindow(reward: String?) {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        let rect = CGRect(x: width*0.1, y: height*0.3, width: width*0.8, height: height*0.6)
+        let rewardWindow = RewardWindow(reward: reward, frame: rect)
+        rewardWindow.alpha = 0
+        rewardWindow.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+
+        self.addSubview(rewardWindow)
+
+        UIView.animate(withDuration: 0.7, delay: 1.3, options: .curveEaseIn, animations: {
+            rewardWindow.alpha = 1
+            rewardWindow.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: {_ in
+        })
+    }
 
     // "おわる"ボタンが押された時に呼ばれるメソッド
     @objc func goHome(button: UIButton) {
