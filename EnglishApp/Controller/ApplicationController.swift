@@ -34,7 +34,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView = ResultView()
         self.questionData = QuestionData()
         self.questionAlphabetIndex = 0
-        self.gameClearCount = 0
         
         self.startView.delegate = self
         self.howToView.delegate = self
@@ -46,6 +45,10 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.speechSynthesizer = AVSpeechSynthesizer()
         self.isSpellJudge = false
+        
+        if self.gameClearCount == nil || self.gameClearCount == 5 {
+            self.gameClearCount = 0
+        }
     }
     
     override func viewDidLoad() {
@@ -110,11 +113,11 @@ class ApplicationController: UIViewController, ARViewDelegate {
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     self.arView.pauseSession()
+                    self.gameClearCount += 1
                     self.toResultView()
                     self.identifier = nil
                     self.isSpellJudge = false
                 }
-                self.gameClearCount += 1
                 return
             }
             
@@ -174,6 +177,12 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView.setQuestionLabel(question: self.question)
         self.view = self.resultView
         self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
+        
+        self.resultView.setClearStars(clearCount: self.gameClearCount)
+        
+        if self.gameClearCount == 5 {
+            self.resultView.setRewardWindow(reward: self.rewardData.getReward())
+        }
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
@@ -187,7 +196,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        return self.question?.map({String($0)})[index]
+        guard let count = self.question?.count else {
+            return nil
+        }
+        
+        if count > index {
+            return self.question?.map({String($0)})[index]
+        }
+        
+        return nil
     }
 }
 
