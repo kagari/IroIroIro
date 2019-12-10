@@ -10,8 +10,10 @@ class HowToView: UIView {
     private let image = UIImage(named:"howtoplay4")!
     private var imageView: UIImageView?
     private var backBtn: UIButton?
+    private var videoPlayerView: HowToPlayVideoView
     
     override init(frame: CGRect) {
+        self.videoPlayerView = HowToPlayVideoView()
         
         super.init(frame: frame)
         self.backgroundColor = .white
@@ -26,6 +28,9 @@ class HowToView: UIView {
         self.backBtn?.layer.borderWidth = 1.0
         self.backBtn?.addTarget(self, action: #selector(onbackClick(button:)), for: .touchUpInside)
         self.addSubview(self.backBtn!)
+        
+        self.addSubview(self.videoPlayerView)
+        self.videoPlayerView.startVideo()
     }
     
     required init?(coder: NSCoder) {
@@ -43,9 +48,59 @@ class HowToView: UIView {
         self.imageView?.frame = CGRect(x: 0, y: 0, width: imgWidth*scale, height: imgHeight*scale)
         self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: width*0.28, height: height*0.05)
         self.backBtn?.titleLabel?.font = UIFont.systemFont(ofSize: height*0.03)
+        
+        self.videoPlayerView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        self.videoPlayerView.center = self.center
     }
     
     @objc func onbackClick(button: UIButton) {
         delegate?.onbackClick(button)
+    }
+}
+
+
+class HowToPlayVideoView: UIView {
+    private var player: AVPlayer
+    private var playerLayer: AVPlayerLayer
+    
+    override init(frame: CGRect) {
+        let asset = NSDataAsset(name:"howToPlay")
+        let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("movie.mp4")
+        try? asset!.data.write(to: videoUrl)
+        
+        self.player = AVPlayer(url: videoUrl)
+        self.playerLayer = AVPlayerLayer(player: self.player)
+        
+        super.init(frame: frame)
+        
+        self.layer.borderColor = UIColor.green.cgColor
+        
+        self.layer.addSublayer(self.playerLayer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        self.layer.borderWidth = width*0.01
+
+        self.playerLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        self.playerLayer.videoGravity = .resizeAspect
+    }
+    
+    @objc private func playerDidFinishPlaying() {
+        print("Finished!!")
+    }
+    
+    func startVideo() {
+        self.player.play()
     }
 }
