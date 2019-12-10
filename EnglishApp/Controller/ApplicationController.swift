@@ -233,14 +233,13 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed HowTo Button!")
         self.view = self.howToView
         
-//        if player != nil {
         self.player.play()
             
         self.playerLayer.frame = self.howToView.bounds
         self.playerLayer.videoGravity = .resizeAspectFill
         self.playerLayer.zPosition = -1 // ボタン等よりも後ろに表示
         self.howToView.layer.insertSublayer(self.playerLayer, at: 0) // 動画をレイヤーとして追加
-//        }
+
     }
     
     func goSetting(_: UIButton) {
