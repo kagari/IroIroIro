@@ -59,7 +59,7 @@ class StartView: UIView {
     
     // 遊び方
     func makeHowToButton() {
-        self.howToButton.setTitle("遊び方", for: UIControl.State())
+        self.howToButton.setTitle("あそびかたを見る", for: UIControl.State())
         self.howToButton.setTitleColor(.white, for: UIControl.State())
         self.howToButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
         self.howToButton.addTarget(self, action: #selector(goHowTo(button:)), for: .touchUpInside)
@@ -68,7 +68,7 @@ class StartView: UIView {
     
     // 設定
     func makeSettingsButton() {
-        self.settingButton.setTitle("設定", for: UIControl.State())
+        self.settingButton.setTitle("せってい", for: UIControl.State())
         self.settingButton.setTitleColor(.white, for: UIControl.State())
         self.settingButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
         self.settingButton.addTarget(self, action: #selector(goSetting(button:)), for: .touchUpInside)

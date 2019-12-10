@@ -28,10 +28,10 @@ class ApplicationController: UIViewController, ARViewDelegate {
     var playerLayer: AVPlayerLayer!
     
     let path = Bundle.main.path(forResource: "遊び方", ofType: "mp4")!
-
-//    let asset = NSDataAsset(name:"遊び方")
-//    let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("遊び方.mp4")
-
+    
+    //    let asset = NSDataAsset(name:"遊び方")
+    //    let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("遊び方.mp4")
+    
     // set instance for game
     private func setupGame() {
         self.startView = StartView()
@@ -42,7 +42,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView = ResultView()
         self.questionData = QuestionData()
         self.questionAlphabetIndex = 0
-        self.gameClearCount = 0
         
         self.startView.delegate = self
         self.howToView.delegate = self
@@ -58,6 +57,10 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.player = AVPlayer(url: URL(fileURLWithPath: self.path))
         self.playerLayer = AVPlayerLayer(player: player)
+        
+        if self.gameClearCount == nil || self.gameClearCount == 5 {
+            self.gameClearCount = 0
+        }
     }
     
     override func viewDidLoad() {
@@ -122,16 +125,16 @@ class ApplicationController: UIViewController, ARViewDelegate {
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     self.arView.pauseSession()
+                    self.gameClearCount += 1
                     self.toResultView()
                     self.identifier = nil
                     self.isSpellJudge = false
                 }
-                self.gameClearCount += 1
                 return
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//                self.arView.pauseSession()
+                //                self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     self.identifier = nil
@@ -186,6 +189,12 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView.setQuestionLabel(question: self.question)
         self.view = self.resultView
         self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
+        
+        self.resultView.setClearStars(clearCount: self.gameClearCount)
+        
+        if self.gameClearCount == 5 {
+            self.resultView.setRewardWindow(reward: self.rewardData.getReward())
+        }
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
@@ -199,7 +208,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        return self.question?.map({String($0)})[index]
+        guard let count = self.question?.count else {
+            return nil
+        }
+        
+        if count > index {
+            return self.question?.map({String($0)})[index]
+        }
+        
+        return nil
     }
 }
 
@@ -216,12 +233,14 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed HowTo Button!")
         self.view = self.howToView
         
-        player.play()
-    
+//        if player != nil {
+        self.player.play()
+            
         self.playerLayer.frame = self.howToView.bounds
         self.playerLayer.videoGravity = .resizeAspectFill
         self.playerLayer.zPosition = -1 // ボタン等よりも後ろに表示
         self.howToView.layer.insertSublayer(self.playerLayer, at: 0) // 動画をレイヤーとして追加
+//        }
     }
     
     func goSetting(_: UIButton) {
