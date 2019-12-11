@@ -11,11 +11,33 @@ class HowToView: UIView {
     private var imageView: UIImageView?
     private var backBtn: UIButton?
     
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
+    
+    let asset = NSDataAsset(name:"howToPlay")
+    let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("howToPlay.mp4")
+
+    
     override init(frame: CGRect) {
+        
+        self.playerLayer = AVPlayerLayer(player: self.player)
+        
+        try! asset!.data.write(to: self.videoUrl)
+        
+        let item = AVPlayerItem(url: self.videoUrl)
+        self.player = AVPlayer(playerItem: item)
         
         super.init(frame: frame)
         self.backgroundColor = .white
-    
+        
+        self.player.play()
+            
+        self.playerLayer.frame = self.bounds
+        self.playerLayer.videoGravity = .resizeAspectFill
+        self.playerLayer.zPosition = -1 // ボタン等よりも後ろに表示
+        self.layer.insertSublayer(self.playerLayer, at: 0) // 動画をレイヤーとして追加
+        self.layer.addSublayer(self.playerLayer)
+        
         //戻るボタン
         self.backBtn = UIButton()
         self.backBtn?.setTitle("戻る", for: UIControl.State())

@@ -2,6 +2,14 @@ import Foundation
 import UIKit
 import AVFoundation
 
+//let asset = NSDataAsset(name:"movie")
+//
+//let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("movie.mp4")
+//try! asset!.data.write(to: videoUrl)
+//
+//let item = AVPlayerItem(url: videoUrl)
+//destination.player = AVPlayer(playerItem: item)
+
 class ApplicationController: UIViewController, ARViewDelegate {
     
     private var startView: StartView!
@@ -23,14 +31,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
     var audioPlayer: AVAudioPlayer!
     let audioCorrect = NSDataAsset(name: "correct1")
     let audioIncorrect = NSDataAsset(name: "incorrect1")
-    
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
-    
-    let path = Bundle.main.path(forResource: "遊び方", ofType: "mp4")!
-    
-    //    let asset = NSDataAsset(name:"遊び方")
-    //    let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("遊び方.mp4")
     
     // set instance for game
     private func setupGame() {
@@ -54,9 +54,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         self.speechSynthesizer = AVSpeechSynthesizer()
         self.isSpellJudge = false
-        
-        self.player = AVPlayer(url: URL(fileURLWithPath: self.path))
-        self.playerLayer = AVPlayerLayer(player: player)
         
         if self.gameClearCount == nil || self.gameClearCount == 5 {
             self.gameClearCount = 0
@@ -134,7 +131,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                //                self.arView.pauseSession()
+                //self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     self.identifier = nil
@@ -233,13 +230,7 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed HowTo Button!")
         self.view = self.howToView
         
-        self.player.play()
-            
-        self.playerLayer.frame = self.howToView.bounds
-        self.playerLayer.videoGravity = .resizeAspectFill
-        self.playerLayer.zPosition = -1 // ボタン等よりも後ろに表示
-        self.howToView.layer.insertSublayer(self.playerLayer, at: 0) // 動画をレイヤーとして追加
-
+        self.setupGame()
     }
     
     func goSetting(_: UIButton) {
