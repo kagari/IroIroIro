@@ -2,14 +2,6 @@ import Foundation
 import UIKit
 import AVFoundation
 
-//let asset = NSDataAsset(name:"movie")
-//
-//let videoUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("movie.mp4")
-//try! asset!.data.write(to: videoUrl)
-//
-//let item = AVPlayerItem(url: videoUrl)
-//destination.player = AVPlayer(playerItem: item)
-
 class ApplicationController: UIViewController, ARViewDelegate {
     
     private var startView: StartView!
@@ -229,8 +221,6 @@ extension ApplicationController: StartViewDelegate {
     func goHowTo(_: UIButton) {
         print("Pushed HowTo Button!")
         self.view = self.howToView
-        
-        self.setupGame()
     }
     
     func goSetting(_: UIButton) {
