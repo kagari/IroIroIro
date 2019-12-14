@@ -92,9 +92,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         
         // すでに使われている単語だった場合は処理をしない
         if self.questionData.getUsedTextList().firstIndex(of: identifier!) != nil {
-            let width = self.view.frame.width
-            let height = self.view.frame.height
-
             // すでに使われている単語をタップした時も、失敗判定にする
             do {
                 audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
@@ -105,16 +102,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
             audioPlayer.prepareToPlay()
             audioPlayer.play()
             
-            let rect = CGRect(x: 0, y: height*0.75, width: width*0.8, height: height*0.2)
-            let sameWordAlert = SameWordAlertView(frame: rect)
-            sameWordAlert.tag = 20
-            sameWordAlert.center = self.view.center
-            self.view.addSubview(sameWordAlert)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                sameWordAlert.removeFromSuperview()
-                self.isSpellJudge = false
-            }
+            self.arView.setAlert(callback: { self.isSpellJudge = false })
             
             return
         }

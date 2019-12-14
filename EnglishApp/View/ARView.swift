@@ -106,6 +106,22 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(batsu2)
     }
     
+    func setAlert(callback: @escaping () -> Void) {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        let rect = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
+        let sameWordAlert = SameWordAlertView(frame: rect)
+        sameWordAlert.tag = 20
+        sameWordAlert.center = self.center
+        self.addSubview(sameWordAlert)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            sameWordAlert.removeFromSuperview()
+            callback()
+        }
+    }
+    
     func startSession() {
         self.sceneView.session.run(self.configuration)
     }
