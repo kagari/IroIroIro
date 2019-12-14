@@ -90,6 +90,11 @@ class ApplicationController: UIViewController, ARViewDelegate {
             self.speechSynthesizer.speak(utterance)
         }
         
+        // すでに使われている単語だった場合は処理をしない
+        if self.questionData.getUsedTextList().firstIndex(of: identifier!) != nil {
+            return
+        }
+        
         if isContain {
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
