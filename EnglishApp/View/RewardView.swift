@@ -25,7 +25,7 @@ class RewardView: UIView {
             label.textColor = UIColor(rgb: 0xFF65B2)
             label.font = UIFont(name: "Menlo", size: 200)
             label.textAlignment = .center
-            label.text = "報酬を入力してね"
+            label.text = "ご褒美を入力してください"
             return label
         }()
         self.addSubview(self.settingLabel)

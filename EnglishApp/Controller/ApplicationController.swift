@@ -1,6 +1,5 @@
 import Foundation
 import UIKit
-import AVFoundation
 
 class ApplicationController: UIViewController, ARViewDelegate {
     
@@ -15,14 +14,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
     private let rewardData = RewardData()
     private var identifier: String!
     var question: String?
-    
-    private var gameClearCount: Int!
-    private var isSpellJudge: Bool!
-    
-    var speechSynthesizer: AVSpeechSynthesizer!
-    var audioPlayer: AVAudioPlayer!
-    let audioCorrect = NSDataAsset(name: "correct1")
-    let audioIncorrect = NSDataAsset(name: "incorrect1")
     
     // set instance for game
     private func setupGame() {
@@ -40,16 +31,8 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.rewardView.delegate = self
         self.arView.delegate = self
         self.resultView.delegate = self
-        self.questionView.delegate = self
         
         self.question = self.questionData.getQuestion()
-        
-        self.speechSynthesizer = AVSpeechSynthesizer()
-        self.isSpellJudge = false
-        
-        if self.gameClearCount == nil || self.gameClearCount == 5 {
-            self.gameClearCount = 0
-        }
     }
     
     override func viewDidLoad() {
@@ -70,25 +53,10 @@ class ApplicationController: UIViewController, ARViewDelegate {
             print("targetAlphabet is nil...")
             return
         }
-        
+            
         guard let isContain = self.checkObjectNameAndQuestion(identifier: identifier, targetAlphabet: String.Element(targetAlphabet)) else {
             print("checkObjectNameAndQuestion function return nil...")
             return
-        }
-        
-        if self.isSpellJudge {
-            return
-        }
-        
-        self.isSpellJudge = true
-        
-        if let identifier = self.identifier {
-            let utterance = AVSpeechUtterance(string: identifier) // 読み上げるtext
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
-            utterance.rate = 0.5; // 読み上げ速度
-            utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
-            utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
-            self.speechSynthesizer.speak(utterance)
         }
         
         if isContain {
@@ -96,15 +64,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
             print("Correct!!")
             
             self.arView.setCorrectLabel() //まる表示
-            // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
-            do {
-                audioPlayer = try AVAudioPlayer(data: audioCorrect!.data, fileTypeHint: "mp3")
-                audioPlayer.volume = 0.1
-            } catch {
-                print("AVAudioPlayerインスタンス作成でエラー")
-            }
-            audioPlayer.prepareToPlay() // 再生準備
-            audioPlayer.play() // 再生
             
             
             self.questionData.addUsedText(usedText: identifier)
@@ -112,22 +71,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
             self.questionAlphabetIndex += 1
             // when Next alphabet is none, goto ResultView
             if self.questionAlphabetIndex == self.question?.lengthOfBytes(using: String.Encoding.utf8) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.arView.pauseSession()
-                    self.gameClearCount += 1
-                    self.toResultView()
-                    self.identifier = nil
-                    self.isSpellJudge = false
-                }
+                self.arView.pauseSession()
+                self.toResultView()
                 return
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                //self.arView.pauseSession()
+                self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                    self.identifier = nil
-                    self.isSpellJudge = false
                     self.toARView()
                 }
             }
@@ -135,22 +87,11 @@ class ApplicationController: UIViewController, ARViewDelegate {
         }else{ //間違えUIここ
             
             self.arView.setWrongLabel() //ばつ表示
-            // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
-            do {
-                audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
-                audioPlayer.volume = 0.1
-            } catch {
-                print("AVAudioPlayerインスタンス作成でエラー")
-            }
-            audioPlayer.prepareToPlay() // 再生準備
-            audioPlayer.play() // 再生
             
             print("targetAlphabet: \(targetAlphabet) not in identifier: \(String(describing: identifier))!!")
             print("Incorrect!!")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                self.identifier = nil
-                self.isSpellJudge = false
                 self.toARView()
             }
         }
@@ -159,7 +100,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     // MARK: - その他の関数
     func toARView() {
         self.arView.subviews.forEach { subview in
-            if subview.tag >= 10 {
+            if subview.tag == 0 && subview is UILabel {
                 subview.removeFromSuperview()
             }
         }
@@ -178,12 +119,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.resultView.setQuestionLabel(question: self.question)
         self.view = self.resultView
         self.resultView.setUsedTextLabels(usedTexts: self.questionData.getUsedTextList(), question: self.question)
-        
-        self.resultView.setClearStars(clearCount: self.gameClearCount)
-        
-        if self.gameClearCount == 5 {
-            self.resultView.setRewardWindow(reward: self.rewardData.getReward())
-        }
     }
     
     func checkObjectNameAndQuestion(identifier: String?, targetAlphabet: String.Element) -> Bool? {
@@ -197,15 +132,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     
     // get n-th alphabet from question
     func getAlphabet(index: Int) -> String? {
-        guard let count = self.question?.count else {
-            return nil
-        }
-        
-        if count > index {
-            return self.question?.map({String($0)})[index]
-        }
-        
-        return nil
+        return self.question?.map({String($0)})[index]
     }
 }
 
@@ -227,13 +154,20 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed Setting Button!")
         self.rewardView.setTextField(reward: self.rewardData.getReward())
         self.view = self.rewardView
+        
+        // 保護者に報酬を設定させるように促すポップアップ画面の初期化
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        
+        let popUpView = PopUpView(frame: CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2))
+        popUpView.center = self.rewardView.center
+        self.rewardView.addSubview(popUpView)
     }
 }
 
 extension ApplicationController: HowToViewDelegate {
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
-        self.setupGame()
         self.view = self.startView
     }
 }
@@ -261,13 +195,4 @@ extension ApplicationController: ResultViewDelegate {
             self.toARView()
         }
     }
-}
-
-extension ApplicationController: QuestionViewDelegate{
-    func goSkip(_: UIButton) {
-        print("Pushed Skip Button!")
-        
-        self.toARView()
-    }
-    
 }
