@@ -18,6 +18,8 @@ class QuestionView: UIView {
     var topLabel: UILabel! //頭文字のラベル
     var searchLabel: UILabel! //"を探そうのラベル"
     
+    var image: UIImage!
+    var imageView: UIImageView!
     // 初期化関数
     override init(frame: CGRect) {
         self.speechSynthesizer = AVSpeechSynthesizer()
@@ -73,8 +75,8 @@ class QuestionView: UIView {
         self.questionLabel.center.x = self.center.x
         self.questionLabel.font = UIFont.systemFont(ofSize: width*0.07)
         
-        self.topLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
-        self.topLabel.center = self.center
+        self.topLabel.frame = CGRect(x: 0, y: height*0.8, width: width*0.8, height: height*0.2)
+        self.topLabel.center.x = width*1/5
         self.topLabel.font = UIFont.systemFont(ofSize: height*0.1)
         
         self.searchLabel.frame = CGRect(x: 0, y: height-height*0.2, width: width*0.8, height: height*0.2)
@@ -88,6 +90,9 @@ class QuestionView: UIView {
         
 //        self.skipLabel.frame = CGRect(x: 0, y: self.skipButton.frame.maxY, width: buttonSize, height: width*0.05)
 //        self.skipLabel.center.x = width*3/4
+        
+        self.imageView.frame = CGRect(x: 0, y: height*0.8, width: width*0.8, height: height*0.5 )
+        self.imageView.center = self.center
     }
     
     func makeSkipButton() {
@@ -118,7 +123,6 @@ class QuestionView: UIView {
         
         self.searchLabel.text = "を探してね"
         self.searchLabel.sizeToFit()
-
         
         if questionString != nil && questionAlphabet != nil {
             if questionString!.prefix(1) == questionAlphabet! {
@@ -167,7 +171,13 @@ class QuestionView: UIView {
         }
     }
     
-    // "おわる"ボタンが押された時に呼ばれるメソッド
+    func setQuestionImage(name: String){
+        self.image = UIImage(named: name)
+        self.imageView = UIImageView(image: image)
+        self.addSubview(self.imageView!)
+    }
+    
+    // スキップボタンが押された時に呼ばれるメソッド
     @objc func goSkip(button: UIButton) {
         print("skip")
         delegate?.goSkip(button)

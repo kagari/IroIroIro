@@ -171,6 +171,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     func toQuestionView() {
         let alphabet = self.getAlphabet(index: self.questionAlphabetIndex)
         self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet)
+        self.questionView.setQuestionImage(name: self.question!)
         self.view = self.questionView
     }
     
