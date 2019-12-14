@@ -227,6 +227,14 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed Setting Button!")
         self.rewardView.setTextField(reward: self.rewardData.getReward())
         self.view = self.rewardView
+        
+        // 保護者に報酬を設定させるように促すポップアップ画面の初期化
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        
+        let popUpView = PopUpView(frame: CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2))
+        popUpView.center = self.rewardView.center
+        self.rewardView.addSubview(popUpView)
     }
 }
 
@@ -266,7 +274,6 @@ extension ApplicationController: ResultViewDelegate {
 extension ApplicationController: QuestionViewDelegate{
     func goSkip(_: UIButton) {
         print("Pushed Skip Button!")
-        
         self.toARView()
     }
     
