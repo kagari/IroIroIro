@@ -90,6 +90,23 @@ class ApplicationController: UIViewController, ARViewDelegate {
             self.speechSynthesizer.speak(utterance)
         }
         
+        // すでに使われている単語だった場合は処理をしない
+        if self.questionData.getUsedTextList().firstIndex(of: identifier!) != nil {
+            // すでに使われている単語をタップした時も、失敗判定にする
+            do {
+                audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
+                audioPlayer.volume = 0.1
+            } catch {
+                print("AVAudioPlayerインスタンス作成でエラー")
+            }
+            audioPlayer.prepareToPlay()
+            audioPlayer.play()
+            
+            self.arView.setAlert(callback: { self.isSpellJudge = false })
+            
+            return
+        }
+        
         if isContain {
             print("targetAlphabet: \(targetAlphabet) in identifier: \(String(describing: identifier))!!")
             print("Correct!!")
