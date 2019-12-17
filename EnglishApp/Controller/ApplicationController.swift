@@ -169,10 +169,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     }
     
     func toQuestionView() {
+        self.arView.subviews.forEach { subview in
+            if subview.tag >= 10 {
+                subview.removeFromSuperview()
+            }
+        }
         let alphabet = self.getAlphabet(index: self.questionAlphabetIndex)
-        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet)
-        self.questionView.setQuestionImage(name: self.question!)
         self.view = self.questionView
+        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet, idx: self.questionAlphabetIndex!)
+        self.questionView.setQuestionImage(name: self.question!)
     }
     
     func toResultView() {
