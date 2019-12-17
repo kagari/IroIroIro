@@ -54,7 +54,7 @@ class ResultView: UIView {
         
         self.questionLabel.frame = CGRect(x: 0, y: 0, width: width, height: height*0.15)
         
-        self.descriptionLabel.frame = CGRect(x: 0, y: height*0.2, width: width, height: height*0.02)
+        self.descriptionLabel.frame = CGRect(x: 0, y: height*0.32, width: width, height: height*0.02)
         
         self.goHomeButton.frame = buttonRect
         self.goHomeButton.center.x = width*1/4
@@ -93,7 +93,7 @@ class ResultView: UIView {
     
     // もういちど
     func makeGoNextGameButton() {
-        // homeアイコンを設置
+        // repeatアイコンを設置
         self.goNextGameButton.setImage(retryImage, for: .init())
         self.goNextGameButton.imageView?.contentMode = .scaleToFill
         self.goNextGameButton.contentHorizontalAlignment = .fill
@@ -140,9 +140,9 @@ class ResultView: UIView {
         }
         
         let labelSizeBaseStringCount = self.frame.width*0.8/CGFloat(count)
-        let labelSizeBaseQuestionLength = self.frame.height*0.35/CGFloat(question.count)
+        let labelSizeBaseQuestionLength = self.frame.height*0.32/CGFloat(question.count)
         let labelSize = min(labelSizeBaseQuestionLength, labelSizeBaseStringCount)
-        var y = self.frame.height*0.28
+        var y = self.frame.height*0.32 + labelSize
         
         for (q, text) in zip(question.lowercased(), used_texts) {
             guard let idx = text.lowercased().firstIndex(of: q) else {
@@ -163,6 +163,34 @@ class ResultView: UIView {
                 self.addSubview(text)
             }
         }
+    }
+    
+    func setClearStars(clearCount: Int) {
+        let width = self.frame.width
+        let height = self.frame.height
+
+        let rect = CGRect(x: width*0.1, y: height*0.18, width: width*0.8, height: height*0.1)
+        let rewardStars = ResultRewardComponent(getStarCount: clearCount, frame: rect)
+        rewardStars.thisGetStar(index: clearCount-1)
+        self.addSubview(rewardStars)
+    }
+    
+    func setRewardWindow(reward: String?) {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        let rect = CGRect(x: width*0.1, y: height*0.3, width: width*0.8, height: height*0.6)
+        let rewardWindow = RewardWindow(reward: reward, frame: rect)
+        rewardWindow.alpha = 0
+        rewardWindow.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+
+        self.addSubview(rewardWindow)
+
+        UIView.animate(withDuration: 0.7, delay: 1.3, options: .curveEaseIn, animations: {
+            rewardWindow.alpha = 1
+            rewardWindow.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: {_ in
+        })
     }
 
     // "おわる"ボタンが押された時に呼ばれるメソッド

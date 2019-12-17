@@ -1,7 +1,6 @@
 import Foundation
 import UIKit
 import ARKit
-import AVFoundation
 
 protocol ARViewDelegate {
     func tapGesture(identifier: String?)
@@ -16,16 +15,11 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     let objectDetectionModel: ObjectDetectionModel
     let configuration: ARConfiguration
     var objectLabel: UILabel!
-    var speechSynthesizer : AVSpeechSynthesizer!
-    var audioPlayer: AVAudioPlayer!
-    let audioCorrect = NSDataAsset(name: "correct1")
-    let audioIncorrect = NSDataAsset(name: "incorrect1")
 
     override init(frame: CGRect) {
         self.sceneView = ARSKView()
         self.objectDetectionModel = ObjectDetectionModel()
         self.configuration = ARWorldTrackingConfiguration()
-        self.speechSynthesizer = AVSpeechSynthesizer()
         
         super.init(frame: frame)
         
@@ -76,7 +70,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
         maru.center = self.center
         maru.textAlignment = .center
-        maru.tag = 0
+        maru.tag = 11
         self.addSubview(maru)
 
         let maru2 = UILabel()
@@ -86,21 +80,8 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         maru2.frame = CGRect(x: 0, y: maru.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
         maru2.center.x = maru.frame.midX
         maru2.textAlignment = .center
-        maru2.tag = 0
+        maru2.tag = 11
         self.addSubview(maru2)
-        
-        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
-        do {
-            audioPlayer = try AVAudioPlayer(data: audioCorrect!.data, fileTypeHint: "mp3")
-            audioPlayer.volume = 0.1
-        } catch {
-            print("AVAudioPlayerインスタンス作成でエラー")
-        }
-        // 再生準備
-        audioPlayer.prepareToPlay()
-        
-        // 再生する
-        audioPlayer.play()
     }
     
     func setWrongLabel() {
@@ -111,7 +92,7 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height*0.45)
         batsu.center = self.center
         batsu.textAlignment = .center
-        batsu.tag = 0
+        batsu.tag = 11
         self.addSubview(batsu)
         
         let batsu2 = UILabel()
@@ -121,21 +102,24 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         batsu2.frame = CGRect(x: 0, y: batsu.frame.minY - self.frame.height*0.2/2, width: self.frame.width, height: self.frame.height*0.2)
         batsu2.center.x = batsu.frame.midX
         batsu2.textAlignment = .center
-        batsu2.tag = 0
+        batsu2.tag = 11
         self.addSubview(batsu2)
-
-        // AVAudioPlayerのインスタンスを作成,ファイルの読み込み
-        do {
-            audioPlayer = try AVAudioPlayer(data: audioIncorrect!.data, fileTypeHint: "mp3")
-            audioPlayer.volume = 0.1
-        } catch {
-            print("AVAudioPlayerインスタンス作成でエラー")
-        }
-        // 再生準備
-        audioPlayer.prepareToPlay()
+    }
+    
+    func setAlert(callback: @escaping () -> Void) {
+        let width = self.frame.width
+        let height = self.frame.height
         
-        // 再生する
-        audioPlayer.play()
+        let rect = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
+        let sameWordAlert = SameWordAlertView(frame: rect)
+        sameWordAlert.tag = 20
+        sameWordAlert.center = self.center
+        self.addSubview(sameWordAlert)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            sameWordAlert.removeFromSuperview()
+            callback()
+        }
     }
     
     func startSession() {
@@ -161,28 +145,89 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
     func detectionFinished(identifier: String?, objectBounds: CGRect?) {
         print("detectionFinished!!")
         
-        self.identifier = identifier
+        self.subviews.filter({$0.tag == 10}).forEach { view in // delete ObjectRoundedLineView
+            view.removeFromSuperview()
+        }
         
-        // 物体の名前を中心に表示
-        self.objectLabel.text = self.identifier
-        self.objectLabel.font = UIFont(name: "Menlo", size: 100)
-        self.objectLabel.frame = CGRect(x: 0, y: 0,width: self.frame.width, height: self.frame.height * 0.2)
-        self.objectLabel.center = self.center
-        self.objectLabel.textAlignment = .center
-        self.addSubview(self.objectLabel)
+        if let objectBounds = objectBounds, let identifier = identifier {
+            
+            let objectRoundedLineView = UIView(frame: objectBounds)
+            objectRoundedLineView.tag = 10
+            objectRoundedLineView.backgroundColor = UIColor(rgba: 0xf0ea9e)
+            // set tap gesture
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapGesture(gestureRecognizer:)))
+            objectRoundedLineView.addGestureRecognizer(tapGestureRecognizer)
+            
+            self.identifier = identifier
+            // 名前を物体の枠の中央に表示
+            self.objectLabel.text = self.identifier
+            self.objectLabel.font = UIFont(name: "Menlo", size: 100)
+            self.objectLabel.adjustsFontSizeToFitWidth = true
+            self.objectLabel.frame = CGRect(x: 0, y: 0,width: objectBounds.width, height: objectBounds.height)
+            self.objectLabel.center = objectRoundedLineView.center
+            self.objectLabel.textAlignment = .center
+            self.objectLabel.tag = 10
+            self.addSubview(self.objectLabel)
+            
+            self.addSubview(objectRoundedLineView)
+        } else {
+            print("Object detection is failed.")
+        }
         
+        // move UILabel to foreground
+        self.subviews.filter({$0 is UILabel}).forEach { label in
+            self.bringSubviewToFront(label)
+        }
+        
+        // alertのViewがあれば一番前面に持ってくる
+        self.subviews.filter({$0.tag == 20}).forEach { alert in
+            self.bringSubviewToFront(alert)
+        }
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
-        if (identifier != nil) {
-            let utterance = AVSpeechUtterance(string: identifier!) // 読み上げるtext
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-US") // 言語
-            utterance.rate = 0.5; // 読み上げ速度
-            utterance.pitchMultiplier = 1.0; // 読み上げる声のピッチ(1.0でSiri)
-            utterance.preUtteranceDelay = 0.2; // 読み上げるまでのため
-            self.speechSynthesizer.speak(utterance)
-        }
-
         delegate?.tapGesture(identifier: self.identifier)
+    }
+}
+
+class SameWordAlertView: UIView {
+    let alertLabel: UILabel
+    
+    override init(frame: CGRect) {
+        self.alertLabel = {
+            let label = UILabel()
+            label.text = "同じ単語は使えないよ！\nちがう単語をさがしてね"
+            label.font = UIFont(name: "Menlo", size: 80)
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.textAlignment = .center
+            label.numberOfLines = 2
+            label.adjustsFontSizeToFitWidth = true
+            
+            return label
+        }()
+        
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        
+        self.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
+        
+        self.addSubview(self.alertLabel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        self.layer.borderWidth = width*0.01
+        self.layer.cornerRadius = height*0.1
+        
+        self.alertLabel.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        self.alertLabel.center = CGPoint(x: width/2, y: height/2)
     }
 }

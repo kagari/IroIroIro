@@ -50,15 +50,15 @@ class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
         self.bounds = bounds
        
         let requestHandler = VNImageRequestHandler(cvPixelBuffer: self.currentBuffer!)
-       
-       visionQueue.async {
-           do {
-               defer { self.currentBuffer = nil } // この関数を出る時に実行される
-               try requestHandler.perform([self.classificationRequest])
-           } catch {
-               print("Error: Vision request failed with error \"\(error)\"")
-           }
-       }
+        
+        self.visionQueue.async {
+            do {
+                defer { self.currentBuffer = nil } // この関数を出る時に実行される
+                try requestHandler.perform([self.classificationRequest])
+            } catch {
+                print("Error: Vision request failed with error \"\(error)\"")
+            }
+        }
     }
     
     private func processClassifications(for request: VNRequest, error: Error?) {
@@ -75,14 +75,19 @@ class ObjectDetectionModel: NSObject, ObjectDetectionModelDataSource {
             self.identifier = String(label)
             self.confidence = bestResult.labels[0].confidence
             self.objectBounds = VNImageRectForNormalizedRect(bestResult.boundingBox, Int(self.bounds!.width), Int(self.bounds!.height))
+            
+            print("識別結果 -> \(String(describing: self.identifier)): \(String(describing: self.confidence))")
+            print("Rectangle -> width: \(String(describing: self.objectBounds?.width)), height: \(String(describing: self.objectBounds?.height))")
+            
         } else {
-            return
+            print("bestResult or label is nil...")
+            self.identifier = nil
+            self.confidence = nil
+            self.objectBounds = nil
         }
         
         DispatchQueue.main.async {() in
             // 認識したことをdelegateを通してARViewControllerに通知する
-            print("識別結果 -> \(String(describing: self.identifier)): \(String(describing: self.confidence))")
-            print("Rectangle -> width: \(String(describing: self.objectBounds?.width)), height: \(String(describing: self.objectBounds?.height))")
             self.delegate?.detectionFinished(identifier: self.identifier, objectBounds: self.objectBounds)
         }
     }

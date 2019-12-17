@@ -9,7 +9,7 @@ class QuestionData {
     
     init() {
         
-        self.questions = ["Cat", "Dog", "Phone", "Person", "Terminal"]
+        self.questions = ["Cat", "Dog", "Phone", "Person", "Apple", "Egg", "Fish", "Fire", "Gum", "Clock", "Orange", "Onion", "Milk", "Melon", "Salt" , "Tea", "Water"]
         self.question = questions.randomElement()
         self.usedTextList = []
     }
