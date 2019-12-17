@@ -19,7 +19,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
     private var gameClearCount: Int!
     private var isSpellJudge: Bool!
     
-    var speechSynthesizer : AVSpeechSynthesizer!
+    var speechSynthesizer: AVSpeechSynthesizer!
     var audioPlayer: AVAudioPlayer!
     let audioCorrect = NSDataAsset(name: "correct1")
     let audioIncorrect = NSDataAsset(name: "incorrect1")
@@ -40,6 +40,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.rewardView.delegate = self
         self.arView.delegate = self
         self.resultView.delegate = self
+        self.questionView.delegate = self
         
         self.question = self.questionData.getQuestion()
         
@@ -139,7 +140,7 @@ class ApplicationController: UIViewController, ARViewDelegate {
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//                self.arView.pauseSession()
+                //                self.arView.pauseSession()
                 self.toQuestionView()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     self.identifier = nil
@@ -185,9 +186,15 @@ class ApplicationController: UIViewController, ARViewDelegate {
     }
     
     func toQuestionView() {
+        self.arView.subviews.forEach { subview in
+            if subview.tag >= 10 {
+                subview.removeFromSuperview()
+            }
+        }
         let alphabet = self.getAlphabet(index: self.questionAlphabetIndex)
-        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet)
         self.view = self.questionView
+        self.questionView.setQuestionLabel(questionString: self.question, questionAlphabet: alphabet, idx: self.questionAlphabetIndex!)
+        self.questionView.setQuestionImage(name: self.question!)
     }
     
     func toResultView() {
@@ -243,12 +250,21 @@ extension ApplicationController: StartViewDelegate {
         print("Pushed Setting Button!")
         self.rewardView.setTextField(reward: self.rewardData.getReward())
         self.view = self.rewardView
+        
+        // 保護者に報酬を設定させるように促すポップアップ画面の初期化
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        
+        let popUpView = PopUpView(frame: CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2))
+        popUpView.center = self.rewardView.center
+        self.rewardView.addSubview(popUpView)
     }
 }
 
 extension ApplicationController: HowToViewDelegate {
     func onbackClick(_: UIButton) {
         print("Pushed Back Button!")
+        self.setupGame()
         self.view = self.startView
     }
 }
@@ -276,4 +292,12 @@ extension ApplicationController: ResultViewDelegate {
             self.toARView()
         }
     }
+}
+
+extension ApplicationController: QuestionViewDelegate{
+    func goSkip(_: UIButton) {
+        print("Pushed Skip Button!")
+        self.toARView()
+    }
+    
 }
