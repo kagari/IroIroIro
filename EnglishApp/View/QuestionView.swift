@@ -183,6 +183,7 @@ class QuestionView: UIView {
         // 透過する
         self.imageView.alpha = 0.3
         self.addSubview(self.imageView!)
+        self.sendSubviewToBack(self.imageView!)
     }
     
     // スキップボタンが押された時に呼ばれるメソッド
