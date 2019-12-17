@@ -106,6 +106,22 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.addSubview(batsu2)
     }
     
+    func setAlert(callback: @escaping () -> Void) {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        let rect = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
+        let sameWordAlert = SameWordAlertView(frame: rect)
+        sameWordAlert.tag = 20
+        sameWordAlert.center = self.center
+        self.addSubview(sameWordAlert)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            sameWordAlert.removeFromSuperview()
+            callback()
+        }
+    }
+    
     func startSession() {
         self.sceneView.session.run(self.configuration)
     }
@@ -162,9 +178,56 @@ class ARView: UIView, ARSKViewDelegate, ARSessionDelegate, ObjectDetectionModelD
         self.subviews.filter({$0 is UILabel}).forEach { label in
             self.bringSubviewToFront(label)
         }
+        
+        // alertのViewがあれば一番前面に持ってくる
+        self.subviews.filter({$0.tag == 20}).forEach { alert in
+            self.bringSubviewToFront(alert)
+        }
     }
     
     @objc func tapGesture(gestureRecognizer: UITapGestureRecognizer) {
         delegate?.tapGesture(identifier: self.identifier)
+    }
+}
+
+class SameWordAlertView: UIView {
+    let alertLabel: UILabel
+    
+    override init(frame: CGRect) {
+        self.alertLabel = {
+            let label = UILabel()
+            label.text = "同じ単語は使えないよ！\nちがう単語をさがしてね"
+            label.font = UIFont(name: "Menlo", size: 80)
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.textAlignment = .center
+            label.numberOfLines = 2
+            label.adjustsFontSizeToFitWidth = true
+            
+            return label
+        }()
+        
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        
+        self.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
+        
+        self.addSubview(self.alertLabel)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        self.layer.borderWidth = width*0.01
+        self.layer.cornerRadius = height*0.1
+        
+        self.alertLabel.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        self.alertLabel.center = CGPoint(x: width/2, y: height/2)
     }
 }
