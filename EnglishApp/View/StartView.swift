@@ -14,9 +14,10 @@ class StartView: UIView {
     var delegate: StartViewDelegate?
     
     private var image1: UIImage = UIImage(named: "eigo")!
-    private var image2: UIImage = UIImage(named: "hikari")!
+    private var backgroundImage = UIImage(named: "HomeBackgrounds")!
+    private var settingImage = UIImage(named: "setting")!
     private var imageView1: UIImageView?
-    private var imageView2: UIImageView?
+    private var backgroundImageView: UIImageView?
     private var startButton: UIButton = UIButton()
     private var howToButton: UIButton = UIButton()
     private var settingButton: UIButton = UIButton()
@@ -36,41 +37,44 @@ class StartView: UIView {
     }
     
     private func makeImage() {
-        self.imageView1 = UIImageView(image: image1)
-        self.imageView2 = UIImageView(image: image2)
-        self.addSubview(self.imageView1!)
-        self.addSubview(self.imageView2!)
+        self.backgroundImageView = UIImageView(image: self.backgroundImage)
+        self.addSubview(self.backgroundImageView!)
 
-        UIView.animate(withDuration: 0.5,
-                       delay: 0.0,
-                       options: [.repeat,.autoreverse],
-                       animations: {
-                        self.imageView2?.alpha = 0.0
-        }, completion: nil)
+        self.imageView1 = UIImageView(image: image1)
+        self.addSubview(self.imageView1!)
     }
     
     // startボタン
     func makeStartButton() {
         self.startButton.setTitle("START", for: .normal) // タイトルを設定する
-        self.startButton.setTitleColor(UIColor(red:120/255, green:204/255, blue:208/255, alpha:1), for: .normal)
+        self.startButton.titleLabel?.numberOfLines = 1
+        self.startButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.startButton.titleLabel?.font = UIFont(name: "Menlo", size: 100)
+        self.startButton.backgroundColor = UIColor(rgb: 0xFF65B2)
         self.startButton.addTarget(self, action: #selector(buttonEvent(button:)), for: .touchUpInside)
         self.addSubview(self.startButton)
     }
     
     // 遊び方
     func makeHowToButton() {
-        self.howToButton.setTitle("あそびかたを見る", for: UIControl.State())
-        self.howToButton.setTitleColor(.white, for: UIControl.State())
-        self.howToButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
+        self.howToButton.setTitle("遊び方を見る", for: UIControl.State())
+        self.howToButton.titleLabel?.textAlignment = .center
+        self.howToButton.titleLabel?.numberOfLines = 1
+        self.howToButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.howToButton.titleLabel?.font = UIFont(name: "Menlo", size: 40)
+        self.howToButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.howToButton.addTarget(self, action: #selector(goHowTo(button:)), for: .touchUpInside)
         self.addSubview(self.howToButton)
     }
     
     // 設定
     func makeSettingsButton() {
-        self.settingButton.setTitle("せってい", for: UIControl.State())
-        self.settingButton.setTitleColor(.white, for: UIControl.State())
-        self.settingButton.backgroundColor = UIColor(red:120/255, green:204/255, blue:208/255, alpha:1)
+        self.settingButton.setImage(self.settingImage, for: .init())
+        self.settingButton.imageView?.contentMode = .scaleToFill
+        self.settingButton.contentHorizontalAlignment = .fill
+        self.settingButton.contentVerticalAlignment = .fill
+         
+        self.settingButton.backgroundColor = UIColor(rgb: 0xFF65B2)
         self.settingButton.addTarget(self, action: #selector(goSetting(button:)), for: .touchUpInside)
         self.addSubview(self.settingButton)
     }
@@ -78,30 +82,28 @@ class StartView: UIView {
     override func layoutSubviews() {
         let width = self.frame.width
         let height = self.frame.height
-        let imgWidth1 = self.image1.size.width // 画像の縦横サイズを取得
-        let imgHeight1 = self.image1.size.height
+            
+        self.backgroundImageView?.frame = self.frame
 
-        let imgWidth2 = self.image2.size.width // 画像の縦横サイズを取得
-        let imgHeight2 = self.image2.size.height
+        let imgWidth1 = self.image1.size.width
+        let imgHeight1 = self.image1.size.height
+        let scale: CGFloat = width/imgWidth1*0.73
+        self.imageView1?.frame = CGRect(x: 0, y: 0, width: imgWidth1*scale, height: imgHeight1*scale)
+        self.imageView1?.center = CGPoint(x: width*0.5, y: height*0.45) // 画像の中心を画面の中心に設定
         
-        let scale: CGFloat = width / imgWidth1 // 画像サイズをスクリーン幅に合わせる
-        let rect: CGRect = CGRect(x: 0, y: 0, width: imgWidth1*scale - 100, height: imgHeight1*scale)
-        let rect2: CGRect = CGRect(x: 0, y: 0, width: imgWidth2*scale + 100, height: imgHeight2*scale + 30)
+        self.startButton.frame = CGRect(x: 0, y: 0, width: width*0.45, height: height*0.098)
+        self.startButton.layer.cornerRadius = width*0.02
+        self.startButton.center = CGPoint(x: width*0.5, y: height*0.6)
         
-        self.imageView1?.frame = rect  // ImageView frameをCGRectで作った矩形に合わせる
-        self.imageView1?.center = CGPoint(x: width*0.5, y: 350) // 画像の中心を画面の中心に設定
-        
-        self.imageView2?.frame = rect2
-        self.imageView2?.center = CGPoint(x: width*0.5, y: height*0.55)
-        
-        self.startButton.frame = CGRect(x: 0, y: height*0.38, width: width, height: height*0.3)
-        self.startButton.titleLabel?.font = UIFont.systemFont(ofSize: height < width*2 ? height*0.085 : width*0.16)
-        
-        self.howToButton.frame = CGRect(x: 0, y: height*0.8, width: width*0.5, height: height*0.2)
-        self.howToButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
-        
-        self.settingButton.frame = CGRect(x: width*0.5, y: height*0.8, width: width*0.5, height: height*0.2)
-        self.settingButton.titleLabel?.font = UIFont.systemFont(ofSize: height*0.05)
+        self.howToButton.frame = CGRect(x: 0, y: 0, width: width*0.4, height: height*0.08)
+        self.howToButton.layer.cornerRadius = width*0.02
+        self.howToButton.center = CGPoint(x: width*0.5, y: height*0.92)
+
+        let buttonSize = width*0.11
+        self.settingButton.frame = CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize)
+        self.settingButton.center = CGPoint(x: width*0.1, y: height*0.08)
+        self.settingButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        self.settingButton.layer.cornerRadius = buttonSize*0.5
     }
     
     // MARK: - ボタンタップ時の挙動
