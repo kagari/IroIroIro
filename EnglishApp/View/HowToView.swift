@@ -5,63 +5,10 @@ protocol HowToViewDelegate: class {
     func onbackClick(_:UIButton)
 }
 
-class HowToView: UIView {
-    var delegate: HowToViewDelegate?
-    private let image = UIImage(named:"howtoplay4")!
-    private var imageView: UIImageView?
-    private var backBtn: UIButton?
-    private var videoPlayerView: HowToPlayVideoView
-    
-    override init(frame: CGRect) {
-        self.videoPlayerView = HowToPlayVideoView()
-        
-        super.init(frame: frame)
-        self.backgroundColor = .white
-    
-        //戻るボタン
-        self.backBtn = UIButton()
-        self.backBtn?.setTitle("戻る", for: UIControl.State())
-        self.backBtn?.setTitleColor(.white, for: UIControl.State())
-        self.backBtn?.backgroundColor = UIColor(rgb: 0x78CCD0)
-        self.backBtn?.layer.cornerRadius = 10.0
-        self.backBtn?.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
-        self.backBtn?.layer.borderWidth = 1.0
-        self.backBtn?.addTarget(self, action: #selector(onbackClick(button:)), for: .touchUpInside)
-        self.addSubview(self.backBtn!)
-        
-        self.addSubview(self.videoPlayerView)
-        self.videoPlayerView.startVideo()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let width = self.frame.width
-        let height = self.frame.height
-        let imgWidth = image.size.width
-        let imgHeight = image.size.height
-        let scale = width / imgWidth
-        
-        self.imageView?.frame = CGRect(x: 0, y: 0, width: imgWidth*scale, height: imgHeight*scale)
-        self.backBtn?.frame = CGRect(x: width*0.7 , y: height*0.9, width: width*0.28, height: height*0.05)
-        self.backBtn?.titleLabel?.font = UIFont.systemFont(ofSize: height*0.03)
-        
-        self.videoPlayerView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        self.videoPlayerView.center = self.center
-    }
-    
-    @objc func onbackClick(button: UIButton) {
-        delegate?.onbackClick(button)
-    }
-}
-
-
 class HowToPlayVideoView: UIView {
     private var player: AVPlayer
     private var playerLayer: AVPlayerLayer
+    private var cancelButton: UIButton
     
     override init(frame: CGRect) {
         let asset = NSDataAsset(name:"howToPlay")
@@ -71,13 +18,28 @@ class HowToPlayVideoView: UIView {
         self.player = AVPlayer(url: videoUrl)
         self.playerLayer = AVPlayerLayer(player: self.player)
         
+        self.cancelButton = {
+            let button = UIButton()
+            button.setImage(UIImage(named: "cancel"), for: .init())
+            button.imageView?.contentMode = .scaleToFill
+            button.contentHorizontalAlignment = .fill
+            button.contentVerticalAlignment = .fill
+            
+            button.backgroundColor = UIColor(rgb: 0x78CCD0)
+            return button
+        }()
+        
         super.init(frame: frame)
-        
-        self.layer.borderColor = UIColor.green.cgColor
-        
+
         self.layer.addSublayer(self.playerLayer)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        self.cancelButton.addTarget(self, action: #selector(self.cancel(_:)), for: .touchUpInside)
+        self.addSubview(self.cancelButton)
+
+        NotificationCenter.default.addObserver(self,
+                         selector: #selector(playerDidFinishPlaying),
+                         name: .AVPlayerItemDidPlayToEndTime,
+                         object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -89,17 +51,27 @@ class HowToPlayVideoView: UIView {
         
         let width = self.frame.width
         let height = self.frame.height
-        
-        self.layer.borderWidth = width*0.01
 
         self.playerLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
         self.playerLayer.videoGravity = .resizeAspect
+        
+        let buttonSize = width*0.15
+        self.cancelButton.frame = CGRect(x: -buttonSize*0.15, y: -buttonSize*0.15, width: buttonSize, height: buttonSize)
+        self.cancelButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.cancelButton.layer.cornerRadius = buttonSize*0.5
     }
     
     @objc private func playerDidFinishPlaying() {
         print("Finished!!")
+        self.removeFromSuperview()
     }
-    
+
+    @objc func cancel(_ button: UIButton) {
+        print("Pushed Cancel Button!")
+        self.player.pause()
+        self.removeFromSuperview()
+    }
+
     func startVideo() {
         self.player.play()
     }
