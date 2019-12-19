@@ -19,12 +19,14 @@ class ResultView: UIView {
     var goHomeLabel = UILabel()
     var goNextGameButton = UIButton()
     var goNextGameLabel = UILabel()
+    private var backgroundImageView = UIImageView(image: UIImage(named: "ResultBackgrounds"))
     
     var descriptionLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
+        self.addSubview(self.backgroundImageView)
         
         self.makeGoHomeButton()
         self.makeGoNextGameButton()
@@ -49,6 +51,9 @@ class ResultView: UIView {
         
         let width = self.frame.width
         let height = self.frame.height
+        
+        self.backgroundImageView.frame = self.frame
+        
         let buttonSize = width*0.1
         let buttonRect = CGRect(x: 0, y: height*0.85, width: buttonSize, height: buttonSize)
         
@@ -87,7 +92,7 @@ class ResultView: UIView {
         
         self.goHomeLabel.text = "おわる"
         self.goHomeLabel.textAlignment = .center
-        self.goHomeLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.goHomeLabel.textColor = .white// UIColor(rgb: 0x78CCD0)
         self.addSubview(self.goHomeLabel)
     }
     
@@ -105,7 +110,7 @@ class ResultView: UIView {
         
         self.goNextGameLabel.text = "もういちど"
         self.goNextGameLabel.textAlignment = .center
-        self.goNextGameLabel.textColor = UIColor(rgb: 0x78CCD0)
+        self.goNextGameLabel.textColor = .white // UIColor(rgb: 0x78CCD0)
         self.addSubview(self.goNextGameLabel)
     }
     

@@ -12,9 +12,7 @@ class QuestionView: UIView {
     
     let skipImage = UIImage(named: "skip")!
     var skipButton = UIButton()
-//    var skipLabel = UILabel()
     var speechSynthesizer : AVSpeechSynthesizer!
-//    var questionLabel: UILabel!
     var topLabel: UILabel! //頭文字のラベル
     var searchLabel: UILabel! //"を探そうのラベル"
     
@@ -27,14 +25,6 @@ class QuestionView: UIView {
         super.init(frame: frame)
         
         self.makeSkipButton()
-        
-//        self.questionLabel = {
-//            let label = UILabel()
-//            label.textColor = UIColor(rgb: 0xFF65B2)
-//            label.font = UIFont(name: "Menlo", size: 50)
-//            label.textAlignment = .center
-//            return label
-//        }()
         
         self.topLabel = {
             let label = UILabel()
@@ -54,10 +44,9 @@ class QuestionView: UIView {
             return label
         }()
         
-//        self.addSubview(self.questionLabel)
         self.addSubview(self.topLabel)
         self.addSubview(self.searchLabel)
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(rgb: 0xc7e8ff)
     }
     
     // ここは上のinit関数と全く同じことを書けばOK
@@ -73,10 +62,6 @@ class QuestionView: UIView {
         let buttonSize = width*0.1
         let buttonRect = CGRect(x: 0, y: height*0.7, width: buttonSize, height: buttonSize)
         
-//        self.questionLabel.frame = CGRect(x: 0, y: 0, width: width*0.8, height: height*0.2)
-//        self.questionLabel.center.x = self.center.x
-//        self.questionLabel.font = UIFont.systemFont(ofSize: width*0.07)
-        
         self.topLabel.frame = CGRect(x: 0, y: 0, width: width, height: height)
         self.topLabel.center = self.center
         self.topLabel.font = UIFont.systemFont(ofSize: height*0.3)
@@ -89,9 +74,6 @@ class QuestionView: UIView {
         self.skipButton.center.x = width*7/8
         self.skipButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.skipButton.layer.cornerRadius = buttonSize/2
-        
-//        self.skipLabel.frame = CGRect(x: 0, y: self.skipButton.frame.maxY, width: buttonSize, height: width*0.05)
-//        self.skipLabel.center.x = width*3/4
         
         self.imageView.frame = CGRect(x: 0, y: 0, width: width*0.6, height: height*0.6 )
         self.imageView.center = self.center
@@ -107,11 +89,6 @@ class QuestionView: UIView {
         self.skipButton.backgroundColor = UIColor(rgb: 0x78CCD0)
         self.skipButton.addTarget(self, action: #selector(goSkip(button:)), for: .touchUpInside)
         self.addSubview(self.skipButton)
-        
-//        self.skipLabel.text = "スキップ"
-//        self.skipLabel.textAlignment = .center
-//        self.skipLabel.textColor = UIColor(rgb: 0x78CCD0)
-//        self.addSubview(self.skipLabel)
     }
     
     // MARK: - QuestionModelからお題のデータを受け取ってセットする関数
@@ -181,9 +158,8 @@ class QuestionView: UIView {
         self.image = UIImage(named: name)
         self.imageView = UIImageView(image: image)
         // 透過する
-        self.imageView.alpha = 0.3
         self.addSubview(self.imageView!)
-        self.sendSubviewToBack(self.imageView!)
+        self.sendSubviewToBack(self.imageView)
     }
     
     // スキップボタンが押された時に呼ばれるメソッド

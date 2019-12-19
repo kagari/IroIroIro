@@ -66,15 +66,17 @@ func makeUILabelsForUsedTextLabel(string: String?, index:Int, x: CGFloat, y: CGF
             // 枠線を表示
             label.layer.borderWidth = 0.08*labelSize
             label.layer.borderColor = UIColor(rgb: 0xed0000).cgColor
-            label.textColor = UIColor(rgb: 0xFF80BF)
         } else {
             // 角を丸くする
             label.layer.cornerRadius = labelSize/2
             label.clipsToBounds = true
-            label.textColor = UIColor(rgb: 0xFF80BF)
         }
-
-        label.font = UIFont(name: "Menlo", size: 0.8*labelSize)
+        
+        label.textColor = UIColor(rgb: 0xFF80BF)
+        label.font = UIFont(name: "Menlo", size: 50)
+        label.textAlignment = .center
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
         return label
     })
     return uilabels
