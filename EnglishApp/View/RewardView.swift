@@ -11,6 +11,8 @@ class RewardView: UIView {
     private var saveButton: UIButton = UIButton()
     private var myTextField: UITextView!
     private var settingLabel: UILabel!
+    private var rewardLabel: UILabel!
+    private var nowRewardtextLabel: UILabel!
     
     
     override init(frame: CGRect) {
@@ -29,6 +31,27 @@ class RewardView: UIView {
             return label
         }()
         self.addSubview(self.settingLabel)
+        
+        self.nowRewardtextLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 200)
+            label.textAlignment = .center
+            label.text = "今のご褒美"
+            return label
+        }()
+        self.addSubview(self.nowRewardtextLabel)
+        
+        self.rewardLabel = {
+            let label = UILabel()
+            label.textColor = UIColor(rgb: 0xFF65B2)
+            label.font = UIFont(name: "Menlo", size: 200)
+            label.textAlignment = .center
+            label.numberOfLines = 1
+            label.adjustsFontSizeToFitWidth = true
+            return label
+        }()
+        self.addSubview(self.rewardLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -52,10 +75,13 @@ class RewardView: UIView {
         self.myTextField.textColor = .black
         // 改行ボタンの種類を設定
         self.myTextField.returnKeyType = .done
+        
+//        self.myTextField.textContainer.maximumNumberOfLines = 1
 
         // UITextFieldを追加
         self.addSubview(self.myTextField)
     }
+    
     func makeRewardButton() {
         self.saveButton.setTitle("保存", for: .normal) // タイトルを設定する
         self.saveButton.setTitleColor(.white, for: UIControl.State())
@@ -64,6 +90,8 @@ class RewardView: UIView {
         self.saveButton.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
         self.saveButton.layer.borderWidth = 1.0
         self.saveButton.addTarget(self, action: #selector(goSave(button:)), for: .touchUpInside)
+        self.saveButton.addTarget(self, action: #selector(didTouchDownButton(_:)), for: .touchDown)
+        self.saveButton.addTarget(self, action: #selector(didTouchDragExitButton(_:)), for: .touchDragExit)
         self.addSubview(self.saveButton)
     }
     //戻るボタン
@@ -87,7 +115,15 @@ class RewardView: UIView {
         self.settingLabel.center.x = self.center.x
         self.settingLabel.font = UIFont.systemFont(ofSize: height*0.05)
         
-        self.myTextField.frame = CGRect(x: width*0.02, y: height*0.2, width: width*0.96, height: height*0.55)
+        self.nowRewardtextLabel.frame = CGRect(x: 0 , y: height*0.4, width: width*0.96, height: height*0.12)
+        self.nowRewardtextLabel.center.x = self.center.x
+        self.nowRewardtextLabel.font = UIFont.systemFont(ofSize: height*0.05)
+    
+        
+        self.rewardLabel.frame = CGRect(x: 0 , y: height*0.6, width: width, height: height*0.12)
+        self.rewardLabel.center.x = self.center.x
+        
+        self.myTextField.frame = CGRect(x: width*0.02, y: height*0.2, width: width*0.96, height: height*0.1)
         
         self.saveButton.frame = CGRect(x: 0, y: height*0.8, width: width*0.2, height: height*0.1)
         self.saveButton.center.x = self.center.x
@@ -101,13 +137,41 @@ class RewardView: UIView {
         self.myTextField.text = reward
     }
     
+    func setRewardLabel(reward: String?) {
+        self.rewardLabel.text = reward
+    }
+    
+    @objc func didTouchDownButton(_: UIButton) {
+        // ボタンを縮こませます
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.saveButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        })
+    }
+
+    @objc func didTouchDragExitButton(_: UIButton) {
+        // 縮こまったボタンをアニメーションで元のサイズに戻します
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
+    
     @objc func goSave(button: UIButton) {
         let reward = self.myTextField.text
+        self.setRewardLabel(reward: reward)
         print("reward: \(String(describing: reward))")
-        delegate?.goSave(reward: reward)
+        UIView.animate(withDuration: 0.5,
+        delay: 0.0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 8,
+        options: .curveEaseOut,
+        animations: {
+            self.saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }, completion: { _ in
+            self.delegate?.goSave(reward: reward)
+        })
     }
     
     @objc func onbackClick(button: UIButton) {
-        delegate?.onbackClick(button)
+        self.delegate?.onbackClick(button)
     }
 }
