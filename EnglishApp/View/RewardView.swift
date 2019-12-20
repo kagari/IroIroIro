@@ -15,7 +15,7 @@ class RewardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor(rgb: 0xc7e8ff)
         self.makeRewardButton()
         self.makeTextField()
         self.makebackButton()
@@ -48,7 +48,8 @@ class RewardView: UIView {
         self.myTextField.layer.cornerRadius = 10.0
         //文字サイズ
         self.myTextField.font = UIFont.systemFont(ofSize: 80)
-        self.myTextField.textColor = UIColor(rgb: 0x78CCD0)
+//        self.myTextField.textColor = UIColor(rgb: 0x78CCD0)
+        self.myTextField.textColor = .black
         // 改行ボタンの種類を設定
         self.myTextField.returnKeyType = .done
 

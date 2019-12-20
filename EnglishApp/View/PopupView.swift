@@ -21,7 +21,7 @@ class PopUpView: UIView {
         
         self.titleLabel = {
             let label = UILabel()
-            label.text = "保護者の方にわたしてね！"
+            label.text = "大人の人にわたしてね！"
             //label.backgroundColor = .white
             label.textColor = UIColor(rgb: 0x000000)
             label.textAlignment = .center
