@@ -52,6 +52,8 @@ class StartView: UIView {
         self.startButton.titleLabel?.font = UIFont(name: "Menlo", size: 100)
         self.startButton.backgroundColor = UIColor(rgb: 0xFF65B2)
         self.startButton.addTarget(self, action: #selector(buttonEvent(button:)), for: .touchUpInside)
+        self.startButton.addTarget(self, action: #selector(didTouchDownButton(_:)), for: .touchDown)
+        self.startButton.addTarget(self, action: #selector(didTouchDragExitButton(_:)), for: .touchDragExit)
         self.addSubview(self.startButton)
     }
     
@@ -106,17 +108,40 @@ class StartView: UIView {
         self.settingButton.layer.cornerRadius = buttonSize*0.5
     }
     
+    @objc func didTouchDownButton(_: UIButton) {
+        // ボタンを縮こませます
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.startButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        })
+    }
+    
+    @objc func didTouchDragExitButton(_: UIButton) {
+        // 縮こまったボタンをアニメーションで元のサイズに戻します
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.startButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
+    
     // MARK: - ボタンタップ時の挙動
     @objc func buttonEvent(button: UIButton) {
-        delegate?.buttonEvent(button)
+        UIView.animate(withDuration: 0.5,
+        delay: 0.0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 8,
+        options: .curveEaseOut,
+        animations: {
+            self.startButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }, completion: { _ in
+            self.delegate?.buttonEvent(button)
+        })
     }
     
     @objc func goHowTo(button: UIButton) {
-        delegate?.goHowTo(button)
+        self.delegate?.goHowTo(button)
     }
     
     @objc func goSetting(button: UIButton) {
-        delegate?.goSetting(button)
+        self.delegate?.goSetting(button)
     }
 }
 

@@ -63,6 +63,8 @@ class RewardView: UIView {
         self.saveButton.layer.borderColor = UIColor(rgb: 0x78CCD0).cgColor
         self.saveButton.layer.borderWidth = 1.0
         self.saveButton.addTarget(self, action: #selector(goSave(button:)), for: .touchUpInside)
+        self.saveButton.addTarget(self, action: #selector(didTouchDownButton(_:)), for: .touchDown)
+        self.saveButton.addTarget(self, action: #selector(didTouchDragExitButton(_:)), for: .touchDragExit)
         self.addSubview(self.saveButton)
     }
     //戻るボタン
@@ -100,13 +102,36 @@ class RewardView: UIView {
         self.myTextField.text = reward
     }
     
+    @objc func didTouchDownButton(_: UIButton) {
+        // ボタンを縮こませます
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.saveButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        })
+    }
+    
+    @objc func didTouchDragExitButton(_: UIButton) {
+        // 縮こまったボタンをアニメーションで元のサイズに戻します
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
+    
     @objc func goSave(button: UIButton) {
         let reward = self.myTextField.text
         print("reward: \(String(describing: reward))")
-        delegate?.goSave(reward: reward)
+        UIView.animate(withDuration: 0.5,
+        delay: 0.0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 8,
+        options: .curveEaseOut,
+        animations: {
+            self.saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }, completion: { _ in
+            self.delegate?.goSave(reward: reward)
+        })
     }
     
     @objc func onbackClick(button: UIButton) {
-        delegate?.onbackClick(button)
+        self.delegate?.onbackClick(button)
     }
 }
