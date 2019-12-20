@@ -5,7 +5,6 @@ import AVFoundation
 class ApplicationController: UIViewController, ARViewDelegate {
     
     private var startView: StartView!
-    private var howToView: HowToView!
     private var rewardView: RewardView!
     private var questionView: QuestionView!
     private var arView: ARView!
@@ -27,7 +26,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
     // set instance for game
     private func setupGame() {
         self.startView = StartView()
-        self.howToView = HowToView()
         self.rewardView = RewardView()
         self.questionView = QuestionView()
         self.arView = ARView()
@@ -36,7 +34,6 @@ class ApplicationController: UIViewController, ARViewDelegate {
         self.questionAlphabetIndex = 0
         
         self.startView.delegate = self
-        self.howToView.delegate = self
         self.rewardView.delegate = self
         self.arView.delegate = self
         self.resultView.delegate = self
@@ -243,7 +240,18 @@ extension ApplicationController: StartViewDelegate {
     
     func goHowTo(_: UIButton) {
         print("Pushed HowTo Button!")
-        self.view = self.howToView
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        let rect = CGRect(x: 0, y: height, width: width*0.8, height: height*0.8)
+        let videoView = HowToPlayVideoView(frame: rect)
+        videoView.center.x = width*0.5
+        self.view.addSubview(videoView)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+            videoView.center.y = height*0.55
+        }, completion: {_ in
+            videoView.startVideo()
+        })
     }
     
     func goSetting(_: UIButton) {
