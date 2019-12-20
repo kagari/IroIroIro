@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "start_icon.png",
+      "filename" : "cancel.png",
       "scale" : "1x"
     },
     {
