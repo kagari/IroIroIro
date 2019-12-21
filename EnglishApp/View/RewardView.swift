@@ -75,8 +75,7 @@ class RewardView: UIView {
         self.myTextField.textColor = .black
         // 改行ボタンの種類を設定
         self.myTextField.returnKeyType = .done
-        
-//        self.myTextField.textContainer.maximumNumberOfLines = 1
+        self.myTextField.textContainer.maximumNumberOfLines = 1
 
         // UITextFieldを追加
         self.addSubview(self.myTextField)
