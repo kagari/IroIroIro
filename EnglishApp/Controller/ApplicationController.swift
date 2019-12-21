@@ -257,6 +257,7 @@ extension ApplicationController: StartViewDelegate {
     func goSetting(_: UIButton) {
         print("Pushed Setting Button!")
         self.rewardView.setTextField(reward: self.rewardData.getReward())
+        self.rewardView.setRewardLabel(reward: self.rewardData.getReward())
         self.view = self.rewardView
         
         // 保護者に報酬を設定させるように促すポップアップ画面の初期化
