@@ -61,6 +61,7 @@ class RewardView: UIView, UITextFieldDelegate {
         // UITextFieldの配置するx,yと幅と高さを設定.
         self.myTextField = UITextField()
         self.myTextField.delegate = self
+        self.myTextField.backgroundColor = .white
         // キーボードタイプを指定
         self.myTextField.keyboardType = .default
         //枠線のスタイル
