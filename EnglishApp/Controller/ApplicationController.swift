@@ -252,6 +252,11 @@ extension ApplicationController: StartViewDelegate {
         }, completion: {_ in
             videoView.startVideo()
         })
+        
+        let backlayer = UIView(frame: CGRect(x: -videoView.frame.minX, y: -videoView.frame.minY, width: width, height: height))
+        backlayer.backgroundColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.5)
+        videoView.addSubview(backlayer)
+        videoView.sendSubviewToBack(backlayer)
     }
     
     func goSetting(_: UIButton) {
